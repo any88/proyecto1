@@ -19,8 +19,56 @@ include './header.php';
  
 
 <div class="container">
-
-
+<div class="row">
+    
+    <div class="col-md-6">
+    <div class="panel panel-default">
+        <div class="panel-heading"><b> <i class="fa fa-search"></i> Buscar Paciente</b> <a href="crearpaciente.php" title='Nuevo Paciente' class="pull-right btn btn-success btn-xs"><i class=" fa fa-plus"></i></a></div>
+        <div class="panel-body">
+            <form name="fsearch" method="post" action="buscar_paciente.php">
+                <label>Buscar por Nombre</label>
+                <input type="text" name="nombre_paciente" placeholder="Nombre paciente" class="form-control">
+                <label>Buscar por N&uacute;mero Historia Cl&iacute;nica</label>
+                <input type="text" name="nhc" placeholder="N&uacute;meroHC" class="form-control">
+                <label>Buscar por Documento de Identidad</label>
+                <input type="text" name="docid" placeholder="Documento de Identidad" class="form-control">
+                <br>
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary"> Buscar</button>
+                </div>
+            </form>
+            
+        </div>
+        
+    </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>Servicios Agendados Para Hoy (<?php echo FechaYMA();?>)</b> <a href="#" title='Ver agenda' class="pull-right btn btn-primary btn-xs"><i class=" fa fa-calendar"></i></a></div>
+           <div class="panel-body">
+               <table class="table table-responsive" id="dataTables-example">
+                   <thead>
+                       <tr>
+                            <th>Servicio</th>
+                            <th>Especialidad</th>
+                            <th>Doctor</th>
+                            <th>Paciente</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       
+                   </tbody>
+                   
+                   
+               </table>
+            
+           </div>
+            
+        </div>
+    </div>
+</div>
+    <div class="col-md-12"></div>
+    
       <div class="row">
         <div class="col-md-12">
           <h3 class="section-title">Panel de Control</h3>
