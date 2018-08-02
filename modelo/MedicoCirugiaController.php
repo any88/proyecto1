@@ -103,6 +103,27 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
         return $affected;
         
     }
+    public function EliminarPordCirugia($p_id_cirugia)
+    {
+        $affected=0;
+        $bd=new con_mysqli("", "", "", "");
+        
+        ##Validar Iny Sql
+        $p_id_cirugia=$bd->real_scape_string($p_id_cirugia);
+        
+        $consulta="DELETE FROM `medico_cirugia` WHERE (`idcirugia`='$p_id_cirugia')";
+        
+        
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $affected=$bd->affected_row();
+            if($affected==0){$affected=1;}
+        }
+        $bd->Close();
+        return $affected;
+        
+    }
     
     public function MostrarMedicoCirugia()
     {
