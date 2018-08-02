@@ -91,8 +91,14 @@ if($_GET)
                    
                      
                 }
-                
-                 
+                ##buscar cirujano principal
+                $nom_cirujano_principal="---";
+                $datosMCP=$objMedicoCirugia->BuscarMedicoCirugia("", "", $idcirugia,1);
+                if(count($datosMCP)>0)
+                {
+                    $id_mcp=$datosMCP[0]->getIdmc();
+                    $nom_cirujano_principal=$objMedico->BuscarMedico($id_mcp, "", "")[0]->getNombre();
+                }
                  ##datos del equipo medico x medico_cirugia
                 $datosMedicoCirugia=$objMedicoCirugia->BuscarMedicoCirugia("", "", $idcirugia);
                                 
@@ -145,6 +151,9 @@ if($_GET)
                                     echo '<tr>';
                                     echo '<th class="text text-info">Cirugía Practicada</th>'; echo "<td>$nombrecirugia</td>";               
                                     echo '</tr>';
+                                    echo '</tr>';
+                                    echo '<th class="text text-info">Cirujano Principal</th>';echo "<td> $nom_cirujano_principal</td>";
+                                    echo '</tr>';
                                     echo '<tr >';
                                     echo '<th class="text text-info">Fecha</th>';echo "<td>$fecha</td>";
                                     echo '</tr>';
@@ -174,8 +183,16 @@ if($_GET)
 
                                              $idmedico= $datosMedicoCirugia[$i]->getIdmedico();
                                              $id_rol_cirugia=$datosMedicoCirugia[$i]->getRol();
-
-                                             $nombremedico= $objMedico->BuscarMedico($idmedico, "", "", "")[0]->getNombre();
+                                             $id_trab=$datosMedicoCirugia[$i]->getTrabajador();
+                                             if($idmedico!="")
+                                             {
+                                                 $nombremedico= $objMedico->BuscarMedico($idmedico, "", "", "")[0]->getNombre();
+                                             }
+                                             if($id_trab!="")
+                                             {
+                                                 $nombremedico= $objTrabajador->BuscarTrabajador($id_trab, "", "")[0]->getNombre();
+                                             }
+                                             
                                              
                                              //ver de donde capturar los datos para el rol de cada gente
                                              $p=array();
