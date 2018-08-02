@@ -165,7 +165,7 @@ if($_GET)
 
                                     echo '<tr class="text text-info">';
                                     echo '<th>Nombre</th>';
-                                    echo '<th>Especialidad</th>';
+                                    
                                     echo '<th>Rol Desempeñado</th>';
                                     echo '</tr>';
 
@@ -176,14 +176,7 @@ if($_GET)
                                              $id_rol_cirugia=$datosMedicoCirugia[$i]->getRol();
 
                                              $nombremedico= $objMedico->BuscarMedico($idmedico, "", "", "")[0]->getNombre();
-                                             $idesp_medico= $objMedico->BuscarMedico($idmedico, "", "", "")[0]->getEspecialidad();
-
-                                             $dat_especialidadBd=$objEspecialidad->BuscarEspecialidad($idesp_medico, "", "");
-
-                                             if(count($dat_especialidadBd)>0)
-                                             {
-                                                 $especialidadmedico=$dat_especialidadBd[0]->getNombreespecialidad();
-                                             }
+                                             
                                              //ver de donde capturar los datos para el rol de cada gente
                                              $p=array();
                                              $cg=new ConsultasG();
@@ -199,7 +192,7 @@ if($_GET)
 
                                             echo '<tr>';
                                             echo "<td>$nombremedico</td>";
-                                            echo "<td>$especialidadmedico</td>";
+                                            
                                             echo "<td>$rol</td>";
                                             echo '</tr>';
                                         }
