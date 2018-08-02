@@ -30,9 +30,17 @@ public function CrearMedicoCirugia($p_idmedico, $p_idcirugia, $p_fecha, $p_idtra
         $p_idtransaccion=$bd->real_scape_string($p_idtransaccion);
         $prol=$bd->real_scape_string($prol);
         $p_idTrabajador=$bd->real_scape_string($p_idTrabajador);
-        $consulta="INSERT INTO `medico_cirugia` (`idmedico`, `idcirugia`, `fecha`, `idtransaccion`,`id_rol_cirugia`,`id_trabajador`) VALUES ('$p_idmedico', '$p_idcirugia', '$p_fecha', '$p_idtransaccion',$prol,'$p_idTrabajador')";
+        if($p_idmedico!="")
+        {
+            $consulta="INSERT INTO `medico_cirugia` (`idmedico`, `idcirugia`, `fecha`,`id_rol_cirugia`) VALUES ('$p_idmedico', '$p_idcirugia', '$p_fecha', '$prol')";
+        }
+        if($p_idTrabajador!="")
+        {
+            $consulta="INSERT INTO `medico_cirugia` (`idcirugia`, `fecha`,`id_rol_cirugia`,`id_trabajador`) VALUES ('$p_idcirugia', '$p_fecha', '$prol','$p_idTrabajador')";
+        }
         
         $r=$bd->consulta($consulta);
+        //Mostrar($consulta);
         if($r)
         {
             $affected=$bd->affected_row();
