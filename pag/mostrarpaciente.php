@@ -97,31 +97,30 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
                                 <div class="tab-pane fade in active" id="home">
                                     <h4>Datos generales del Paciente</h4>
                                     <table class="table table-responsive">
-                                        <tr class="text text-info">
-                                           <td rowspan='3' style='width:200px;'><img src='<?php echo $img;?>' title='Paciete' style='width:150px;'></td><td><b>Nombre</b><?php echo $nombre;?></td>
+                                        <tr>
+                                           <td rowspan='3' style='width:200px;'><img src='<?php echo $img;?>' title='Paciete' style='width:150px;'></td>
+                                           <td><b>Nombre: </b><?php echo $nombre;?></td>
                                         </tr>
                                         <tr>
 
-                                            <td> <?php echo $edad;?></td>
+                                            <td><b>Edad: </b> <?php echo $edad;?></td>
                                         </tr>
                                         <tr>
 
-                                            <td><?php echo $sexo;?></td>
+                                            <td><b>Sexo: </b><?php echo $sexo;?></td>
                                         </tr>
                                         <tr >
-                                            <td>
-
-                                                <input type="hidden" name="id_pacmod" value="<?php echo $id_pacmod;?>">
-                                                Documento Identidad:</td>
+                                            <td><input type="hidden" name="id_pacmod" value="<?php echo $id_pacmod;?>">
+                                                <b>Documento Identidad: </b>
+                                            </td>
                                             <td><?php echo $docID;?></td>
                                         </tr>
-                                        <tr class="text text-info">
-                                            <th>Ocupaci&oacute;n</th>
+                                        <tr>
+                                            <td><b>Ocupaci&oacute;n: </b></td>
                                             <td><?php echo $ocupacion;?></td>
-
                                         </tr>
                                         <tr>
-                                            <th>Aseguradora</th>
+                                            <td><b>Aseguradora: </b></td>
                                             <td>
                                                 <?php 
                                                   $id_aseguradora=$pacmod[0]->getIdAseguradora();
@@ -135,21 +134,20 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
                                         </tr>
                                         
                                         <tr>
-                                           <th>Direcci&oacute;n</th>
-                                           <td><?php echo $direccion;?></td>      
-
+                                            <td><b>Direcci&oacute;n: </b></td>
+                                            <td><?php echo $direccion;?></td> 
                                         </tr>
-                                        <tr class="text text-info">
-                                            <th>Teléfono</th>
+                                        <tr>
+                                            <td><b>Teléfono: </b></td>
                                             <td><?php echo $telefono;?></td>
                                         </tr>
-                                        <tr class="text text-info">
-                                            <th >Email</th>
+                                        <tr>
+                                            <td ><b>Email: </b></td>
                                             <td><?php echo $email;?></td>
 
                                         </tr>
                                         <tr>
-                                            <th>Anamnesis</th>
+                                            <td><b>Anamnesis: </b></td>
                                             <td><?php echo $anamnesis;?></td>
                                         </tr>
 
@@ -309,18 +307,19 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
                                 </div>
                                 
                             </div>
+                            
                         </div>
+                    
                     </div>
-              
-              
-          
-              
+             
           </form>
        
         </div>
     
-        
-
+        <div class="pull-right">
+            <a href='listar_pacientes.php' class='btn btn-danger'>Cancelar</a>
+        </div>
+        <br><br>
 
         </div>
         
