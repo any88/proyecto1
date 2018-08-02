@@ -72,8 +72,6 @@
           <ul>
               <li><a href="crearpaciente.php">Nuevo Paciente</a></li>
               <li><a href="listar_pacientes.php">Listar Pacientes</a></li>
-              <li><a href="buscar_paciente.php">Buscar Paciente</a></li>
-              
            </ul>
           </li>
           <li class="menu-has-children" ><a href="#">Servicios</a>
