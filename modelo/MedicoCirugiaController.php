@@ -83,7 +83,7 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
         $p_idcirugia=$bd->real_scape_string($p_idcirugia);
          
         $consulta="UPDATE `medico_cirugia` SET  `idmedico`='$p_idmedico'  WHERE (`idcirugia`='$p_idcirugia' and `id_rol_cirugia`='1')";
-        
+        Mostrar($consulta);
         $r=$bd->consulta($consulta);
         if($r)
         {
@@ -119,7 +119,7 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
         ##Validar Iny Sql
         $p_id_cirugia=$bd->real_scape_string($p_id_cirugia);
         
-        $consulta="DELETE FROM `medico_cirugia` WHERE (`idcirugia`='$p_id_cirugia')";
+        $consulta="DELETE FROM `medico_cirugia` WHERE (`idcirugia`='$p_id_cirugia' and `id_rol_cirugia`!='1')";
         
         
         $r=$bd->consulta($consulta);
@@ -218,7 +218,7 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
          
         
         $consulta=$consulta." order by `id_med_cirugia` ASC";
-        
+       
         $r=$bd->consulta($consulta);
         if($r)
         {

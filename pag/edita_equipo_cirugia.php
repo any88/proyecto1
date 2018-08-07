@@ -13,6 +13,7 @@ include '../modelo/CirugiaController.php';
 include '../modelo/TrabajadorController.php';
 include '../modelo/CargoController.php';
 include '../modelo/MedicoCirugiaController.php';
+include '../modelo/PacienteServicioController.php';
 
 
 
@@ -23,7 +24,7 @@ $objEspecialidad= new EspecialidadController();
 $objMedico=new MedicoController();
 $objNombreCirugia= new NombreCirugiaController();
 $objServicioC= new ServicioController();
-
+$objPacienteServC= new PacienteServicioController();
 $objTrabajador=new TrabajadorController();
 $objMedicoCC=new MedicoCirugiaController();
 $objCargo=new CargoController();
@@ -75,11 +76,7 @@ if($r){$lista_roles_enf=$cg->ArregloAsociativoSelect($r, 'roles_cirugia');}
 
 $arr_cargos=$objCargo->BuscarLike("enferm");
 
-
-if($_GET)
-{
-    $id_cirugia=$_GET['nik'];
-    $lista_trabajadores=array();
+$lista_trabajadores=array();
 $t=0;
 for ($i = 0; $i < count($arr_cargos); $i++) 
 {
@@ -94,6 +91,10 @@ for ($i = 0; $i < count($arr_cargos); $i++)
 }
 $lista_medicos=array();
 $lista_medicos=$objMedico->MostrarMedico();
+if($_GET)
+{
+    $id_cirugia=$_GET['nik'];
+    
 
 $contador=0;
 for ($index = 0; $index < count($lista_trabajadores); $index++) 
@@ -121,13 +122,24 @@ for ($index = 0; $index < count($lista_medicos); $index++)
    $id_medico=$lista_medicos[$index]->getIdMedico();
    $arr=$objMedicoCC->BuscarMedicoCirugia("", $id_medico, $id_cirugia);
    $nombre_cargo="";
-   $arrCargos=$objCargo->BuscarCargo(4, "");
-   if(count($arrCargos)>0){$nombre_cargo=$arrCargos[0]->getNombreCargo();}
+   
    if(count($arr)>0)
    {
        for ($index1 = 0; $index1 < count($arr); $index1++)
        {
             $p_lista_medicos[$contador]['med']=$lista_medicos[$index]->getNombre();
+            $id_rol=$arr[$index1]->getRol();
+            $arrrol=array();
+            $cg=new ConsultasG();
+            $p=array();
+            $p['campo'][0]='id_rol';
+            $p['valor'][0]=$id_rol;
+            $r=$cg->GenericSelect('roles_cirugia', $p);
+            if($r)
+            {
+                $arrrol=$cg->ArregloAsociativoSelect($r, 'roles_cirugia');
+                if(count($arrrol)>0){$nombre_cargo=$arrrol[0]['nombre'];}
+            }
             $p_lista_medicos[$contador]['cargo']=$nombre_cargo;
             $contador++;
        }
@@ -141,6 +153,10 @@ $p_cantidad_medicos= count($p_lista_medicos);
 if($_POST)
 {
     if(isset($_POST['cantidad_medicos'])){$p_cantidad_medicos=$_POST['cantidad_medicos'];}
+     if(isset($_POST['id_cirugia'])){$id_cirugia=$_POST['id_cirugia'];}
+     if(isset($_POST['id_paciente_buscar'])){$idpaciente=$_POST['id_paciente_buscar'];}
+     if(isset($_POST['servicios'])){$id_servicio=$_POST['servicios'];}
+     if(isset($_POST['act_select_hidden'])) {$act_select_hidden=$_POST['act_select_hidden'];}  
     
     if($p_cantidad_medicos>0)
            {          
@@ -167,44 +183,115 @@ if($_POST)
                
            }
           if($act_select_hidden==0)
-          {              
+          {  
               ##elimino todos los trabajadores o medicos de medico cirugia donde el id_cirugia =id cirugia
-              $id_medico_cirugia_base="";
-              $arrMedCir=$objMedicoCC->BuscarMedicoCirugia("", "", $id_cirugia);
-              if(count($arrMedCir)>0)
+              if($p_cantidad_medicos>0)
               {
-                  for ($i = 0; $i < count($arrMedCir); $i++) 
-                  {
-                      $id_medico_cirugia_base=$arrMedCir[$i]->getIdmc();
-                      $id_medico=$arrMedCir[$i]->getIdmedico();
-                      $id_trab=$arrMedCir[$i]->getTrabajador();
-                      
-                      $encontrado=0;
-                      for ($j = 0; $j < count($p_lista_medicos); $j++) 
+                  
+                  $affected=$objMedicoCC->EliminarPordCirugia($id_cirugia);
+                    if($affected==1)
+                    {
+                        ##buscar la fecha de la cirugia
+                        
+                        $arrC=$objCirugiaC->BuscarCirugia($id_cirugia, "", "");
+                        if(count($arrC)>0)
+                        {
+                            $id_servicio=$arrC[0]->getIdServicio();
+                            $arrPS=$objPacienteServC->BuscarPacienteServicio("", "", $id_servicio);
+                            if(count($arrPS)>0){$p_fecha_cirugia=$arrPS[0]->getFecha();}
+                        }
+                        
+                        for ($i = 0; $i < $p_cantidad_medicos; $i++) 
                       {
-                         $nombre_cargo=$p_lista_medicos[$j]['cargo'];
-                         if(isset($p_lista_medicos[$j]['med']))
-                         {
-                             $nomb_medico=$p_lista_medicos[$j]['med'];
-                             
-                         }
-                         if(isset($p_lista_medicos[$j]['trab']))
-                         {
-                             
-                         }
+                          $xx=0;
+                          $pcargo="";$p_idC="";
+                          $pmed="";$p_idmc=null;
+                          $ptrab="";$p_idt=null;
+                         if(isset($_POST["cargo$i"])){$pcargo=$_POST["cargo$i"];}
+                         if(isset($_POST["med$i"])){$pmed=$_POST["med$i"];} 
+                         if(isset($_POST["trab$i"])){$ptrab=$_POST["trab$i"];} 
+                          
+                          if($pmed!="")
+                          {
+                              ##buscar el id del medico por el nombre
+                              $arrMed=$objMedico->BuscarMedico("", $pmed, "");
+                              if(count($arrMed)>0)
+                              {
+                                  $p_idmc=$arrMed[0]->getIdMedico();
+                                  $xx++;
+                              }
+
+                          }
+                           if($ptrab!="")
+                          {
+                               $arrT=$objTrabajador->BuscarTrabajador("", $ptrab, "");
+                               if(count($arrT)>0)
+                               {
+                                  $p_idt=$arrT[0]->getIdTrabajador();
+                                  $xx++;
+                               }
+
+                          }
+
+                          if($pcargo!="")
+                          {
+                              $parametros=array();
+                              $parametros['campo'][0]="nombre";
+                              $parametros['valor'][0]=$pcargo;
+
+                              $r=$cg->GenericSelect('roles_cirugia', $parametros);
+                              if($r){
+                                  $arrCargos=$cg->ArregloAsociativoSelect($r, 'roles_cirugia');
+                                  if(count($arrCargos)>0)
+                                  {
+                                      $p_idC=$arrCargos[0]['id_rol'];
+                                  }
+
+                              }
+
+                          }
+                          if($xx!=0)
+                          {
+                              if($p_idmc!="")
+                              {
+                                  $aff=$objMedicoCC->CrearMedicoCirugia($p_idmc, $id_cirugia, $p_fecha_cirugia, "", $p_idC, "");
+                              }
+                              if($p_idt!="")
+                              {
+                                  $aff=$objMedicoCC->CrearMedicoCirugia("", $id_cirugia, $p_fecha_cirugia, "", $p_idC, $p_idt);
+                              }
+                              
+                              
+                          }
+                          if($aff==0)
+                          {
+                              $msg="<div class='alert alert-danger alert-dismissable'>"
+                              . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                              . "Error! No se pudieron modificar los datos de la cirugia  </div>"; 
+                          }
+                          else
+                          {
+                              $msg="<div class='alert alert-success alert-dismissable'>"
+                              . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                              . "OK! Los datos de la cirugia fueron modificados con exito. </div>"; 
+
+                              echo "<script>";
+                                  echo "window.location = 'mostrar_cirugia.php?nik=$id_cirugia';";
+                             echo "</script>";
+                          }
                       }
-                 }
-                  
-                  
-                  
+                    }
+                    else
+                    {
+                        $msg="<div class='alert alert-danger alert-dismissable'>"
+                          . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                          . "Error! No se pudieron borrar los datos anteriores de la cirugia  </div>"; 
+
+                    }
               }
-              else
-              {
-                  $msg="<div class='alert alert-danger alert-dismissable'>"
-                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                    . "Error!No se han encontrado los datos de la cirugia seleccionada</div>"; 
-                    $error++;
-              }
+              
+              
+                
           }
           
           
@@ -219,10 +306,13 @@ if($_POST)
                 <input type="hidden" name="act_select_hidden" id="cirugia_hidden" value="0">
                 <input type="hidden" name="servicios"  value="<?php echo $id_servicio;?>">
                 <input type="hidden" name="id_paciente_buscar"  value="<?php echo $idpaciente;?>">
-                
+                <input type="hidden" name="id_cirugia"  value="<?php echo $id_cirugia;?>">
           <h3 class="text-left"><i class="fa fa-user text-info"> Datos del equipo medico</i></h3>
           
           <div class="col-md-12" >
+              <?php 
+              if($msg!=""){echo $msg;}
+              ?>
                   <table class="table table-responsive table-bordered" id="tabla_med_equipo">
                     <tr>
                         <th colspan="3" >
@@ -273,7 +363,7 @@ if($_POST)
               
               <div class="text-right col-md-12">
                   <button  type="submit" class="btn btn-success">Registrar</button>
-                  <a href='index.php' class="btn btn-danger" >Cancelar</a>
+                  <a href='mostrar_cirugia.php?nik=<?php echo $id_cirugia;?>' class="btn btn-danger" >Cancelar</a>
               </div>
           </form>
         </div>

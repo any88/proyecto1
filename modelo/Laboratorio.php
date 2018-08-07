@@ -18,15 +18,13 @@ class Laboratorio {
     private $idTipoAnalisisLaboratorio;
     private $nombre;
     private $resultados;
-    private $precio;
-    
-    public function __construct($idServicio, $idLaboratorio, $idTipoAnalisisLaboratorio, $nombre, $resultados, $precio) {
+        
+    public function __construct($idServicio, $idLaboratorio, $idTipoAnalisisLaboratorio, $nombre, $resultados) {
         $this->idServicio = $idServicio;
         $this->idLaboratorio = $idLaboratorio;
         $this->idTipoAnalisisLaboratorio = $idTipoAnalisisLaboratorio;
         $this->nombre = $nombre;
         $this->resultados = $resultados;
-        $this->precio = $precio;
     }
 
     public function getIdServicio() {
@@ -44,37 +42,8 @@ class Laboratorio {
     public function getNombre() {
         return $this->nombre;
     }
-
-    public function getPrecio() {
-        return $this->precio;
-    }
-    
+   
     public function getResultados() {
         return $this->resultados;
     }
-
-    public function setResultados($resultados) {
-        $this->resultados = $resultados;
-    }
-
-    public function setIdServicio($idServicio) {
-        $this->idServicio = $idServicio;
-    }
-
-    public function setIdLaboratorio($idLaboratorio) {
-        $this->idLaboratorio = $idLaboratorio;
-    }
-
-    public function setIdTipoAnalisisLaboratorio($idTipoAnalisisLaboratorio) {
-        $this->idTipoAnalisisLaboratorio = $idTipoAnalisisLaboratorio;
-    }
-
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
-    }
-
-    public function setPrecio($precio) {
-        $this->precio = $precio;
-    }
-
 }

@@ -18,7 +18,7 @@ class TransaccionController {
     
     public function TransaccionController(){}
     
-public function CrearTransaccion($p_tipo, $p_fecha, $p_monto, $p_motivo)
+public function CrearTransaccion($p_tipo, $p_fecha, $p_monto, $p_motivo,$f_pago)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
@@ -28,20 +28,32 @@ public function CrearTransaccion($p_tipo, $p_fecha, $p_monto, $p_motivo)
         $p_fecha=$bd->real_scape_string($p_fecha);
         $p_monto=$bd->real_scape_string($p_monto);
         $p_motivo=$bd->real_scape_string($p_motivo);
+        $f_pago=$bd->real_scape_string($f_pago);
                         
-        $consulta="INSERT INTO `transaccion` (`tipotransaccion`, `fecha`, `monto`, `motivo`) VALUES ('$p_tipo', '$p_fecha', '$p_monto', '$p_motivo')";
+        $consulta="INSERT INTO `transaccion` (`tipotransaccion`, `fecha`, `monto`, `motivo`,`forma_pago`) VALUES ('$p_tipo', '$p_fecha', '$p_monto', '$p_motivo','$f_pago')";
         
         $r=$bd->consulta($consulta);
         if($r)
         {
             $affected=$bd->affected_row();
+            if($affected==1)
+            {
+                $consulta="SELECT LAST_INSERT_ID()";
+                $r=$bd->consulta($consulta);
+                if($r)
+                {
+                    $fila=$bd->fetch_array($r);
+                    $affected=$fila[0];
+                }
+                
+            }
         }
         $bd->Close();
         return $affected;
         
 }
 
-public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo)
+public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo,$fpago)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -51,8 +63,9 @@ public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo)
         $p_fecha=$bd->real_scape_string($p_fecha);
         $p_monto=$bd->real_scape_string($p_monto);
         $p_motivo=$bd->real_scape_string($p_motivo);
+        $fpago=$bd->real_scape_string($fpago);
                
-        $consulta="UPDATE `transaccion` SET `tipotransaccion`='$p_tipo', `fecha`='$p_fecha', `monto`='$p_monto', `motivo`='$p_motivo' WHERE (`idtransaccion`='$p_id')";
+        $consulta="UPDATE `transaccion` SET `tipotransaccion`='$p_tipo', `fecha`='$p_fecha', `monto`='$p_monto', `motivo`='$p_motivo' ,`forma_pago`='$fpago' WHERE (`idtransaccion`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -100,8 +113,9 @@ public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo)
                 $p_fecha=$fila["fecha"];
                 $p_monto=$fila["monto"];
                 $p_motivo=$fila["motivo"];
+                $forma_pago=$fila["forma_pago"];
                                                                 
-                $objTransaccion=new Transaccion($p_id, $p_tipo, $p_fecha, $p_monto, $p_motivo);
+                $objTransaccion=new Transaccion($p_id, $p_tipo, $p_fecha, $p_monto, $p_motivo,$forma_pago);
                 $result[$a]=$objTransaccion;
                 $a++;
             }
@@ -110,6 +124,35 @@ public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo)
         return $result;
     }
     
+    public function BuscarTransaccionPorId($id_transaccion)
+    {
+        $result=array();
+        $bd= new con_mysqli("", "", "", "");
+        $consulta="SELECT * FROM `transaccion` WHERE `idtransaccion`='$id_transaccion'";
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $a=0;
+            while ($fila=$bd->fetch_assoc($r))
+            {
+                 
+                $p_id=$fila["idtransaccion"];
+                $p_tipotransaccion=$fila["tipotransaccion"];
+                $p_fecha=$fila["fecha"];
+                $p_monto=$fila["monto"];
+                $p_motivo=$fila["motivo"];
+                $forma_pago=$fila["forma_pago"];
+                                                                
+                $objTransaccion=new Transaccion($p_id, $p_tipotransaccion, $p_fecha, $p_monto, $p_motivo,$forma_pago);
+                $result[$a]=$objTransaccion;
+                $a++;
+            }
+        }
+        $bd->Close();
+        return $result;
+        
+    }
+
     public function BuscarTransaccion($p_idtransaccion, $p_fecha, $p_monto)
     {
         $result=array();
@@ -145,6 +188,7 @@ public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo)
          
         
         $consulta=$consulta." order by `fecha` ASC";
+       
         $r=$bd->consulta($consulta);
         if($r)
         {
@@ -157,8 +201,9 @@ public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo)
                 $p_fecha=$fila["fecha"];
                 $p_monto=$fila["monto"];
                 $p_motivo=$fila["motivo"];
+                $forma_pago=$fila["forma_pago"];
                                                                 
-                $objTransaccion=new Transaccion($p_id, $p_tipotransaccion, $p_fecha, $p_monto, $p_motivo);
+                $objTransaccion=new Transaccion($p_id, $p_tipotransaccion, $p_fecha, $p_monto, $p_motivo,$forma_pago);
                 $result[$a]=$objTransaccion;
                 $a++;
             }

@@ -18,7 +18,7 @@ class LaboratorioController {
     
     public function LaboratorioController(){}
     
-public function CrearLaboratorio($p_idservicio, $p_idtipoanalisislab, $p_nombre, $p_precio, $p_resultados)
+public function CrearLaboratorio($p_idservicio, $p_idtipoanalisislab, $p_nombre, $p_resultados)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
@@ -27,10 +27,9 @@ public function CrearLaboratorio($p_idservicio, $p_idtipoanalisislab, $p_nombre,
         $p_idservicio=$bd->real_scape_string($p_idservicio);
         $p_idtipoanalisislab=$bd->real_scape_string($p_idtipoanalisislab);
         $p_nombre=$bd->real_scape_string($p_nombre);
-        $p_precio=$bd->real_scape_string($p_precio);
         $p_resultados=$bd->real_scape_string($p_resultados);
                         
-        $laboratorio="INSERT INTO `laboratorio` (`idservicio`, `idtipoanalisislaboratorio`, `idnombreanalisis`, `precio`, `resultados`) VALUES ('$p_idservicio', '$p_idtipoanalisislab', '$p_nombre', '$p_precio', '$p_resultados')";
+        $laboratorio="INSERT INTO `laboratorio` (`idservicio`, `idtipoanalisislaboratorio`, `idnombreanalisis`, `resultados`) VALUES ('$p_idservicio', '$p_idtipoanalisislab', '$p_nombre', '$p_resultados')";
         
         $r=$bd->consulta($laboratorio);
         if($r)
@@ -48,7 +47,7 @@ public function CrearLaboratorio($p_idservicio, $p_idtipoanalisislab, $p_nombre,
         return $affected;   
 }
 
-public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_precio,$p_resultados)
+public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_resultados)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -56,10 +55,9 @@ public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_pre
         ##Validar Iny Sql
         $p_idtipoanalisislab=$bd->real_scape_string($p_idtipoanalisislab);
         $p_nombre=$bd->real_scape_string($p_nombre);
-        $p_precio=$bd->real_scape_string($p_precio);
         $p_resultados=$bd->real_scape_string($p_resultados);
                
-        $laboratorio="UPDATE `laboratorio` SET `idtipoanalisislaboratorio`='$p_idtipoanalisislab', `idnombreanalisis`='$p_nombre', `precio`='$p_precio', `resultados`='$p_resultados' WHERE (`idlaboratorio`='$p_id')";
+        $laboratorio="UPDATE `laboratorio` SET `idtipoanalisislaboratorio`='$p_idtipoanalisislab', `idnombreanalisis`='$p_nombre', `resultados`='$p_resultados' WHERE (`idlaboratorio`='$p_id')";
         
         $r=$bd->laboratorio($laboratorio);
         if($r)
@@ -105,10 +103,9 @@ public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_pre
                 $p_idlaboratorio=$fila["idlaboratorio"];
                 $p_idtipoanalisislab=$fila["idtipoanalisislaboratorio"];
                 $p_nombre=$fila["idnombreanalisis"];
-                $p_precio=$fila["precio"];
                 $p_resultados=$fila["resultados"];
                                                                 
-                $objLaboratorio=new Laboratorio($p_idlaboratorio, $p_idtipoanalisislab, $p_nombre, $p_resultados, $p_precio);
+                $objLaboratorio=new Laboratorio($p_idlaboratorio, $p_idtipoanalisislab, $p_nombre, $p_resultados);
                 $result[$a]=$objLaboratorio;
                 $a++;
             }
@@ -163,10 +160,9 @@ public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_pre
                 $p_idlaboratorio=$fila["idlaboratorio"];
                 $p_idtipoanalisislab=$fila["idtipoanalisislaboratorio"];
                 $p_nombre=$fila["idnombreanalisis"];
-                $p_precio=$fila["precio"];
                 $p_resultados=$fila["resultados"];
                                                                 
-                $objLaboratorio=new Laboratorio($p_idservicio, $p_idlaboratorio, $p_idtipoanalisislab, $p_nombre, $p_precio, $p_resultados);
+                $objLaboratorio=new Laboratorio($p_idservicio, $p_idlaboratorio, $p_idtipoanalisislab, $p_nombre, $p_resultados);
                 $result[$a]=$objLaboratorio;
                 $a++;
             }
@@ -217,8 +213,7 @@ public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_pre
             {
                 $bd_idlaboratorio=$fila["idlaboratorio"];
                 $bd_nombre=$fila["idnombreanalisis"];
-                $bd_precio=$fila["precio"];
-                $result[$a]="($bd_idlaboratorio) ".$bd_nombre." ".$bd_precio;
+                $result[$a]="($bd_idlaboratorio) ".$bd_nombre;
                 $a++;
             }
         }

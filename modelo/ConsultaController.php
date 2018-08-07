@@ -18,7 +18,7 @@ class ConsultaController {
     
     public function ConsultaController(){}
     
-public function CrearConsulta($p_idservicio, $p_especialidad, $p_indicaciones, $p_resultados, $p_precio)
+public function CrearConsulta($p_idservicio, $p_especialidad, $p_indicaciones, $p_resultados)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
@@ -28,9 +28,8 @@ public function CrearConsulta($p_idservicio, $p_especialidad, $p_indicaciones, $
         $p_especialidad=$bd->real_scape_string($p_especialidad);
         $p_indicaciones=$bd->real_scape_string($p_indicaciones);
         $p_resultados=$bd->real_scape_string($p_resultados);
-        $p_precio=$bd->real_scape_string($p_precio);
-                        
-        $consulta="INSERT INTO `consulta` (`idservicio`, `idespecialidad`, `indicaciones`, `resultados`, `precio`) VALUES ('$p_idservicio', '$p_especialidad', '$p_indicaciones', '$p_resultados', '$p_precio')";
+                                
+        $consulta="INSERT INTO `consulta` (`idservicio`, `idespecialidad`, `indicaciones`, `resultados`) VALUES ('$p_idservicio', '$p_especialidad', '$p_indicaciones', '$p_resultados')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -49,7 +48,7 @@ public function CrearConsulta($p_idservicio, $p_especialidad, $p_indicaciones, $
         
 }
 
-public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resultados,$p_precio)
+public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resultados)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -58,9 +57,8 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
         $p_especialidad=$bd->real_scape_string($p_especialidad);
         $p_indicaciones=$bd->real_scape_string($p_indicaciones);
         $p_resultados=$bd->real_scape_string($p_resultados);
-        $p_precio=$bd->real_scape_string($p_precio);
-               
-        $consulta="UPDATE `consulta` SET `especialidad`='$p_especialidad', `indicaciones`='$p_indicaciones', `resultados`='$p_resultados', `precio`='$p_precio' WHERE (`idconsulta`='$p_id')";
+                       
+        $consulta="UPDATE `consulta` SET `especialidad`='$p_especialidad', `indicaciones`='$p_indicaciones', `resultados`='$p_resultados' WHERE (`idconsulta`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -107,9 +105,8 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
                 $p_especialidad=$fila["especialidad"];
                 $p_indicaciones=$fila["indicaciones"];
                 $p_resultados=$fila["resultados"];
-                $p_precio=$fila["precio"];
-                                                                
-                $objConsulta=new Consulta($p_idconsulta, $p_especialidad, $p_indicaciones, $p_resultados, $p_precio);
+                                                                                
+                $objConsulta=new Consulta($p_idconsulta, $p_especialidad, $p_indicaciones, $p_resultados);
                 $result[$a]=$objConsulta;
                 $a++;
             }
@@ -118,7 +115,7 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
         return $result;
     }
     
-    public function BuscarConsulta($p_idconsulta, $p_especialidad, $p_precio)
+    public function BuscarConsulta($p_idconsulta, $p_especialidad)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -138,19 +135,7 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
             {
                 $consulta=$consulta." and `especialidad`='$p_especialidad'";
             }
-        }
-        if($p_precio!="")
-        {
-            if($p_idconsulta=="" && $p_especialidad=="")
-            {
-                $consulta=$consulta."WHERE `precio`='$p_precio'";
-            }
-            else 
-            {
-                $consulta=$consulta." and `precio`='$p_precio'";
-            }
-         }
-         
+        }       
         
         $consulta=$consulta." order by `idconsulta` ASC";
         $r=$bd->consulta($consulta);
@@ -165,9 +150,8 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
                 $p_especialidad=$fila["idespecialidad"];
                 $p_indicaciones=$fila["indicaciones"];
                 $p_resultados=$fila["resultados"];
-                $p_precio=$fila["precio"];
-                                                                
-                $objConsulta=new Consulta($p_idservicio, $p_idconsulta, $p_especialidad, $p_indicaciones, $p_resultados, $p_precio);
+                                                                                
+                $objConsulta=new Consulta($p_idservicio, $p_idconsulta, $p_especialidad, $p_indicaciones, $p_resultados);
                 $result[$a]=$objConsulta;
                 $a++;
             }
@@ -218,8 +202,7 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
             {
                 $bd_idconsulta=$fila["idconsulta"];
                 $bd_especialidad=$fila["especialidad"];
-                $bd_precio=$fila["precio"];
-                $result[$a]="($bd_idconsulta) ".$bd_especialidad." ".$bd_precio;
+                $result[$a]="($bd_idconsulta) ".$bd_especialidad;
                 $a++;
             }
         }

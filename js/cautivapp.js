@@ -380,7 +380,7 @@ function AddEquipo()
     var f=document.getElementById('cirugia_form');
     var hidden=document.getElementById('cirugia_hidden');
     
-    hidden.value=1;
+    hidden.value=1; 
     f.submit(); 
  /**cerrar modal*/
     var bot = document.getElementById("m_equipoMF");
@@ -429,6 +429,7 @@ function EliminarServicio(id)
     var np="nombre_pac"+id;
     var nombre_servoicio=document.getElementById(ns).value;
     var nombre_paciente=document.getElementById(np).value;
+    
     /**el estado del servicio no puede ser PAGO*/
     if(estado.value!="PAGO")
     {

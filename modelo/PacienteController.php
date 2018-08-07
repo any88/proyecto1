@@ -184,8 +184,7 @@ public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaN
                }
             }
          
-        
-        $consulta=$consulta." order by `nombre` ASC"; 
+        $consulta=$consulta." order by `nombre` ASC";    
         $r=$bd->consulta($consulta);
         if($r)
         {
