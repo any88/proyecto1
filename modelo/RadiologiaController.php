@@ -19,7 +19,7 @@ class RadiologiaController {
         
     }
 
-    public function CrearRadiologia($p_idservicio, $p_idtiporadiologia, $p_nombre, $p_resultado, $p_precio) {
+    public function CrearRadiologia($p_idservicio, $p_idtiporadiologia, $p_nombre, $p_resultado) {
         $affected = 0;
         $bd = new con_mysqli("", "", "", "");
 
@@ -28,9 +28,8 @@ class RadiologiaController {
         $p_idtiporadiologia = $bd->real_scape_string($p_idtiporadiologia);
         $p_nombre = $bd->real_scape_string($p_nombre);
         $p_resultado = $bd->real_scape_string($p_resultado);
-        $p_precio = $bd->real_scape_string($p_precio);
-
-        $consulta = "INSERT INTO `radiologia` (`idservicio`, `idtiporadiologia`, `idnombreradiologia`, `resultado`, `precio`) VALUES ('$p_idservicio', '$p_idtiporadiologia', '$p_nombre', '$p_resultado', '$p_precio')";
+        
+        $consulta = "INSERT INTO `radiologia` (`idservicio`, `idtiporadiologia`, `idnombreradiologia`, `resultado`) VALUES ('$p_idservicio', '$p_idtiporadiologia', '$p_nombre', '$p_resultado')";
 
         $r = $bd->consulta($consulta);
         if ($r) 
@@ -48,7 +47,7 @@ class RadiologiaController {
         return $affected;
     }
 
-    public function ModificarRadiologia($p_id, $p_idtiporadiologia, $p_nombre, $p_resultado, $p_precio) {
+    public function ModificarRadiologia($p_id, $p_idtiporadiologia, $p_nombre, $p_resultado) {
         $affected = 0;
         $bd = new con_mysqli("", "", "", "");
 
@@ -56,9 +55,8 @@ class RadiologiaController {
         $p_idtiporadiologia = $bd->real_scape_string($p_idtiporadiologia);
         $p_nombre = $bd->real_scape_string($p_nombre);
         $p_resultado = $bd->real_scape_string($p_resultado);
-        $p_precio = $bd->real_scape_string($p_precio);
-
-        $radiologia = "UPDATE `radiologia` SET `idtiporadiologia`='$p_idtiporadiologia', `idnombreradiologia`='$p_nombre', `resultado`='$p_resultado', `precio`='$p_precio' WHERE (`idradiologia`='$p_id')";
+        
+        $radiologia = "UPDATE `radiologia` SET `idtiporadiologia`='$p_idtiporadiologia', `idnombreradiologia`='$p_nombre', `resultado`='$p_resultado' WHERE (`idradiologia`='$p_id')";
 
         $r = $bd->radiologia($radiologia);
         if ($r) {
@@ -98,9 +96,8 @@ class RadiologiaController {
                 $p_idtiporadiologia = $fila["idtiporadiologia"];
                 $p_nombre = $fila["idnombreradiologia"];
                 $p_resultado = $fila["resultado"];
-                $p_precio = $fila["precio"];
-
-                $objRadiologia = new Radiologia($p_idradiologia, $p_idtiporadiologia, $p_nombre, $p_resultado, $p_precio);
+                
+                $objRadiologia = new Radiologia($p_idradiologia, $p_idtiporadiologia, $p_nombre, $p_resultado);
                 $result[$a] = $objRadiologia;
                 $a++;
             }
@@ -144,9 +141,8 @@ class RadiologiaController {
                 $p_idtiporadiologia = $fila["idtiporadiologia"];
                 $p_nombre = $fila["idnombreradiologia"];
                 $p_resultado = $fila["resultado"];
-                $p_precio = $fila["precio"];
-
-                $objRadiologia = new Radiologia($p_idservicio, $p_idradiologia, $p_idtiporadiologia, $p_nombre, $p_resultado, $p_precio);
+                
+                $objRadiologia = new Radiologia($p_idservicio, $p_idradiologia, $p_idtiporadiologia, $p_nombre, $p_resultado);
                 $result[$a] = $objRadiologia;
                 $a++;
             }
@@ -191,8 +187,7 @@ class RadiologiaController {
             while ($fila = $bd->fetch_assoc($r)) {
                 $bd_idradiologia = $fila["idradiologia"];
                 $bd_nombre = $fila["idnombreradiologia"];
-                $bd_precio = $fila["precio"];
-                $result[$a] = "($bd_idradiologia) " . $bd_nombre . " " . $bd_precio;
+                $result[$a] = "($bd_idradiologia) " . $bd_nombre;
                 $a++;
             }
         }

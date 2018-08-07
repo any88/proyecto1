@@ -18,7 +18,7 @@ class CirugiaController {
         
     public function CirugiaController(){}
     
-public function CrearCirugia($p_idservicio, $p_idespecialidad, $p_idnombrec, $p_duracion, $p_precio)
+public function CrearCirugia($p_idservicio, $p_idespecialidad, $p_idnombrec, $p_duracion)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
@@ -28,9 +28,8 @@ public function CrearCirugia($p_idservicio, $p_idespecialidad, $p_idnombrec, $p_
         $p_idespecialidad=$bd->real_scape_string($p_idespecialidad);
         $p_idnombrec=$bd->real_scape_string($p_idnombrec);
         $p_duracion=$bd->real_scape_string($p_duracion);
-        $p_precio=$bd->real_scape_string($p_precio);
-                        
-        $consulta="INSERT INTO `cirugia` (`idservicio`, `idespecialidad`, `idnombrec`, `duracion`, `precio`) VALUES ('$p_idservicio', '$p_idespecialidad', '$p_idnombrec', '$p_duracion', '$p_precio')";
+                                
+        $consulta="INSERT INTO `cirugia` (`idservicio`, `idespecialidad`, `idnombrec`, `duracion`) VALUES ('$p_idservicio', '$p_idespecialidad', '$p_idnombrec', '$p_duracion')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -52,7 +51,7 @@ public function CrearCirugia($p_idservicio, $p_idespecialidad, $p_idnombrec, $p_
         
 }
 
-public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracion,$p_precio)
+public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracion)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -61,9 +60,8 @@ public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracio
         $p_idespecialidad=$bd->real_scape_string($p_idespecialidad);
         $p_idnombrec=$bd->real_scape_string($p_idnombrec);
         $p_duracion=$bd->real_scape_string($p_duracion);
-        $p_precio=$bd->real_scape_string($p_precio);
-               
-        $consulta="UPDATE `cirugia` SET `idespecialidad`='$p_idespecialidad', `idnombrec`='$p_idnombrec', `duracion`='$p_duracion', `precio`='$p_precio' WHERE (`idcirugia`='$p_id')";
+                       
+        $consulta="UPDATE `cirugia` SET `idespecialidad`='$p_idespecialidad', `idnombrec`='$p_idnombrec', `duracion`='$p_duracion' WHERE (`idcirugia`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -109,11 +107,10 @@ public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracio
                 $p_idcirugia=$fila["idcirugia"];
                 $p_idnombrec=$fila["idnombrec"];
                 $p_duracion=$fila["duracion"];
-                $p_precio=$fila["precio"];                      
                 $p_idservicio=$fila["idservicio"];
                 $p_idespecialidad=$fila["idespecialidad"];
                
-                $objCirugia=new Cirugia($p_idservicio, $p_idcirugia, $p_idespecialidad, $p_idnombrec, $p_duracion, $p_precio);
+                $objCirugia=new Cirugia($p_idservicio, $p_idcirugia, $p_idespecialidad, $p_idnombrec, $p_duracion);
                 $result[$a]=$objCirugia;
                 $a++;
             }
@@ -122,7 +119,7 @@ public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracio
         return $result;
     }
     
-    public function BuscarCirugia($p_idcirugia, $p_idespecialidad, $p_idnombrec,$id_servicio=null)
+    public function BuscarCirugia($p_idcirugia, $p_idespecialidad, $p_idnombrec,$id_servicio=null,$id_rol_cirugia=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -165,6 +162,17 @@ public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracio
                 $consulta=$consulta." and `idservicio`='$id_servicio'";
             }
          }
+          if($id_rol_cirugia!="")
+        {
+            if($p_idcirugia=="" && $p_idespecialidad=="" && $p_idnombrec=="" && $id_servicio=="")
+            {
+                $consulta=$consulta."WHERE `id_rol_cirugia`='$id_rol_cirugia'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `id_rol_cirugia`='$id_rol_cirugia'";
+            }
+         }
         
         $consulta=$consulta." order by `idcirugia` ASC";
         //Mostrar($consulta);
@@ -178,11 +186,10 @@ public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracio
                 $p_idcirugia=$fila["idcirugia"];
                 $p_idnombrec=$fila["idnombrec"];
                 $p_duracion=$fila["duracion"];
-                $p_precio=$fila["precio"];
                 $p_idservicio=$fila["idservicio"];
                 $p_idespecialidad=$fila["idespecialidad"];
                
-                $objCirugia=new Cirugia($p_idservicio, $p_idcirugia, $p_idespecialidad, $p_idnombrec, $p_duracion, $p_precio);
+                $objCirugia=new Cirugia($p_idservicio, $p_idcirugia, $p_idespecialidad, $p_idnombrec, $p_duracion);
                 
                 $result[$a]=$objCirugia;
                 $a++;
@@ -234,8 +241,7 @@ public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracio
             {
                 $bd_idcirugia=$fila["idcirugia"];
                 $bd_idnombrec=$fila["idnombrec"];
-                $bd_precio=$fila["precio"];
-                $result[$a]="($bd_idcirugia) ".$bd_idnombrec." ".$bd_precio;
+                $result[$a]="($bd_idcirugia) ".$bd_idnombrec;
                 $a++;
             }
         }

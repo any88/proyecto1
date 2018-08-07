@@ -7,11 +7,17 @@ include './header.php';
 include '../modelo/AseguradoraController.php';
 include '../modelo/PacienteController.php';
 include '../modelo/consultas_genericas.php';
+include '../modelo/TransaccionController.php';
+include '../modelo/ServicioController.php';
+include '../modelo/PacienteServicioController.php';
 
 $msg="";
 $objAseguradora=new AseguradoraController();
 $lista_aseguradoras=$objAseguradora->MostrarAseguradora();
 $objPaciente=new PacienteController();
+$objTransaccion=new TransaccionController();
+$objServicio= new ServicioController();
+$objPacienteServC=new PacienteServicioController();
 $pacmod=array();
 $id_pacmod="";
    
@@ -30,7 +36,8 @@ $anamnesis="";
 $tiempo_enfermedad="";
 $id_aseguradora="";
 $lista_paciente_servicio=array();
-
+$id_ps="";
+$precio_real=0;
 if(isset($_GET['nik']))
 {
 $id_pacmod=$_GET['nik'];
@@ -65,6 +72,60 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
    }
     
 }
+if($_POST)
+{
+    $p_id_servicio="";
+    $p_estado="";
+    if(isset($_POST['id_servicio'])){$p_id_servicio=$_POST['id_servicio'];}
+    if(isset($_POST['estado'])){$estado=$_POST['estado'];}
+    if(isset($_POST['id_paciente'])){$id_pacmod=$_POST['id_paciente'];}
+    
+    if(eliminarblancos($p_id_servicio)!="")
+    {
+        if(eliminarblancos($p_estado)!="PAGO")
+        {
+            ##si existe lo elimino
+            $arrExiste=$objServicio->BuscarServicio($p_id_servicio, "", "");
+            if(count($arrExiste)>0)
+            {
+                $affected=$objServicio->EliminarServicio($p_id_servicio);
+            if($affected==1)
+                {
+                    $msg="<div class='alert alert-success alert-dismissable'>"
+                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                    . "OK! El servicio ha sido eliminado correctamente.</div>";
+                }
+                else
+                {
+                   $msg="<div class='alert alert-danger alert-dismissable'>"
+                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                    . "Error! No se puede eliminar el servicio seleccionado.</div>";
+
+                }
+            }
+        }
+        else
+        {
+            $msg="<div class='alert alert-danger alert-dismissable'>"
+                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                . "Error! No se puede eliminar el servicio seleccionado pues ya se ha registrado un pago para este servicio.Usted debe primero elimiar la transacci&oacute;n y luego els ervicio.</div>";
+        }
+    }
+    
+    if($id_pacmod!="")
+    {
+        $cg=new ConsultasG();
+        $p=array();
+        $p['campo'][0]='idpaciente';
+        $p['valor'][0]=$id_pacmod;
+        $r=$cg->GenericSelect('paciente_servicio', $p);
+        if($r)
+        {
+            $lista_paciente_servicio=$cg->ArregloAsociativoSelect($r, 'paciente_servicio');
+
+        }
+    }
+}
 
 ?>
 
@@ -79,6 +140,8 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
               $sexoPaciente="M";
                 $img="../img/paciente_masculino.png";
                 if($sexoPaciente=="F"){$img="../img/paciente_femenino.png";}
+                
+                if($msg!=""){echo $msg;}
               ?>
               <div class="panel panel-default">
                         <div class="panel-heading">
@@ -165,7 +228,9 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
 
                                                   <th>Tipo Servicio</th>
                                                   <th>Fecha</th>
-                                                  <th>Precio</th>
+                                                  <th>Precio Acordado</th>
+                                                  <th>Pago real</th>
+                                                  <th>Estado del servicio</th>
                                                   <th>Acci&oacute;n</th>
                                               </tr>
                                           </thead>
@@ -173,9 +238,21 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
                                               <?php 
                                                     for ($i = 0; $i < count($lista_paciente_servicio); $i++) 
                                                     {
+                                                        $precio_real=0;
                                                         $nro=$i+1;
+                                                        $id_ps=$lista_paciente_servicio[$i]['id_ps'];
                                                         $id_paciente_servicio=$lista_paciente_servicio[$i]['idservicio'];
                                                         $fecha=$lista_paciente_servicio[$i]['fecha'];
+                                                        $id_transaccionebd=$lista_paciente_servicio[$i]['idtransaccion'];
+                                                        
+                                                        if($id_transaccionebd!="")
+                                                        {
+                                                            $arrT=$objTransaccion->BuscarTransaccionPorId($id_transaccionebd);
+                                                            if(count($arrT)>0)
+                                                            {
+                                                                $precio_real=$arrT[0]->getMonto();
+                                                            }
+                                                        }
                                                         $p=array();
                                                         $p['campo'][0]='idservicio';
                                                         $p['valor'][0]=$id_paciente_servicio;
@@ -294,7 +371,28 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
                                                         echo "<td>$nombre_tipo_servicio</td>";
                                                         echo "<td>$fecha</td>";
                                                         echo "<td>s/. $precio_servicio</td>";
-                                                        echo"<td><a href='$link?nik=$nik' class='btn btn-primary  btn-xs'><i class='fa fa-eye'></i></a></td>";
+                                                        echo "<td>s/. $precio_real</td>";
+                                                        $estado="<b class='text-danger'>PENDIENTE</b>";
+                                                        IF($id_transaccionebd!=""){$estado="PAGO";}
+                                                        echo "<td>$estado</td>";
+                                                        echo"<td>";
+                                                            echo "<form action='transaccion_pacientes.php' name='f$i' method='post' >";
+                                                               
+                                                                echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'> <i class='fa fa-eye'></i> </a>";
+                                                                echo "<input type='hidden' name='idt' value='$id_ps'>";
+                                                                echo " <button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'> <i class='fa fa-dollar'> </i></button>";
+                                                            echo "</form>";
+                                                            echo "<form method='post' action='#' id='f$i' name='delf'  style='margin-top:-23px; margin-left:55px;'>";
+                                                            $est="PENDIENTE";
+                                                            if($estado=="PAGO"){$est="PAGO";}
+                                                            echo "<input type='hidden' name='id_servicio' value='$id_paciente_servicio'>";
+                                                            echo "<input type='hidden' name='id_paciente' value='$id_pacmod'>";
+                                                            echo "<input type='hidden' name='estado' value='$est' id='estado$i'>";
+                                                            echo "<input type='hidden' name='nombre_servicio' value='$nombre_tipo_servicio' id='nombre_serv$i'>";
+                                                            echo "<input type='hidden' name='nombre_paciente' value='$nombre' id='nombre_pac$i'>";
+                                                            echo " <button type='button'class='btn btn-danger btn-xs' id='$i' onclick='EliminarServicio(this.id);' title='Eliminar Servicio'> <i class='fa fa-trash'></i> </button> ";
+                                                            echo "</form>";
+                                                        echo "</td>";
                                                         echo "</tr>";
                                                     } 
                                               ?>

@@ -149,6 +149,7 @@ public function ModificarServicio($p_id,$p_idtiposervicio,$p_precio)
             }
          }
          
+         
         
         $consulta=$consulta." order by `idservicio` ASC";
       

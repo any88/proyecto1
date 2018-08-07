@@ -523,3 +523,25 @@ function BorrarFichero($url_Fichero)
     return false;
     
 }
+
+function MotivosTransaccion()
+{
+    $motivos=array();
+    $c=1;
+    #motivo 1 COBRO PACIENTES
+    $motivos[$c]="COBRO PACIENTE";$c++;
+    #motivo 2
+    $motivos[$c]="PAGO MEDICO CIRUGIA";$c++;
+    #motivo 3
+    $motivos[$c]="PAGO MEDICO CONSULTA";$c++;
+    #motivo 4
+    $motivos[$c]="PAGO LABORATORIO ANALISIS";$c++;
+    #motivo 5
+    $motivos[$c]="PAGO LABORATORIO RADIOLOGIA";$c++;
+    #motivo 6
+    $motivos[$c]="PAGO INSUMOS";$c++;
+    #motivo 7
+    $motivos[$c]="PAGO SALARIOS";$c++;
+    
+    return $motivos;
+}

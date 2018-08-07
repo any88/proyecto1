@@ -18,7 +18,7 @@ class HospitalizacionController {
     
     public function HospitalizacionController(){}
     
-public function CrearHospitalizacion($p_idservicio, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico, $p_precio)
+public function CrearHospitalizacion($p_idservicio, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
@@ -38,9 +38,8 @@ public function CrearHospitalizacion($p_idservicio, $p_fechaingreso, $p_fechaalt
         $p_temp=$bd->real_scape_string($p_temp);
         $p_peso=$bd->real_scape_string($p_peso);
         $p_examenfisico=$bd->real_scape_string($p_examenfisico);
-        $p_precio=$bd->real_scape_string($p_precio);
-        
-        $consulta="INSERT INTO `hospitalizacion` (`idservicio`, `fechaingreso`, `fechaalta`, `duracion`, `tipohabitacion`, `nrocama`, `nombrefamiliar`, `parentescofamiliar`, `estadodelpaciente`, `condiciondeatencion`, `pa`, `pulso`, `temp`, `peso`, `examenfisico`, `precio`) VALUES ('$p_idservicio', '$p_fechaingreso', '$p_fechaalta', '$p_duracion', '$p_tipohabitacion', '$p_nrocama', '$p_nombrefamiliar', '$p_parentescofamiliar', '$p_estadopaciente', '$p_condicionatencion', '$p_pa', '$p_pulso', '$p_temp', '$p_peso', '$p_examenfisico', '$p_precio')";
+                
+        $consulta="INSERT INTO `hospitalizacion` (`idservicio`, `fechaingreso`, `fechaalta`, `duracion`, `tipohabitacion`, `nrocama`, `nombrefamiliar`, `parentescofamiliar`, `estadodelpaciente`, `condiciondeatencion`, `pa`, `pulso`, `temp`, `peso`, `examenfisico`) VALUES ('$p_idservicio', '$p_fechaingreso', '$p_fechaalta', '$p_duracion', '$p_tipohabitacion', '$p_nrocama', '$p_nombrefamiliar', '$p_parentescofamiliar', '$p_estadopaciente', '$p_condicionatencion', '$p_pa', '$p_pulso', '$p_temp', '$p_peso', '$p_examenfisico')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -63,7 +62,7 @@ public function CrearHospitalizacion($p_idservicio, $p_fechaingreso, $p_fechaalt
         
 }
 
-public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico, $p_precio)
+public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -84,9 +83,8 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
         $p_temp=$bd->real_scape_string($p_temp);
         $p_peso=$bd->real_scape_string($p_peso);
         $p_examenfisico=$bd->real_scape_string($p_examenfisico);
-        $p_precio=$bd->real_scape_string($p_precio);
-        
-        $consulta="UPDATE `hospitalizacion` SET `fechaingreso`='$p_fechaingreso', `fechaalta`='$p_fechaalta', `duracion`='$p_duracion', `tipohabitacion`='$p_tipohabitacion', `nrocama`='$p_nrocama', `nombrefamiliar`='$p_nombrefamiliar', `parentescofamiliar`='$p_parentescofamiliar', `estadodelpaciente`='$p_estadopaciente', `condiciondeatencion`='$p_condicionatencion', `pa`='$p_pa', `pulso`='$p_pulso', `temp`='$p_temp', `peso`='$p_peso', `examenfisico`='$p_examenfisico', `precio`='$p_precio' WHERE (`idhospitalizacion`='$p_id')";
+                
+        $consulta="UPDATE `hospitalizacion` SET `fechaingreso`='$p_fechaingreso', `fechaalta`='$p_fechaalta', `duracion`='$p_duracion', `tipohabitacion`='$p_tipohabitacion', `nrocama`='$p_nrocama', `nombrefamiliar`='$p_nombrefamiliar', `parentescofamiliar`='$p_parentescofamiliar', `estadodelpaciente`='$p_estadopaciente', `condiciondeatencion`='$p_condicionatencion', `pa`='$p_pa', `pulso`='$p_pulso', `temp`='$p_temp', `peso`='$p_peso', `examenfisico`='$p_examenfisico' WHERE (`idhospitalizacion`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -144,9 +142,8 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
                 $p_temp=$fila["temp"];
                 $p_peso=$fila["peso"];
                 $p_examenfisico=$fila["examenfisico"];
-                $p_precio=$fila["precio"];            
-                                             
-                $objHospitalizacion=new Hospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico, $p_precio);
+                                                             
+                $objHospitalizacion=new Hospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico);
                 $result[$a]=$objHospitalizacion;
                 $a++;
             }
@@ -155,7 +152,7 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
         return $result;
     }
     
-    public function BuscarHospitalizacion($p_id, $p_fechaingreso, $p_precio)
+    public function BuscarHospitalizacion($p_id, $p_fechaingreso)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -175,19 +172,7 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
             {
                 $consulta=$consulta." and `fechaingreso`='$p_fechaingreso'";
             }
-        }
-        if($p_precio!="")
-        {
-            if($p_id=="" && $p_fechaingreso=="" )
-            {
-                $consulta=$consulta."WHERE `precio`='$p_precio'";
-            }
-            else 
-            {
-                $consulta=$consulta." and `precio`='$p_precio'";
-            }
-         }
-         
+        }        
         
         $consulta=$consulta." order by `idhospitalizacion` ASC";
         $r=$bd->consulta($consulta);
@@ -213,9 +198,8 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
                 $p_temp=$fila["temp"];
                 $p_peso=$fila["peso"];
                 $p_examenfisico=$fila["examenfisico"];
-                $p_precio=$fila["precio"];
-                                
-                $objHospitalizacion=new Hospitalizacion($p_serv, $p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico, $p_precio);
+                                                
+                $objHospitalizacion=new Hospitalizacion($p_serv, $p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico);
                 $result[$a]=$objHospitalizacion;
                 $a++;
             }
@@ -265,8 +249,7 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
             while ($fila=$bd->fetch_assoc($r))
             {
                 $bd_id=$fila["idhospitalizacion"];
-                $bd_precio=$fila["precio"];
-                $result[$a]="($bd_id) ".$bd_precio;
+                $result[$a]="($bd_id)";
                 $a++;
             }
         }

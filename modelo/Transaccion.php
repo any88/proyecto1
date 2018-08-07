@@ -18,17 +18,23 @@ class Transaccion {
     private $fecha;
     private $monto;
     private $motivo;
-    
-    public function __construct($idTransaccion, $idTipoTransaccion, $fecha, $monto, $motivo) {
+    private $fpago;
+
+
+    public function __construct($idTransaccion, $idTipoTransaccion, $fecha, $monto, $motivo,$fpago) {
         $this->idTransaccion = $idTransaccion;
         $this->idTipoTransaccion = $idTipoTransaccion;
         $this->fecha = $fecha;
         $this->monto = $monto;
         $this->motivo = $motivo;
+        $this->fecha=$fpago;
     }
     
     public function getIdTransaccion() {
         return $this->idTransaccion;
+    }
+    public function getFpago() {
+        return $this->fpago;
     }
 
     public function getIdTipoTransaccion() {

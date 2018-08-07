@@ -63,6 +63,27 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
         $bd->Close();
         return $affected;
     }
+    public function EfectuarPago($id_ps,$id_transaccion)
+    {
+        $affected=0;
+        $bd=new con_mysqli("", "", "", "");
+        
+        ##Validar Iny Sql
+        $id_ps=$bd->real_scape_string($id_ps);
+        $id_transaccion=$bd->real_scape_string($id_transaccion);
+       
+               
+        $consulta="UPDATE `paciente_servicio` SET `idtransaccion`='$id_transaccion' WHERE (`id_ps`='$id_ps')";
+        
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $affected=$bd->affected_row();
+        }
+        $bd->Close();
+        return $affected;
+    }
+
     public function ModificarFechaporIdServicio($p_idservicio,$p_fecha)
     {
         $affected=0;
