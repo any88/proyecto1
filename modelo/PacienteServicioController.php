@@ -309,4 +309,35 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
         return $result;
         
     }
+    
+    public function CobrosPendientes()
+    {
+        $bd= new con_mysqli("", "", "", "");
+        $consulta="SELECT * FROM `paciente_servicio` WHERE `idtransaccion`='' or  `idtransaccion` IS NULL";
+        $result=array();
+       $a=0;
+       $r=$bd->consulta($consulta);
+       if($r)
+        {
+            $a=0;
+            while ($fila=$bd->fetch_assoc($r))
+            {
+                 
+                $p_id=$fila["id_ps"];
+                $p_idpaciente=$fila["idpaciente"];
+                $p_idservicio=$fila["idservicio"];
+                $p_fecha=$fila["fecha"];
+                $p_idtransaccion=$fila["idtransaccion"];
+                                                                
+                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion);
+                $result[$a]=$objPacienteServicio;
+                $a++;
+            }
+        }
+        $bd->Close();
+        return $result;
+    }
+    
+  
+            
 }

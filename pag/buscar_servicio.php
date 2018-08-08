@@ -94,8 +94,8 @@ if($_POST)
       
         <div class="col-md-12">
           <h3 class="text-left  text-info"><i class="fa fa-search-plus"> </i> Buscar Servicios</h3>
-          <div class="col-md-2" ></div>
-          <div class="col-md-8" >
+          
+          <div class="col-md-12" >
               <form name="f" method="post" action="buscar_servicio.php">
               <label>Tipo de servicio</label>
               <select name="tipoc" class="form-control">
@@ -137,10 +137,14 @@ if($_POST)
                   
                   ?>
               </select>
-              <button type="submit" class="btn btn-success"> Buscar</button>  
+              <br>
+              <div class="pull-right">
+                  <button type="submit" class="btn btn-success"> Buscar</button>
+              </div> 
+                
           </form>
           </div>
-          <div class="col-md-2" ></div>
+          
           <div class="col-md-12" >
           <?php 
           if($msgs!=""){ echo $msgs;}

@@ -82,7 +82,7 @@
           </li>
           <li class="menu-has-children" ><a href="#">Caja</a>
           <ul>
-              <li><a href="#" onclick="Msg();">Cobros Pendientes</a></li>
+              <li><a href="cobros_pendientes.php" >Cobros Pendientes</a></li>
               <li><a href="#" onclick="Msg();">Pagos Pendientes</a></li>
               <li><a href="#" onclick="Msg();">Cobros Realizados</a></li>
               <li><a href="#" onclick="Msg();">Pagos Realizados</a></li>
@@ -141,6 +141,7 @@
          $(document).ready(function () {
              $('#dataTables-example').dataTable();
          });
+         
     </script>
      <!-- END Data table js -->
 <!--date picker-->

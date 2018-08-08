@@ -53,7 +53,6 @@ if($_GET)
                       <th>Nombre</th>
                       <th>Doc. Id</th>
                       <th>Num. HC</th>
-                      
                       <th>Acci&oacute;n</th>
                   </tr>
               </thead>
