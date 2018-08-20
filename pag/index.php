@@ -56,7 +56,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Servicios Agendados Para Hoy (<?php echo FechaYMA();?>)</b> <a href="#" title='Ver agenda' class="pull-right btn btn-primary btn-xs"><i class=" fa fa-calendar"></i></a></div>
+            <div class="panel-heading"><b>Servicios Agendados Para Hoy (<?php echo FechaYMA();$fecha_agenda=FechaYMA();?>)</b> <a href="agendaclinica.php" title='Ver agenda' class="pull-right btn btn-primary btn-xs"><i class=" fa fa-calendar"></i></a></div>
            <div class="panel-body">
                <table class="table table-responsive" id="dataTables-example">
                    <thead>
