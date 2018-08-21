@@ -1204,3 +1204,12 @@ body {
     margin-top: -5px;
     margin-left: 5px;
 }
+/****css para agenda**/
+.label_consulas
+{
+    width:80px; 
+    border:solid 1px;
+    background-color: red;
+    height: 20px;
+    word-wrap:break-word;
+}

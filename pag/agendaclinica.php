@@ -128,10 +128,10 @@ $cant_dias=  cantidadDiasMes($mes_actual, $anno_actual);
                                             
                                             
                                              #echo "<a href='modal_tarea.php?id=$id_acc' class='btnModal  pull-left btn btn-sm ' style='color:#000 !important; ' data-idmodal='#divModal' title='$nombre_tipo_contenido' '> <i class='$icon_medip form-control pull-left' style='background-color:$color_medio; width:30px!important;color:white;  position:relative;' ></i>$iniciales $icon_estado</a>&nbsp;";
-                                            echo "<label class='pull-left label label-primary btn-responsive' style='width:50%; border:solid 1px; '>";
+                                            echo "<div class='label_consulas'><label class='pull-left label  btn-responsive'>";
                                              echo "<i class='fa fa user pull-left'  style='color:white !important; width:35%; heigth:100%!important; position:relative;'  ></i> ";
                                              echo "<a href='modal_tarea.php?id=1' class='btnModal' style='margin-top:5px!important; color:white;' data-idmodal='#divModal' title='$nomb_servicio' '> $icon_estado $iniciales </a>";
-                                            echo "</label>";
+                                            echo "</label></div>";
                                             
                                              if($br==1) {echo '<br>';$br=0;}else{$br++;}
                                          }
