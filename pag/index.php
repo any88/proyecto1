@@ -124,47 +124,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
 </div>
     <div class="col-md-12"></div>
     
-      <div class="row">
-        <div class="col-md-12">
-          <h3 class="section-title">Panel de Control</h3>
-          <div class="section-title-divider"></div>
-          
-        </div>
-      </div>
- 
-      <div class="row">
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-user"></i></div>
-          <h4 class="service-title"><a href="listar_pacientes.php">Pacientes</a></h4>
-          <p class="service-description">Descripci&oacute;n..</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-plus"></i></div>
-          <h4 class="service-title"><a href="#" onclick="Msg();">Servicios</a></h4>
-          <p class="service-description">Descripci&oacute;n..</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-cart-plus"></i></div>
-          <h4 class="service-title"><a href="#" onclick="Msg();">Caja</a></h4>
-         <p class="service-description">Descripci&oacute;n..</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-flask"></i></div>
-          <h4 class="service-title"><a href="#" onclick="Msg();">Farmacia</a></h4>
-         <p class="service-description">Descripci&oacute;n..</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-bar-chart"></i></div>
-          <h4 class="service-title"><a href="#" onclick="Msg();">Reportes</a></h4>
-          <p class="service-description">Descripci&oacute;n..</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-cogs"></i></div>
-          <h4 class="service-title"><a href="nomencladores.php">Administraci&oacute;n</a></h4>
-           <p class="service-description">Descripci&oacute;n..</p>
-        </div>
-      </div>
-    </div>
+  </div>
   </section>
 <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 <?php
