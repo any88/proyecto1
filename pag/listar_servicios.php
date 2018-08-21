@@ -18,59 +18,100 @@ $objTS=new TipoServicioController();
 $datos=array();
 $list_serv=$objPacienteServ->ServiciosDelDia();
 
+$lista_meses= Meses();
+$nmes= MesActual();
+$anno_actual= AnnoActual();
+$mmm=$nmes;
+if($nmes<10){$mmm='0'.$nmes;}
+$fecha=$anno_actual.'-'.$mmm;
+$list_serv=$objPacienteServ->AgendaClinica($fecha);
 ##variables
 $p_id_servicio="";
 $p_estado="";
 $msg="";
-$mes= MesActual();
-$m= Meses();
-$nombre_mes=$m[$mes];
+
+
 if($_POST)
 {    
-    if(isset($_POST['id_servicio'])){$p_id_servicio=$_POST['id_servicio'];}
-    if(isset($_POST['estado'])){$estado=$_POST['estado'];}
-    
-    if(eliminarblancos($p_id_servicio)!="")
+    if(isset($_POST['mes_listS']))
     {
-        if(eliminarblancos($p_estado)!="PAGO")
+        $nmes=$_POST['mes_listS'];
+        if(isset($_POST['anno_listS'])){$anno_actual=$_POST['anno_listS'];}
+        $mmm=$nmes;
+        if($nmes<10){$mmm='0'.$nmes;}
+        $fecha=$anno_actual.'-'.$mmm;
+        $list_serv=$objPacienteServ->AgendaClinica($fecha);
+       
+    }
+ else 
+    {
+        if(isset($_POST['id_servicio'])){$p_id_servicio=$_POST['id_servicio'];}
+         if(isset($_POST['estado'])){$estado=$_POST['estado'];}
+    
+        if(eliminarblancos($p_id_servicio)!="")
         {
-            ##si existe lo elimino
-            $arrExiste=$objServicio->BuscarServicio($p_id_servicio, "", "");
-            if(count($arrExiste)>0)
+            if(eliminarblancos($p_estado)!="PAGO")
             {
-                $affected=$objServicio->EliminarServicio($p_id_servicio);
-            if($affected==1)
+                ##si existe lo elimino
+                $arrExiste=$objServicio->BuscarServicio($p_id_servicio, "", "");
+                if(count($arrExiste)>0)
                 {
-                    $msg="<div class='alert alert-success alert-dismissable'>"
-                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                    . "OK! El servicio ha sido eliminado correctamente.</div>";
-                }
-                else
-                {
-                   $msg="<div class='alert alert-danger alert-dismissable'>"
-                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                    . "Error! No se puede eliminar el servicio seleccionado.</div>";
+                    $affected=$objServicio->EliminarServicio($p_id_servicio);
+                if($affected==1)
+                    {
+                        $msg="<div class='alert alert-success alert-dismissable'>"
+                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                        . "OK! El servicio ha sido eliminado correctamente.</div>";
+                    }
+                    else
+                    {
+                       $msg="<div class='alert alert-danger alert-dismissable'>"
+                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                        . "Error! No se puede eliminar el servicio seleccionado.</div>";
 
+                    }
                 }
             }
-        }
-        else
-        {
-            $msg="<div class='alert alert-danger alert-dismissable'>"
-                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error! No se puede eliminar el servicio seleccionado pues ya se ha registrado un pago para este servicio.Usted debe primero elimiar la transacci&oacute;n y luego els ervicio.</div>";
+            else
+            {
+                $msg="<div class='alert alert-danger alert-dismissable'>"
+                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                    . "Error! No se puede eliminar el servicio seleccionado pues ya se ha registrado un pago para este servicio.Usted debe primero elimiar la transacci&oacute;n y luego els ervicio.</div>";
+            }
         }
     }
+    
 }
-$datos=array();
-$list_serv=$objPacienteServ->ServiciosDelDia();
+
+
 ?>
 
 <br><br>
 <section class="about-text">
     <div class="container ">
         <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-user text-info"> Listado de servicios del Mes de <?php echo $nombre_mes;?></i></h3>
+          <h3 class="text-left"><i class="fa fa-user text-info"> Listado de servicios del Mes de </i>
+              <form name="fsearch" method="post" action="listar_servicios.php">
+                  <select name="mes_listS" class="form-control" style="width: 200px; margin-left: 368px;margin-top: -25px;">
+                  
+                  <?php 
+                  for ($i = 1; $i <= count($lista_meses); $i++) 
+                  {
+                    
+                    if($nmes==$i)
+                    {
+                        echo "<option value='$i' selected='selected'> $lista_meses[$i]</option>";
+                    }
+                    else {echo "<option value='$i'> $lista_meses[$i]</option>";}
+                    
+                    
+                  }
+                  ?>
+              </select>
+              <input type="number" name='anno_listS' min="2010" max="2100" value="<?php echo $anno_actual;?>" class="form-control" style="width: 200px; margin-left: 571px;margin-top: -35px;">
+              <button type="submit" class="btn btn-success" style="width: 100px; margin-left: 773px;margin-top: -65px;"/><i class="fa fa-search"></i>Buscar</button>
+              </form>
+               </h3>
         </div>
         <br><br>
         <?php if($msg!=""){echo $msg;}?>
@@ -91,6 +132,7 @@ $list_serv=$objPacienteServ->ServiciosDelDia();
                 
                 for ($i = 0; $i < count($list_serv); $i++) 
                 {
+                    $idps=$list_serv[$i]->getIdps();
                     $id_serviciobd=$list_serv[$i]->getIdservicio();
                     $id_tipo_servbd="";
                     $preciobd="";
@@ -129,8 +171,11 @@ $list_serv=$objPacienteServ->ServiciosDelDia();
                     echo "<input type='hidden' name='nombre_servicio' value='$nombre_servicio' id='nombre_serv$i'>";
                     echo "<input type='hidden' name='nombre_paciente' value='$nombre_paciente' id='nombre_pac$i'>";
                     echo "<button type='button'class='btn btn-danger btn-xs' id='$i' onclick='EliminarServicio(this.id);' title='Eliminar Servicio'> <i class='fa fa-trash'></i> </button> ";
-                    echo "<a href='pago_servicio.php?nik=$id_serviciobd' class='btn btn-success btn-xs' title='Efectuar Pago'> <i class='fa fa-dollar  '> </i> </a>";
                     echo "</form>";
+                     echo "<div style='margin-top:-23px; margin-left:25px;'><form action='transaccion_pacientes.php' name='f$i' method='post' >";                       
+                        echo "<input type='hidden' name='idt' value='$idps'>";
+                        echo "<button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'> <i class='fa fa-dollar'></i></button>";
+                    echo "</form></div>";
                     echo '</td>';
                     echo '</tr>';
                 }
