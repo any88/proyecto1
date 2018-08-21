@@ -283,7 +283,7 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
            $m=$arrf[1];
            $fecha=$y.'-'.$m;
         }
-       $consulta="SELECT * FROM `paciente_servicio` WHERE `fecha` LIKE '%$fecha%' order by `fecha`";
+       $consulta="SELECT * FROM `paciente_servicio` WHERE `fecha` = '$fecha' order by `fecha`";
        
        $result=array();
        $a=0;
