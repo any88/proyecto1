@@ -275,16 +275,10 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
     public function ServiciosDelDia()
     {
        $bd= new con_mysqli("", "", "", "");
-       $fecha=date("Y-m-d");
-       $arrf= preg_split("/[-]/", $fecha);
-       if(count($arrf)==3)
-        {
-           $y=$arrf[0];
-           $m=$arrf[1];
-           $fecha=$y.'-'.$m;
-        }
-       $consulta="SELECT * FROM `paciente_servicio` WHERE `fecha` = '$fecha' order by `fecha`";
+       $fecha= FechaYMA();
        
+       $consulta="SELECT * FROM `paciente_servicio` WHERE `fecha` = '$fecha' order by `fecha`";
+      
        $result=array();
        $a=0;
        $r=$bd->consulta($consulta);
