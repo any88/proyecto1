@@ -58,64 +58,71 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
         <div class="panel panel-default">
             <div class="panel-heading"><b>Servicios Agendados Para Hoy (<?php echo FechaYMA();$fecha_agenda=FechaYMA();?>)</b> <a href="agendaclinica.php" title='Ver agenda' class="pull-right btn btn-primary btn-xs"><i class=" fa fa-calendar"></i></a></div>
            <div class="panel-body">
-               <table class="table table-responsive" id="dataTables-example">
-                   <thead>
-                       <tr>
-                            <th>Nro.</th>
-                            <th>Servicio</th>
-                            <th>Paciente</th>
-                            <th>Acci&oacute;n</th>
-                       </tr>
-                   </thead>
-                   <tbody>
+               
                        <?php 
-                        for ($i = 0; $i < count($listaPacientesDelDia); $i++) 
-                        {
-                            $id_servicio=$listaPacientesDelDia[$i]->getIdservicio();
-                            $id_paciente=$listaPacientesDelDia[$i]->getIdpaciente();
-                            $nomb_paciente="";
-                            $arrPacientes=$objPaciente->BuscarPaciente("", "", "", $id_paciente);
-                            if(count($arrPacientes)>0)
+                       if(count($listaPacientesDelDia)>0)
+                       {
+                           echo "<table class='table table-responsive' id='dataTables-example'>";
+                            echo "<thead>";
+                                echo "<tr>";
+                                     echo "<th>Nro.</th>";
+                                     echo "<th>Servicio</th>";
+                                     echo "<th>Paciente</th>";
+                                     echo "<th>Acci&oacute;n</th>";
+                                echo "</tr>";
+                            echo "</thead>";
+                            echo "<tbody>";
+                            for ($i = 0; $i < count($listaPacientesDelDia); $i++) 
                             {
-                                $nomb_paciente=$arrPacientes[0]->getNombre();
-                            }
-                            $arrServicios=$objServicioC->BuscarServicio($id_servicio, "", "");
-                            $nomb_servicio="";
-                            if(count($arrServicios)>0)
-                            {
-                                $id_tipo_servicio=$arrServicios[0]->getIdTipoServicio();
-                                
-                                $arrTipoServicio=$objTipoServicio->BuscarTipoServicio($id_tipo_servicio, "");
-                                if(count($arrTipoServicio)>0)
+                                $id_servicio=$listaPacientesDelDia[$i]->getIdservicio();
+                                $id_paciente=$listaPacientesDelDia[$i]->getIdpaciente();
+                                $nomb_paciente="";
+                                $arrPacientes=$objPaciente->BuscarPaciente("", "", "", $id_paciente);
+                                if(count($arrPacientes)>0)
                                 {
-                                    $nomb_servicio=$arrTipoServicio[0]->getTipoServicio();
+                                    $nomb_paciente=$arrPacientes[0]->getNombre();
                                 }
-                               
-                                
+                                $arrServicios=$objServicioC->BuscarServicio($id_servicio, "", "");
+                                $nomb_servicio="";
+                                if(count($arrServicios)>0)
+                                {
+                                    $id_tipo_servicio=$arrServicios[0]->getIdTipoServicio();
+
+                                    $arrTipoServicio=$objTipoServicio->BuscarTipoServicio($id_tipo_servicio, "");
+                                    if(count($arrTipoServicio)>0)
+                                    {
+                                        $nomb_servicio=$arrTipoServicio[0]->getTipoServicio();
+                                    }
+
+
+                                }
+                                $nro=$i+1;
+                                echo "<tr>";
+                                echo "<td>$nro</td>";
+                                echo "<td>$nomb_servicio</td>";
+                                echo "<td>$nomb_paciente</td>";
+                                echo '
+                                <td>
+                                         <a href="editarpaciente.php?nik='.$id_paciente.'" title="Editar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+
+                                         <a href="listar_pacientes.php?action=delete&nik='.$id_paciente.'&v='.$nomb_paciente.'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos  de el paciente '.$nomb_paciente.' ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+
+                                         <a href="mostrarpaciente.php?nik='.$id_paciente.'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+
+                                         <a href="addservicios.php??nik='.$id_paciente.'" title="Nuevo Servicio" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>                     '
+                             . '</td>';
+                                echo "</tr>";
                             }
-                            $nro=$i+1;
-                            echo "<tr>";
-                            echo "<td>$nro</td>";
-                            echo "<td>$nomb_servicio</td>";
-                            echo "<td>$nomb_paciente</td>";
-                            echo '
-                    <td>
-                             <a href="editarpaciente.php?nik='.$id_paciente.'" title="Editar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-
-                             <a href="listar_pacientes.php?action=delete&nik='.$id_paciente.'&v='.$nomb_paciente.'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos  de el paciente '.$nomb_paciente.' ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                 
-                             <a href="mostrarpaciente.php?nik='.$id_paciente.'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-
-                             <a href="addservicios.php??nik='.$id_paciente.'" title="Nuevo Servicio" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>                     '
-                 . '</td>';
-                            echo "</tr>";
-                        }
+                             echo "</tbody>";
+                             echo "</table>";
+                       }
+                       else 
+                       {
+                           echo "<h3>No hay pacientes agendados para hoy.</h3>";
+                       }
                        
                        ?>
-                   </tbody>
                    
-                   
-               </table>
             
            </div>
             
