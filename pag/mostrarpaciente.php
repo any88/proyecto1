@@ -380,7 +380,7 @@ if($_POST)
                                                                
                                                                 echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'> <i class='fa fa-eye'></i> </a>";
                                                                 echo "<input type='hidden' name='idt' value='$id_ps'>";
-                                                                echo " <button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'> <i class='fa fa-dollar'> </i></button>";
+                                                                echo " <button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'> <i class='fa fa-dollar'></i></button>";
                                                             echo "</form>";
                                                             echo "<form method='post' action='#' id='f$i' name='delf'  style='margin-top:-23px; margin-left:55px;'>";
                                                             $est="PENDIENTE";
@@ -390,7 +390,7 @@ if($_POST)
                                                             echo "<input type='hidden' name='estado' value='$est' id='estado$i'>";
                                                             echo "<input type='hidden' name='nombre_servicio' value='$nombre_tipo_servicio' id='nombre_serv$i'>";
                                                             echo "<input type='hidden' name='nombre_paciente' value='$nombre' id='nombre_pac$i'>";
-                                                            echo " <button type='button'class='btn btn-danger btn-xs' id='$i' onclick='EliminarServicio(this.id);' title='Eliminar Servicio'> <i class='fa fa-trash'></i> </button> ";
+                                                            echo "<button type='button'class='btn btn-danger btn-xs' id='$i' onclick='EliminarServicio(this.id);' title='Eliminar Servicio'><i class='fa fa-trash'></i> </button> ";
                                                             echo "</form>";
                                                         echo "</td>";
                                                         echo "</tr>";
