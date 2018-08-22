@@ -43,15 +43,16 @@ if($_POST)
     <div class="container ">
       
         <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-search-plus text-info"> </i> Datos del Paciente</h3>
+          <h3 class="text-left"><i class="fa fa-search text-info"> Datos del Paciente</i> </h3>
           <a href="crearpaciente.php" class="btn btn-success"><i class="fa fa-plus"></i> Nuevo Paciente</a>
+          <br><br>
           <?php 
           if(count($datos_paciente)>0)
           {
               
               echo "<div class='panel panel-default'>";
               echo "<div class='panel-heading'>";
-                    echo "Se han encontrado ".count($datos_paciente). "resultados para su busqueda";
+                    echo "Se han encontrado <b>(".count($datos_paciente). ")</b> resultado(s) para su b&uacute;squeda";
               echo "</div>";
               echo "<div class='panel panel-body'>";
               echo "<table class='table table-responsive' id='dataTables-example'>";
@@ -100,7 +101,7 @@ if($_POST)
           {
               echo "<div class='alert alert-warning alert-dismissable'>"
             . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-            . "Lo sentimos no se han encontrado resultados de paciente para su busqueda</div>";
+            . "No se han encontrado resultados para su b&uacute;squeda...<a href=index.php>Volver</a></div>";
               
              
           }

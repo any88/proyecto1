@@ -40,15 +40,9 @@ public function CrearPaciente($p_nombre, $p_numeroHC, $p_docID, $p_fechaNac, $p_
         $p_grupoSanguineo=$bd->real_scape_string($p_grupoSanguineo);
         $p_alergiaMed=$bd->real_scape_string($p_alergiaMed);
         
-        if($p_idAseguradora=="")
-        {
-            
-            $consulta="INSERT INTO `paciente` (`nombre`, `numerohc`, `docid`, `fechanac`, `sexo`, `telef`, `ocupacion`, `direccion`, `anamnesis`, `tiempodeenfermedad`, `email`, `gruposanguineo`, `alergiamed`) VALUES ('$p_nombre', '$p_numeroHC', '$p_docID', '$p_fechaNac', '$p_sexo', '$p_telef', '$p_ocupacion', '$p_direccion', '$p_anamnesis', '$p_tiempoDeEnfermedad', '$p_email', '$p_grupoSanguineo', '$p_alergiaMed')";
-        }
-        else
-        {
-            $consulta="INSERT INTO `paciente` (`nombre`, `numerohc`, `docid`, `fechanac`, `sexo`, `telef`, `ocupacion`, `direccion`, `anamnesis`, `tiempodeenfermedad`, `idaseguradora`, `email`, `idclienteaseguradora`, `gruposanguineo`, `alergiamed`) VALUES ('$p_nombre', '$p_numeroHC', '$p_docID', '$p_fechaNac', '$p_sexo', '$p_telef', '$p_ocupacion', '$p_direccion', '$p_anamnesis', '$p_tiempoDeEnfermedad', '$p_idAseguradora', '$p_email', '$p_idClienteAseguradora', '$p_grupoSanguineo', '$p_alergiaMed')";
-        }
+        
+        $consulta="INSERT INTO `paciente` (`nombre`, `numerohc`, `docid`, `fechanac`, `sexo`, `telef`, `ocupacion`, `direccion`, `anamnesis`, `tiempodeenfermedad`, `idaseguradora`, `email`, `idclienteaseguradora`, `gruposanguineo`, `alergiamed`) VALUES ('$p_nombre', '$p_numeroHC', '$p_docID', '$p_fechaNac', '$p_sexo', '$p_telef', '$p_ocupacion', '$p_direccion', '$p_anamnesis', '$p_tiempoDeEnfermedad', '$p_idAseguradora', '$p_email', '$p_idClienteAseguradora', '$p_grupoSanguineo', '$p_alergiaMed')";
+        
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -82,14 +76,8 @@ public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaN
         $p_grupoSanguineo=$bd->real_scape_string($p_grupoSanguineo);
         $p_alergiaMed=$bd->real_scape_string($p_alergiaMed);
         
-        if($p_idAseguradora=="")
-        {
-            $consulta="UPDATE `paciente` SET `nombre`='$p_nombre', `numerohc`='$p_numeroHC', `docid`='$p_docID', `fechanac`='$p_fechaNac', `sexo`='$p_sexo', `telef`='$p_telef', `ocupacion`='$p_ocupacion', `direccion`='$p_direccion', `anamnesis`='$p_anamnesis', `tiempodeenfermedad`='$p_tiempoDeEnfermedad', `email`='$p_email',`gruposanguineo`='$p_grupoSanguineo', `alergiamed`='$p_alergiaMed' WHERE (`idpaciente`='$p_id')";
-        }
-        else
-        {
-            $consulta="UPDATE `paciente` SET `nombre`='$p_nombre', `numerohc`='$p_numeroHC', `docid`='$p_docID', `fechanac`='$p_fechaNac', `sexo`='$p_sexo', `telef`='$p_telef', `ocupacion`='$p_ocupacion', `direccion`='$p_direccion', `anamnesis`='$p_anamnesis', `tiempodeenfermedad`='$p_tiempoDeEnfermedad', `idaseguradora`='$p_idAseguradora', `email`='$p_email', `idclienteaseguradora`='$p_idClienteAseguradora', `gruposanguineo`='$p_grupoSanguineo', `alergiamed`='$p_alergiaMed' WHERE (`idpaciente`='$p_id')";
-        }
+        $consulta="UPDATE `paciente` SET `nombre`='$p_nombre', `numerohc`='$p_numeroHC', `docid`='$p_docID', `fechanac`='$p_fechaNac', `sexo`='$p_sexo', `telef`='$p_telef', `ocupacion`='$p_ocupacion', `direccion`='$p_direccion', `anamnesis`='$p_anamnesis', `tiempodeenfermedad`='$p_tiempoDeEnfermedad', `idaseguradora`='$p_idAseguradora', `email`='$p_email', `idclienteaseguradora`='$p_idClienteAseguradora', `gruposanguineo`='$p_grupoSanguineo', `alergiamed`='$p_alergiaMed' WHERE (`idpaciente`='$p_id')";
+       
         
         
         $r=$bd->consulta($consulta);
