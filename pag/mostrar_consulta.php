@@ -15,6 +15,7 @@ $objConsultaController=new ConsultaController();
 $objMedicoC=new MedicoController();
 $objPacienteC=new PacienteController();
 $objEspecialidad=new EspecialidadController();
+$objServicio=new ServicioController();
 $datosConsulta=array();
 
 $idconsulta="";
@@ -41,7 +42,7 @@ if($_GET)
                  $indicaciones=$datosConsulta[$i]->getIndicaciones();
                  $especialidad=$datosConsulta[$i]->getEspecialidad();
                  $resultados=$datosConsulta[$i]->getResultados();
-                 $precio=$datosConsulta[$i]->getPrecio();
+                 
                  
                  ##datos especialidad
                  $dat_especialidad=$objEspecialidad->BuscarEspecialidad($especialidad, "", "");
@@ -61,10 +62,16 @@ if($_GET)
                      $id_pacienteS=$dat_pacientesS[0]['idpaciente'];
                      $fecha=$dat_pacientesS[0]['fecha'];
                     
+                     
                      $datos_paciente=$objPacienteC->BuscarPaciente("", "", "", $id_pacienteS);
                      if(count($datos_paciente)>0)
                       {
                          $nombre_paciente=$datos_paciente[0]->getNombre();
+                      }
+                      $datos_servicio=$objServicio->BuscarServicio($id_servicio, "", "");
+                      if(count($datos_servicio)>0)
+                      {
+                          $precio=$datos_servicio[0]->getPrecio();
                       }
                      
                  }
@@ -94,11 +101,13 @@ if($_GET)
                 echo '<tr class="text text-info">';
                 echo '<th>Doctor</th>';
                 echo '<th>Fecha</th>';
+                
                 echo '<th>Paciente</th>';
                 echo '</tr>';
                 echo '<tr>';
                 echo "<td>$nombre_medico</td>";
                 echo "<td>$fecha</td>";
+               
                 echo "<td>$nombre_paciente</td>";
                 echo '</tr>';
                 echo '<tr class="text text-info">';

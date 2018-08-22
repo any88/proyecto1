@@ -37,7 +37,7 @@ $msg="";
 $error=0;
 $estado="PENDIENTE";
 if($_POST)
-{
+{    Mostrar($_POST);
     if(isset($_POST['idt']))
     {
         $id_pacienteS=$_POST['idt'];

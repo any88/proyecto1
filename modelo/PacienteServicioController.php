@@ -18,7 +18,7 @@ class PacienteServicioController {
     
     public function PacienteServicioController(){}
     
-public function CrearPacienteServicio($p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion)
+public function CrearPacienteServicio($p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion,$p_hora=null)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
@@ -28,8 +28,9 @@ public function CrearPacienteServicio($p_idpaciente, $p_idservicio, $p_fecha, $p
         $p_idservicio=$bd->real_scape_string($p_idservicio);
         $p_fecha=$bd->real_scape_string($p_fecha);
         $p_idtransaccion=$bd->real_scape_string($p_idtransaccion);
+        $p_hora=$bd->real_scape_string($p_hora);
                         
-        $consulta="INSERT INTO `paciente_servicio` (`idpaciente`, `idservicio`, `fecha`, `idtransaccion`) VALUES ('$p_idpaciente', '$p_idservicio', '$p_fecha', '$p_idtransaccion')";
+        $consulta="INSERT INTO `paciente_servicio` (`idpaciente`, `idservicio`, `fecha`, `idtransaccion`,`hora`) VALUES ('$p_idpaciente', '$p_idservicio', '$p_fecha', '$p_idtransaccion','$p_hora')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -41,7 +42,7 @@ public function CrearPacienteServicio($p_idpaciente, $p_idservicio, $p_fecha, $p
         
 }
 
-public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_fecha,$p_idtransaccion)
+public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_fecha,$p_idtransaccion,$p_hora=null)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -52,8 +53,9 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
         $p_idpaciente=$bd->real_scape_string($p_idpaciente);
         $p_idservicio=$bd->real_scape_string($p_idservicio);
         $p_idtransaccion=$bd->real_scape_string($p_idtransaccion);
-               
-        $consulta="UPDATE `paciente_servicio` SET `fecha`='$p_fecha', `idpaciente`='$p_idpaciente', `idservicio`='$p_idservicio', `idtransaccion`='$p_idtransaccion' WHERE (`id_ps`='$p_id')";
+        $p_hora=$bd->real_scape_string($p_hora);
+        
+        $consulta="UPDATE `paciente_servicio` SET `fecha`='$p_fecha', `idpaciente`='$p_idpaciente', `idservicio`='$p_idservicio', `idtransaccion`='$p_idtransaccion',`hora`='$p_hora' WHERE (`id_ps`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -142,8 +144,8 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
                 $p_fecha=$fila["fecha"];
                 $p_idservicio=$fila["idservicio"];
                 $p_idtransaccion=$fila["idtransaccion"];
-                                                                
-                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion);
+                $p_hora=$fila["hora"];                                                
+                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion,$p_hora);
                 $result[$a]=$objPacienteServicio;
                 $a++;
             }
@@ -210,8 +212,8 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
                 $p_idservicio=$fila["idservicio"];
                 $p_fecha=$fila["fecha"];
                 $p_idtransaccion=$fila["idtransaccion"];
-                                                                
-                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion);
+                $p_hora=$fila["hora"];                                                
+                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion,$p_hora);
                 $result[$a]=$objPacienteServicio;
                 $a++;
             }
@@ -293,8 +295,8 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
                 $p_idservicio=$fila["idservicio"];
                 $p_fecha=$fila["fecha"];
                 $p_idtransaccion=$fila["idtransaccion"];
-                                                                
-                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion);
+                $p_hora=$fila["hora"];                                                
+                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion,$p_hora);
                 $result[$a]=$objPacienteServicio;
                 $a++;
             }
@@ -307,7 +309,7 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
     {
        $bd= new con_mysqli("", "", "", "");
        $fecha=$bd->real_scape_string($fecha);
-       $consulta="SELECT * FROM `paciente_servicio` WHERE `fecha` LIKE '$fecha%' order by `fecha`";
+       $consulta="SELECT * FROM `paciente_servicio` WHERE `fecha` LIKE '$fecha%' order by `hora`";
        
        $result=array();
        $a=0;
@@ -323,8 +325,9 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
                 $p_idservicio=$fila["idservicio"];
                 $p_fecha=$fila["fecha"];
                 $p_idtransaccion=$fila["idtransaccion"];
-                                                                
-                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion);
+                $p_hora=$fila["hora"];                                                
+                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion,$p_hora);                                                
+                
                 $result[$a]=$objPacienteServicio;
                 $a++;
             }
@@ -352,8 +355,8 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
                 $p_idservicio=$fila["idservicio"];
                 $p_fecha=$fila["fecha"];
                 $p_idtransaccion=$fila["idtransaccion"];
-                                                                
-                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion);
+                $p_hora=$fila["hora"];                                                
+                $objPacienteServicio=new PacienteServicio($p_id, $p_idpaciente, $p_idservicio, $p_fecha, $p_idtransaccion,$p_hora);                                                
                 $result[$a]=$objPacienteServicio;
                 $a++;
             }

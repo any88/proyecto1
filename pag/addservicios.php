@@ -100,7 +100,7 @@ $fecha_consulta="";
 $p_idespecialidad_quirurgica="";
 $p_id_cirugia="";
 $p_id_cirujano="";
-$p_fecha_cirugia="";
+$p_fecha_cirugia= "";
 $p_duracion_cirugia="";
 $p_id_insumos="";
 $p_precio_cirugia="";
@@ -108,6 +108,7 @@ $p_lista_insumos=array();
 $p_lista_medicos=array();
 $p_cantidad_insumos=0;
 $p_cantidad_medicos=0;
+$p_hora_cirugia="";
 ##variables hospitalizacion
 $fechaingreso="";
 $fechaalta="";
@@ -389,6 +390,7 @@ if($_POST)
            if(isset($_POST['fecha'])){$p_fecha_cirugia=$_POST['fecha'];}
            if(isset($_POST['medicos'])){$p_id_cirujano=$_POST['medicos'];}
            if(isset($_POST['cantidad_medicos'])){$p_cantidad_medicos=$_POST['cantidad_medicos'];}
+           if(isset($_POST['hora'])){$p_hora_cirugia=$_POST['hora'];}
            
 ///////////////////////////////////////////////////////////////esto estaba disperso al inicio, debe ser de cirugia
 
@@ -486,7 +488,14 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                {
                     $msg="<div class='alert alert-danger alert-dismissable'>"
                     . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                    . "Error! Usted debe de seleccionar la fecha para la cirugua cirug&iacute;a </div>"; 
+                    . "Error! Usted debe de seleccionar la fecha para la cirug&iacute;a </div>"; 
+                    $error++;
+               }
+               if(eliminarblancos($p_hora_cirugia)=="")
+               {
+                    $msg="<div class='alert alert-danger alert-dismissable'>"
+                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                    . "Error! Usted debe de seleccionar la Hora para la cirug&iacute;a </div>"; 
                     $error++;
                }
                if(eliminarblancos($p_id_cirujano)=="")
@@ -512,6 +521,9 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                         $a++;
                         $p['campo'][$a]='fecha';
                         $p['valor'][$a]=$p_fecha_cirugia;
+                        $a++;
+                        $p['campo'][$a]='hora';
+                        $p['valor'][$a]=$p_hora_cirugia;
                         $a++;
                         $p['campo'][$a]='idpaciente';
                         $p['valor'][$a]=$idpaciente;
@@ -1313,7 +1325,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                   <tr class="text text-info">
                       <th> Especialidad Quirúrgica</th>
                       <th> Nombre de la Cirugía</th>
-                      <th> Cirujano Principal</th>
+                      <th colspan="2"> Cirujano Principal</th>
                       
                   </tr>
                   <tr >
@@ -1350,7 +1362,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                               ?>
                           </select>
                       </td>
-                      <td>
+                      <td colspan="2">
                           <select name="medicos" class="form-control">
                               <option value=''>--SELECCIONE--</option>
                               <?php
@@ -1372,12 +1384,14 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                       
                       <th >Precio</th>
                       <th>Fecha</th>
+                      <th colspan="2">Hora (24H)</th>
                   </tr>
                   <tr>
                       <td><input type="text" name="duracion" class="form-control" value="<?php echo $p_duracion_cirugia;?>"></td>
                       
                       <td ><input type="text" name="precio" class="form-control" value="<?php echo $p_precio_cirugia;?>"></td>
                       <td><input type="date" name="fecha" class="form-control" required="" value="<?php echo $p_fecha_cirugia;?>"></td>
+                      <td><input type="time" name="hora" class="form-control" required="" value="<?php echo $p_hora_cirugia;?>"></td>
                   </tr>
                  
               </table>

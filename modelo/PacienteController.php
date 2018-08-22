@@ -231,6 +231,90 @@ public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaN
         return $result;
         
     }
+    public function BuscarPacienteLike($p_numerohc, $p_nombre, $p_docid,$p_id)
+    {
+        $result=array();
+        $bd= new con_mysqli("", "", "", "");
+        $consulta="SELECT * FROM `paciente` ";
+        
+        $p_nombre=$bd->real_scape_string($p_nombre);
+        $p_numerohc=$bd->real_scape_string($p_numerohc);
+        $p_docid=$bd->real_scape_string($p_docid);
+        $p_id=$bd->real_scape_string($p_id);
+        
+        if($p_numerohc!="")
+        {
+            $consulta=$consulta."WHERE `numerohc`='$p_numerohc'";
+        }
+        if($p_nombre!="")
+        {
+            if($p_numerohc=="")
+            {
+                $consulta=$consulta."WHERE `nombre` LIKE '%$p_nombre%'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `nombre` LIKE '%$p_nombre%'";
+            }
+        }
+        if($p_docid!="")
+        {
+            if($p_numerohc=="" && $p_nombre=="")
+            {
+                $consulta=$consulta."WHERE `docid`='$p_docid'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `docid`='$p_docid'";
+            }
+         }
+         if($p_id!="")
+            {
+                if($p_numerohc=="" && $p_nombre=="" && $p_docid=="")
+               {
+                   $consulta=$consulta."WHERE `idpaciente`='$p_id'";
+               }
+               else 
+               {
+                   $consulta=$consulta." and `idpaciente`='$p_id'";
+               }
+            }
+         
+        $consulta=$consulta." order by `nombre` ASC";  
+       
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $a=0;
+            while ($fila=$bd->fetch_assoc($r))
+            {
+                 
+                $p_id=$fila["idpaciente"];
+                $p_nombre=$fila["nombre"];
+                $p_numerohc=$fila["numerohc"];
+                $p_docid=$fila["docid"];
+                $p_fechanac=$fila["fechanac"];
+                $p_sexo=$fila["sexo"];
+                $p_telef=$fila["telef"];
+                $p_ocupacion=$fila["ocupacion"];
+                $p_direccion=$fila["direccion"];
+                $p_anamnesis=$fila["anamnesis"];
+                $p_tiempodeenfermedad=$fila["tiempodeenfermedad"];
+                $p_idaseguradora=$fila["idaseguradora"];
+                $p_email=$fila["email"];
+                $p_idClienteAseguradora=$fila["idclienteaseguradora"];
+                $p_grupoSanguineo=$fila["gruposanguineo"];
+                $p_alergiaMed=$fila["alergiamed"];
+                                
+                $objPaciente=new Paciente($p_id, $p_nombre, $p_numerohc, $p_docid, $p_fechanac, $p_sexo, $p_telef, $p_ocupacion, $p_direccion, $p_anamnesis, $p_tiempodeenfermedad, $p_idaseguradora, $p_email, $p_idClienteAseguradora, $p_grupoSanguineo, $p_alergiaMed);
+                $result[$a]=$objPaciente;
+                $a++;
+            }
+        }
+        $bd->Close();
+        return $result;
+        
+    }
     
     public function CargarPaciente($search)
     {

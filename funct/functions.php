@@ -184,7 +184,11 @@ function FechaYMA()
     date_default_timezone_set("Cuba");
     return $fecha=date("Y-m-d");
 }
-
+function FechaYMA2()
+{
+    date_default_timezone_set("Cuba");
+    return $fecha=date("d/m/Y");
+}
 function AnnoActual()
 {
     return  date('Y');

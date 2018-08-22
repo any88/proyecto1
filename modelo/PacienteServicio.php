@@ -18,13 +18,15 @@ class PacienteServicio {
     private $idservicio;
     private $fecha;
     private $idtransaccion;
-    
-    function __construct($idps, $idpaciente, $idservicio, $fecha, $idtransaccion) {
+    private $hora;
+            
+    function __construct($idps, $idpaciente, $idservicio, $fecha, $idtransaccion,$hora) {
         $this->idps = $idps;
         $this->idpaciente = $idpaciente;
         $this->idservicio = $idservicio;
         $this->fecha = $fecha;
         $this->idtransaccion = $idtransaccion;
+        $this->hora=$hora;
     }
 
     function getIdps() {
@@ -41,6 +43,9 @@ class PacienteServicio {
 
     function getFecha() {
         return $this->fecha;
+    }
+    function getHora() {
+        return $this->hora;
     }
 
     function getIdtransaccion() {
