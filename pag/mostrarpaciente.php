@@ -152,6 +152,9 @@ if($_POST)
               <div class="panel panel-default">
                         <div class="panel-heading">
                             <b>Historia Cl&iacute;nica # (<?php echo $hc;?>)</b>
+                            <div class="pull-right">
+                                <a href='addservicios.php?nik=<?php echo $id_pacmod;?>' class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Nuevo servicio</a>
+                            </div>
                         </div>
                         <div class="panel-body">
                             <ul class="nav nav-tabs">
@@ -398,7 +401,7 @@ if($_POST)
                                                         IF($id_transaccionebd!=""){$estado="PAGO";}
                                                         echo "<td>$estado</td>";
                                                         echo"<td>";
-                                                        echo $id_ps;
+                                                       
                                                             echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";
                                                              echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'><i class='fa fa-eye'></i></a>";
                                                                 echo "<input type='hidden' name='idt' value='$id_ps'>";
