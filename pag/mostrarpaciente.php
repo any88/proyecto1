@@ -434,7 +434,11 @@ if($_POST)
         </div>
     
         <div class="pull-right">
-            <a href='listar_pacientes.php' class='btn btn-danger'>Cancelar</a>
+            <?php
+            echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
+            echo "<a href='editarpaciente.php?nik=$id_pacmod' class='btn btn-success'>Editar</a> ";
+            echo "<a href='listar_pacientes.php' class='btn btn-danger'>Cancelar</a>";
+            ?>
         </div>
         <br><br>
 
