@@ -27,7 +27,7 @@ if($_POST)
     
     if(eliminarblancos($nombre_paciente)!="" || eliminarblancos($nhc)!="" || eliminarblancos($docId)!="")
     {
-        $datos_paciente=$objPaciente->BuscarPaciente($nhc, $nombre_paciente, $docId, "");
+        $datos_paciente=$objPaciente->BuscarPacienteLike($nhc, $nombre_paciente, $docId, "");
     }
 }
  else 

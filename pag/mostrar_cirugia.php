@@ -77,6 +77,7 @@ if($_GET)
                 if(count($datosPcteServ)>0)
                 {
                      $fecha=$datosPcteServ[0]->getFecha();
+                     $hora=$datosPcteServ[0]->getHora();
                      $idpaciente=$datosPcteServ[0]->getIdpaciente();
                      ##datos del paciente
                     $datosPaciente=array();
@@ -156,6 +157,9 @@ if($_GET)
                                     echo '</tr>';
                                     echo '<tr >';
                                     echo '<th class="text text-info">Fecha</th>';echo "<td>$fecha</td>";
+                                    echo '</tr>';
+                                    echo '<tr >';
+                                    echo '<th class="text text-info">Hora</th>';echo "<td>$hora</td>";
                                     echo '</tr>';
                                     echo '<tr >';
                                     echo '<th class="text text-info">Duración</th>';echo "<td>$duracion</td>";

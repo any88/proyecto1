@@ -18,6 +18,7 @@ class Consulta {
     private $especialidad;
     private $indicaciones;
     private $resultados;
+    
         
     public function __construct($idServicio, $idConsulta, $especialidad, $indicaciones, $resultados) {
         $this->idServicio = $idServicio;

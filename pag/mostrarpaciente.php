@@ -247,6 +247,7 @@ if($_POST)
 
                                                   <th>Tipo Servicio</th>
                                                   <th>Fecha</th>
+                                                  <th>Hora</th>
                                                   <th>Precio Acordado</th>
                                                   <th>Pago real</th>
                                                   <th>Estado del servicio</th>
@@ -262,6 +263,7 @@ if($_POST)
                                                         $id_ps=$lista_paciente_servicio[$i]['id_ps'];
                                                         $id_paciente_servicio=$lista_paciente_servicio[$i]['idservicio'];
                                                         $fecha=$lista_paciente_servicio[$i]['fecha'];
+                                                        $hora=$lista_paciente_servicio[$i]['hora'];
                                                         $id_transaccionebd=$lista_paciente_servicio[$i]['idtransaccion'];
                                                         
                                                         if($id_transaccionebd!="")
@@ -389,19 +391,20 @@ if($_POST)
 
                                                         echo "<td>$nombre_tipo_servicio</td>";
                                                         echo "<td>$fecha</td>";
+                                                        echo "<td>$hora</td>";
                                                         echo "<td>s/. $precio_servicio</td>";
                                                         echo "<td>s/. $precio_real</td>";
                                                         $estado="<b class='text-danger'>PENDIENTE</b>";
                                                         IF($id_transaccionebd!=""){$estado="PAGO";}
                                                         echo "<td>$estado</td>";
                                                         echo"<td>";
-                                                            echo "<form action='transaccion_pacientes.php' name='f$i' method='post' >";
-                                                               
-                                                                echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'> <i class='fa fa-eye'></i> </a>";
+                                                        echo $id_ps;
+                                                            echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";
+                                                             echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'><i class='fa fa-eye'></i></a>";
                                                                 echo "<input type='hidden' name='idt' value='$id_ps'>";
-                                                                echo " <button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'> <i class='fa fa-dollar'></i></button>";
+                                                                echo "<button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'><i class='fa fa-dollar'></i></button>";
                                                             echo "</form>";
-                                                            echo "<form method='post' action='#' id='f$i' name='delf'  style='margin-top:-23px; margin-left:55px;'>";
+                                                            echo "<form method='post' action='mostrarpaciente.php' id='f$i' name='delf'  style='margin-top:-23px; margin-left:53px;'>";
                                                             $est="PENDIENTE";
                                                             if($estado=="PAGO"){$est="PAGO";}
                                                             echo "<input type='hidden' name='id_servicio' value='$id_paciente_servicio'>";
@@ -409,7 +412,7 @@ if($_POST)
                                                             echo "<input type='hidden' name='estado' value='$est' id='estado$i'>";
                                                             echo "<input type='hidden' name='nombre_servicio' value='$nombre_tipo_servicio' id='nombre_serv$i'>";
                                                             echo "<input type='hidden' name='nombre_paciente' value='$nombre' id='nombre_pac$i'>";
-                                                            echo "<button type='button'class='btn btn-danger btn-xs' id='$i' onclick='EliminarServicio(this.id);' title='Eliminar Servicio'><i class='fa fa-trash'></i> </button> ";
+                                                            echo "<button type='button'class='btn btn-danger btn-xs' id='$i' onclick='EliminarServicio(this.id);' title='Eliminar Servicio'><i class='fa fa-trash'></i> </button>";
                                                             echo "</form>";
                                                         echo "</td>";
                                                         echo "</tr>";
