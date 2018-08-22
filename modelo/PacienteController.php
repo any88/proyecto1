@@ -18,7 +18,7 @@ class PacienteController {
     
     public function PacienteController(){}
     
-public function CrearPaciente($p_nombre, $p_numeroHC, $p_docID, $p_fechaNac, $p_sexo, $p_telef, $p_ocupacion, $p_direccion, $p_anamnesis, $p_tiempoDeEnfermedad, $p_idAseguradora, $p_email)
+public function CrearPaciente($p_nombre, $p_numeroHC, $p_docID, $p_fechaNac, $p_sexo, $p_telef, $p_ocupacion, $p_direccion, $p_anamnesis, $p_tiempoDeEnfermedad, $p_idAseguradora, $p_email, $p_idClienteAseguradora, $p_grupoSanguineo, $p_alergiaMed)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
@@ -36,8 +36,19 @@ public function CrearPaciente($p_nombre, $p_numeroHC, $p_docID, $p_fechaNac, $p_
         $p_tiempoDeEnfermedad=$bd->real_scape_string($p_tiempoDeEnfermedad);
         $pid_Aseguradora=$bd->real_scape_string($p_idAseguradora);
         $p_email=$bd->real_scape_string($p_email);
+        $p_idClienteAseguradora=$bd->real_scape_string($p_idClienteAseguradora);
+        $p_grupoSanguineo=$bd->real_scape_string($p_grupoSanguineo);
+        $p_alergiaMed=$bd->real_scape_string($p_alergiaMed);
         
-        $consulta="INSERT INTO `paciente` (`nombre`, `numerohc`, `docid`, `fechanac`, `sexo`, `telef`, `ocupacion`, `direccion`, `anamnesis`, `tiempodeenfermedad`, `idaseguradora`, `email`) VALUES ('$p_nombre', '$p_numeroHC', '$p_docID', '$p_fechaNac', '$p_sexo', '$p_telef', '$p_ocupacion', '$p_direccion', '$p_anamnesis', '$p_tiempoDeEnfermedad', '$p_idAseguradora', '$p_email')";
+        if($p_idAseguradora=="")
+        {
+            
+            $consulta="INSERT INTO `paciente` (`nombre`, `numerohc`, `docid`, `fechanac`, `sexo`, `telef`, `ocupacion`, `direccion`, `anamnesis`, `tiempodeenfermedad`, `email`, `gruposanguineo`, `alergiamed`) VALUES ('$p_nombre', '$p_numeroHC', '$p_docID', '$p_fechaNac', '$p_sexo', '$p_telef', '$p_ocupacion', '$p_direccion', '$p_anamnesis', '$p_tiempoDeEnfermedad', '$p_email', '$p_grupoSanguineo', '$p_alergiaMed')";
+        }
+        else
+        {
+            $consulta="INSERT INTO `paciente` (`nombre`, `numerohc`, `docid`, `fechanac`, `sexo`, `telef`, `ocupacion`, `direccion`, `anamnesis`, `tiempodeenfermedad`, `idaseguradora`, `email`, `idclienteaseguradora`, `gruposanguineo`, `alergiamed`) VALUES ('$p_nombre', '$p_numeroHC', '$p_docID', '$p_fechaNac', '$p_sexo', '$p_telef', '$p_ocupacion', '$p_direccion', '$p_anamnesis', '$p_tiempoDeEnfermedad', '$p_idAseguradora', '$p_email', '$p_idClienteAseguradora', '$p_grupoSanguineo', '$p_alergiaMed')";
+        }
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -49,7 +60,7 @@ public function CrearPaciente($p_nombre, $p_numeroHC, $p_docID, $p_fechaNac, $p_
         
 }
 
-public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaNac,$p_sexo,$p_telef,$p_ocupacion,$p_direccion,$p_anamnesis,$p_tiempoDeEnfermedad,$p_idAseguradora,$p_email)
+public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaNac,$p_sexo,$p_telef,$p_ocupacion,$p_direccion,$p_anamnesis,$p_tiempoDeEnfermedad,$p_idAseguradora,$p_email, $p_idClienteAseguradora, $p_grupoSanguineo, $p_alergiaMed)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -67,8 +78,19 @@ public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaN
         $p_tiempoDeEnfermedad=$bd->real_scape_string($p_tiempoDeEnfermedad);
         $p_idAseguradora=$bd->real_scape_string($p_idAseguradora);
         $p_email=$bd->real_scape_string($p_email);
+        $p_idClienteAseguradora=$bd->real_scape_string($p_idClienteAseguradora);
+        $p_grupoSanguineo=$bd->real_scape_string($p_grupoSanguineo);
+        $p_alergiaMed=$bd->real_scape_string($p_alergiaMed);
         
-        $consulta="UPDATE `paciente` SET `nombre`='$p_nombre', `numerohc`='$p_numeroHC', `docid`='$p_docID', `fechanac`='$p_fechaNac', `sexo`='$p_sexo', `telef`='$p_telef', `ocupacion`='$p_ocupacion', `direccion`='$p_direccion', `anamnesis`='$p_anamnesis', `tiempodeenfermedad`='$p_tiempoDeEnfermedad', `idaseguradora`='$p_idAseguradora', `email`='$p_email' WHERE (`idpaciente`='$p_id')";
+        if($p_idAseguradora=="")
+        {
+            $consulta="UPDATE `paciente` SET `nombre`='$p_nombre', `numerohc`='$p_numeroHC', `docid`='$p_docID', `fechanac`='$p_fechaNac', `sexo`='$p_sexo', `telef`='$p_telef', `ocupacion`='$p_ocupacion', `direccion`='$p_direccion', `anamnesis`='$p_anamnesis', `tiempodeenfermedad`='$p_tiempoDeEnfermedad', `email`='$p_email',`gruposanguineo`='$p_grupoSanguineo', `alergiamed`='$p_alergiaMed' WHERE (`idpaciente`='$p_id')";
+        }
+        else
+        {
+            $consulta="UPDATE `paciente` SET `nombre`='$p_nombre', `numerohc`='$p_numeroHC', `docid`='$p_docID', `fechanac`='$p_fechaNac', `sexo`='$p_sexo', `telef`='$p_telef', `ocupacion`='$p_ocupacion', `direccion`='$p_direccion', `anamnesis`='$p_anamnesis', `tiempodeenfermedad`='$p_tiempoDeEnfermedad', `idaseguradora`='$p_idAseguradora', `email`='$p_email', `idclienteaseguradora`='$p_idClienteAseguradora', `gruposanguineo`='$p_grupoSanguineo', `alergiamed`='$p_alergiaMed' WHERE (`idpaciente`='$p_id')";
+        }
+        
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -125,8 +147,11 @@ public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaN
                 $p_tiempodeenfermedad=$fila["tiempodeenfermedad"];
                 $p_idaseguradora=$fila["idaseguradora"];
                 $p_email=$fila["email"];
+                $p_idClienteAseguradora=$fila["idclienteaseguradora"];
+                $p_grupoSanguineo=$fila["gruposanguineo"];
+                $p_alergiaMed=$fila["alergiamed"];
                                 
-                $objPaciente=new Paciente($p_id, $p_nombre, $p_numerohc, $p_docid, $p_fechanac, $p_sexo, $p_telef, $p_ocupacion, $p_direccion, $p_anamnesis, $p_tiempodeenfermedad, $p_idaseguradora, $p_email);
+                $objPaciente=new Paciente($p_id, $p_nombre, $p_numerohc, $p_docid, $p_fechanac, $p_sexo, $p_telef, $p_ocupacion, $p_direccion, $p_anamnesis, $p_tiempodeenfermedad, $p_idaseguradora, $p_email, $p_idClienteAseguradora, $p_grupoSanguineo, $p_alergiaMed);
                 $result[$a]=$objPaciente;
                 $a++;
             }
@@ -205,8 +230,11 @@ public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaN
                 $p_tiempodeenfermedad=$fila["tiempodeenfermedad"];
                 $p_idaseguradora=$fila["idaseguradora"];
                 $p_email=$fila["email"];
+                $p_idClienteAseguradora=$fila["idclienteaseguradora"];
+                $p_grupoSanguineo=$fila["gruposanguineo"];
+                $p_alergiaMed=$fila["alergiamed"];
                                 
-                $objPaciente=new Paciente($p_id, $p_nombre, $p_numerohc, $p_docid, $p_fechanac, $p_sexo, $p_telef, $p_ocupacion, $p_direccion, $p_anamnesis, $p_tiempodeenfermedad, $p_idaseguradora, $p_email);
+                $objPaciente=new Paciente($p_id, $p_nombre, $p_numerohc, $p_docid, $p_fechanac, $p_sexo, $p_telef, $p_ocupacion, $p_direccion, $p_anamnesis, $p_tiempodeenfermedad, $p_idaseguradora, $p_email, $p_idClienteAseguradora, $p_grupoSanguineo, $p_alergiaMed);
                 $result[$a]=$objPaciente;
                 $a++;
             }

@@ -26,9 +26,12 @@ class Paciente {
     private $anamnesis;
     private $tiempoDeEnfermedad;
     private $idAseguradora;
+    private $idClienteAseguradora;
+    private $grupoSanguineo;
+    private $alergiaMed;
 
 
-    public function __construct($idPaciente, $nombre, $numeroHC, $docID, $fechaNac, $sexo, $telef, $ocupacion, $direccion, $anamnesis, $tiempoDeEnfermedad, $idAseguradora, $email) {
+    public function __construct($idPaciente, $nombre, $numeroHC, $docID, $fechaNac, $sexo, $telef, $ocupacion, $direccion, $anamnesis, $tiempoDeEnfermedad, $idAseguradora, $email, $idClienteAseguradora, $grupoSanguineo, $alergiaMed) {
         $this->idPaciente = $idPaciente;
         $this->nombre = $nombre;
         $this->numeroHC = $numeroHC;
@@ -42,6 +45,9 @@ class Paciente {
         $this->tiempoDeEnfermedad = $tiempoDeEnfermedad;
         $this->idAseguradora = $idAseguradora;
         $this->email = $email;
+        $this->idClienteAseguradora = $idClienteAseguradora;
+        $this->grupoSanguineo = $grupoSanguineo;
+        $this->alergiaMed = $alergiaMed;
     }
     
     public function getIdPaciente() {
@@ -96,58 +102,18 @@ class Paciente {
         return $this->idAseguradora;
     }
 
-    public function setIdPaciente($idPaciente) {
-        $this->idPaciente = $idPaciente;
+    function getIdClienteAseguradora() {
+        return $this->idClienteAseguradora;
     }
 
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
+    function getGrupoSanguineo() {
+        return $this->grupoSanguineo;
     }
 
-    public function setNumeroHC($numeroHC) {
-        $this->numeroHC = $numeroHC;
+    function getAlergiaMed() {
+        return $this->alergiaMed;
     }
 
-    public function setDocID($docID) {
-        $this->docID = $docID;
-    }
-
-    public function setFechaNac($fechaNac) {
-        $this->fechaNac = $fechaNac;
-    }
-
-    public function setSexo($sexo) {
-        $this->sexo = $sexo;
-    }
-
-    public function setTelef($telef) {
-        $this->telef = $telef;
-    }
-    
-    function setEmail($email) {
-        $this->email = $email;
-    }
-
-    public function setOcupacion($ocupacion) {
-        $this->ocupacion = $ocupacion;
-    }
-
-    public function setDireccion($direccion) {
-        $this->direccion = $direccion;
-    }
-
-    public function setAnamnesis($anamnesis) {
-        $this->anamnesis = $anamnesis;
-    }
-
-    public function setTiempoDeEnfermedad($tiempoDeEnfermedad) {
-        $this->tiempoDeEnfermedad = $tiempoDeEnfermedad;
-    }
-    
-    public function setIdAseguradora($idAseguradora) {
-        $this->idAseguradora = $idAseguradora;
-    }
-    
     public function GetEdadPaciente()
     {
        $edad=0;

@@ -35,6 +35,9 @@ $direccion="";
 $anamnesis="";
 $tiempo_enfermedad="";
 $id_aseguradora="";
+$idclienteaseguradora="";
+$gruposanguineo="";
+$alergiamed="";
 $lista_paciente_servicio=array();
 $id_ps="";
 $precio_real=0;
@@ -58,6 +61,9 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
         $anamnesis=$pacmod[0]->getAnamnesis();
         $tiempo_enfermedad=$pacmod[0]->getTiempoDeEnfermedad();
         $edad=$pacmod[0]->GetEdadPaciente();
+        $idclienteaseguradora=$pacmod[0]->getIdClienteAseguradora();
+        $gruposanguineo=$pacmod[0]->getGrupoSanguineo();
+        $alergiamed=$pacmod[0]->getAlergiaMed();
         
     }
    $cg=new ConsultasG();
@@ -195,7 +201,10 @@ if($_POST)
                                                     ?>    
                                             </td>
                                         </tr>
-                                        
+                                        <tr>
+                                            <td><b>ID de Cliente de Aseguradora: </b></td>
+                                            <td><?php echo $idclienteaseguradora;?></td>
+                                        </tr>
                                         <tr>
                                             <td><b>Direcci&oacute;n: </b></td>
                                             <td><?php echo $direccion;?></td> 
@@ -207,6 +216,16 @@ if($_POST)
                                         <tr>
                                             <td ><b>Email: </b></td>
                                             <td><?php echo $email;?></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td ><b>Grupo Sanguíneo: </b></td>
+                                            <td><?php echo $gruposanguineo;?></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td ><b>Alergias Medicamentosas: </b></td>
+                                            <td><?php echo $alergiamed;?></td>
 
                                         </tr>
                                         <tr>

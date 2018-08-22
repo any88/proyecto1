@@ -28,7 +28,9 @@ $direccion="";
 $anamnesis="";
 $tiempo_enfermedad="";
 $id_aseguradora="";
-
+$idclienteaseguradora="";
+$gruposanguineo="";
+$alergiamed="";
 
 if(isset($_GET['nik']))
 {
@@ -49,6 +51,9 @@ $pacmod=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
         $fecha_nac=$pacmod[0]->getFechaNac();
         $anamnesis=$pacmod[0]->getAnamnesis();
         $tiempo_enfermedad=$pacmod[0]->getTiempoDeEnfermedad();
+        $idclienteaseguradora=$pacmod[0]->getIdClienteAseguradora();
+        $gruposanguineo=$pacmod[0]->getGrupoSanguineo();
+        $alergiamed=$pacmod[0]->getAlergiaMed();
         
     }
 }
@@ -68,11 +73,14 @@ if($_POST)
     if(isset($_POST['anamnesis'])){$anamnesis=eliminarblancos($_POST['anamnesis']);}
     if(isset($_POST['tiempo_enfermedad'])){$tiempo_enfermedad=eliminarblancos($_POST['tiempo_enfermedad']);}
     if(isset($_POST['id_aseguradora'])){$id_aseguradora=eliminarblancos($_POST['id_aseguradora']);}
+    if(isset($_POST['idclienteaseguradora'])){$idclienteaseguradora=eliminarblancos($_POST['idclienteaseguradora']);}
+    if(isset($_POST['gruposanguineo'])){$gruposanguineo=eliminarblancos($_POST['gruposanguineo']);}
+    if(isset($_POST['alergiamed'])){$alergiamed=eliminarblancos($_POST['alergiamed']);}
     
     $error=0;
     ##validar
     
-    if($nombre=="" || $docID=="" || $telefono=="" || $fecha_nac=="" || $hc=="" || $direccion=="")
+    if($nombre=="" || $docID=="" || $telefono=="" || $fecha_nac=="" || $hc=="" || $direccion=="" || $gruposanguineo=="")
     {
         $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
@@ -88,10 +96,48 @@ if($_POST)
                 . "Error! El campo tel&eacute;fono solo admite n&uacute;meros</div>"; 
            $error++;
         }
+        ##buscar todos los datos del paciente y verifica si el numero de identidad e hc son distintos que no exista otro paciente
+        #que tenga el mismo numero
+        $datos_paciente=$objPaciente->BuscarPaciente("", "", "", $id_pacmod);
+        if(count($datos_paciente)>0)
+        {
+            if($hc!=$datos_paciente[0]->getNumeroHC())
+            {
+                ##validar que el numero de historia clinica no se repita
+                $list_pac=$objPaciente->BuscarPaciente($hc, "", "", "");
+                if(count($list_pac)>0)
+                {
+                    $msg="<div class='alert alert-danger alert-dismissable'>"
+                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                        . "Error! Ya existe un paciente registrado con ese n&uacute;mero de historia clinica $hc</div>"; 
+                    $error++;
+
+                }
+            }
+            if($docID!=$datos_paciente[0]->getDocID())
+            {
+                    $list_p=$objPaciente->BuscarPaciente('', '', $docID, '');
+                    if(count($list_p)>0)
+                    {
+                        $msg="<div class='alert alert-danger alert-dismissable'>"
+                            . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                            . "Error! Ya existe un paciente registrado con documento de identidad igual a $docID</div>"; 
+                        $error++;
+
+                    }
+            }
+        }
+        else
+        {
+            $msg="<div class='alert alert-danger alert-dismissable'>"
+                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                . "Error! EL paciente ha ya no se encuentra disponible para realizar esta operaci&oacute;n. Verifique que no este eliminado.</div>"; 
+           $error++;
+        }
             
         if($error==0)
         {
-            $affected=$objPaciente->ModificarPaciente($id_pacmod, $nombre, $hc, $docID, $fecha_nac, $sexo, $telefono, $ocupacion, $direccion, $anamnesis, $tiempo_enfermedad, $id_aseguradora, $email);
+            $affected=$objPaciente->ModificarPaciente($id_pacmod, $nombre, $hc, $docID, $fecha_nac, $sexo, $telefono, $ocupacion, $direccion, $anamnesis, $tiempo_enfermedad, $id_aseguradora, $email, $idclienteaseguradora, $gruposanguineo, $alergiamed);
             if($affected==1)
             {
                 
@@ -139,11 +185,12 @@ if($_POST)
                       <td><input type="text" name="hc" class="form-control" value="<?php echo $hc;?>"></td>
                   </tr>
                   <tr class="text text-info">
+                      <th>Fecha Nacimiento</th>
                       <th>Sexo</th>
                       <th>Teléfono</th>
-                      <th >Email</th>
                   </tr>
                   <tr>
+                      <td><input type="date" name="fecha_nac" class="form-control" value='<?php echo $fecha_nac;?>'></td>
                       <td>
                           <select name="sexo" class="form-control">
                               <?php 
@@ -158,19 +205,25 @@ if($_POST)
                           </select>
                       </td>
                       <td><input type="text" name='telefono' class="form-control" value='<?php echo $telefono;?>'></td>
-                      <td><input type="email" name="email" class="form-control" value='<?php echo $email;?>'></td>
                   </tr>
                   <tr class="text text-info">
                       <th>Ocupaci&oacute;n</th>
-                      <th>Direcci&oacute;n</th>
-                      <th>Aseguradora</th>
-                      
+                      <th >Email</th>
+                      <th>Direcci&oacute;n</th>   
                   </tr>
                   <tr>
                       <td><input type="text" name="ocupacion" class="form-control" value='<?php echo $ocupacion;?>'></td>
+                      <td><input type="email" name="email" class="form-control" value='<?php echo $email;?>'></td>
                       <td >
                           <textarea class="form-control" name="direccion"><?php echo $direccion;?></textarea>
                       </td>
+                  </tr>
+                  <tr class="text text-info">
+                      <th>Aseguradora</th>
+                      <th>ID de Cliente en Aseguradora</th>
+                      <th>Grupo Sanguíneo</th>
+                  </tr>
+                  <tr>
                       <td>
                           <select name="id_aseguradora" class="form-control">
                               <option value=''>--SELECCIONE--</option>
@@ -187,19 +240,19 @@ if($_POST)
                               ?>
                           </select>    
                       </td>
+                      <td><input type="text" name="idclienteaseguradora" class="form-control" value='<?php echo $idclienteaseguradora;?>'></td>
+                      <td><input type="text" name="gruposanguineo" class="form-control" value='<?php echo $gruposanguineo;?>'></td>                   
                   </tr>
                   <tr class="text text-info">
-                      <th>Fecha Nacimiento</th>
                       <th>Anamnesis</th>
                       <th>Tiempo Enfermedad</th>
-                      
+                      <th>Alergia Medicamentosa</th>
                   </tr>
                   <tr>
-                      <td><input type="date" name="fecha_nac" class="form-control" value='<?php echo $fecha_nac;?>'></td>
                       <td><textarea class="form-control" name="anamnesis"><?php echo $anamnesis;?></textarea></td>
                       <td><input type="number" name="tiempo_enfermedad" class="form-control" value='<?php echo $tiempo_enfermedad;?>'></td>
-                  </tr>
-                                    
+                      <td><input type="text" name="alergiamed" class="form-control" value='<?php echo $alergiamed;?>'></td>                     
+                  </tr>                  
               </table>
               <div class="text-right">
                   <button class="btn btn-success" type="submit">Actualizar</button>

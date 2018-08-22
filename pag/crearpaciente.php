@@ -25,6 +25,10 @@ $direccion="";
 $anamnesis="";
 $tiempo_enfermedad="";
 $email="";
+$idclienteaseguradora="";
+$gruposanguineo="";
+$alergiamed="";
+
 if($_POST)
 {
     //Mostrar($_POST);
@@ -40,10 +44,13 @@ if($_POST)
     if(isset($_POST['anamnesis'])){$anamnesis=eliminarblancos($_POST['anamnesis']);}
     if(isset($_POST['tiempo_enfermedad'])){$tiempo_enfermedad=eliminarblancos($_POST['tiempo_enfermedad']);}
     if(isset($_POST['email'])){$email=eliminarblancos($_POST['email']);}
+    if(isset($_POST['idclienteaseguradora'])){$idclienteaseguradora=eliminarblancos($_POST['idclienteaseguradora']);}
+    if(isset($_POST['gruposanguineo'])){$gruposanguineo=eliminarblancos($_POST['gruposanguineo']);}
+    if(isset($_POST['alergiamed'])){$alergiamed=eliminarblancos($_POST['alergiamed']);}
     
     $error=0;
     ##validar
-    if($nombre_paciente=="" || $docID=="" || $hc=="" || $fecha_nac=="" || $ocupacion=="" || $direccion=="")
+    if($nombre_paciente=="" || $docID=="" || $hc=="" || $fecha_nac=="" || $ocupacion=="" || $direccion=="" || $gruposanguineo=="")
     {
         $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
@@ -71,12 +78,22 @@ if($_POST)
             $error++;
             
         }
+        ##validar que el numero de historia clinica no se repita
+        $list_pac=$objPaciente->BuscarPaciente($hc, "", "", "");
+        if(count($list_pac)>0)
+        {
+            $msg="<div class='alert alert-danger alert-dismissable'>"
+                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                . "Error! Ya existe un paciente registrado con ese n&uacute;mero de historia clinica $hc</div>"; 
+            $error++;
+            
+        }
         
         
         if($error==0)
         {
             $sd= new PacienteController();
-            $affected=$objPaciente->CrearPaciente($nombre_paciente, $hc, $docID, $fecha_nac, $sexo, $telefono, $ocupacion, $direccion, $anamnesis, $tiempo_enfermedad, $aseguradora, $email);
+            $affected=$objPaciente->CrearPaciente($nombre_paciente, $hc, $docID, $fecha_nac, $sexo, $telefono, $ocupacion, $direccion, $anamnesis, $tiempo_enfermedad, $aseguradora, $email, $idclienteaseguradora, $gruposanguineo, $alergiamed);
             if($affected==1)
             {
                 
@@ -105,7 +122,7 @@ if($_POST)
     <div class="container ">
       
         <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-user"> Nuevo Paciente</i></h3>
+          <h3 class="text-left"><i class="fa fa-user text-info"> Nuevo Paciente</i></h3>
           <?php 
              echo $msg;
           ?>
@@ -146,11 +163,22 @@ if($_POST)
                   <tr class="text text-info">
                       <th>Ocupaci&oacute;n</th>
                       <th>Email</th>
-                      <th>Aseguradora</th>
+                      <th >Direcci&oacute;n</th>
                   </tr>
                   <tr>
                       <td><input type="text" name='ocupacion' class="form-control" required="" value='<?php echo $ocupacion;?>'></td>
                       <td><input type="email" name="email" class="form-control" value='<?php echo $email;?>'></td>
+                      <td >
+                          <textarea class="form-control" name="direccion"><?php echo $direccion;?></textarea>
+                      </td>
+                      
+                  </tr>
+                  <tr class="text text-info">
+                      <th>Aseguradora</th>
+                      <th>ID de Cliente en Aseguradora</th>
+                      <th>Grupo Sanguíneo</th>
+                  </tr>
+                  <tr>
                       <td>
                           <select name="aseguradora" class="form-control">
                               <option value=''>--SELECCIONE--</option>
@@ -166,20 +194,23 @@ if($_POST)
                               ?>
                           </select>
                       </td>
+                      <td><input type="text" name="idclienteaseguradora" class="form-control" value="<?php echo $idclienteaseguradora;?>"></td>
+                      <td><input type="text" name="gruposanguineo" class="form-control" value="<?php echo $gruposanguineo;?>"></td>
+                                            
                   </tr>
                   <tr class="text text-info">
-                      <th >Direcci&oacute;n</th>
                       <th >Anamnesis</th>
                       <th>Tiempo Enfermedad</th>
+                      <th>Alergia Medicamentosa</th>
                   </tr>
                   <tr>
-                      <td >
-                          <textarea class="form-control" name="direccion"><?php echo $direccion;?></textarea>
-                      </td>
-                      <td >
+                      <td>
                           <textarea class="form-control" name="anamnesis" ><?php echo $anamnesis;?></textarea>
                       </td>
                       <td><input type="number" name="tiempo_enfermedad" class="form-control" min="0" max="100" value="<?php echo $tiempo_enfermedad;?>"></td>
+                      <td>
+                          <textarea class="form-control" name="alergiamed" ><?php echo $alergiamed;?></textarea>
+                      </td>
                       
                   </tr>
                   
