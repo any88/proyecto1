@@ -89,8 +89,9 @@ include './header.php';
           <div class="service-icon"><i class="fa fa-hand-scissors-o"></i></div>
           <h4 class="service-title"><a href="listar_nombrecirugia.php">Tipo de Cirugía</a></h4>
            <p class="service-description">Descripci&oacute;n..</p>
-        </div>  
-          <div class="col-md-12"></div>
+        </div> 
+          </div> 
+         <div class="row">
           <div class="col-md-4 service-item">
           <div class="service-icon"><i class="fa fa-flask"></i></div>
           <h4 class="service-title"><a href="listar_analisislaboratorio.php">Tipo de Análisis</a></h4>
@@ -99,6 +100,11 @@ include './header.php';
         <div class="col-md-4 service-item">
           <div class="service-icon"><i class="fa fa-area-chart"></i></div>
           <h4 class="service-title"><a href="listar_pruebasradiologia.php">Tipo de Prueba Radiológica</a></h4>
+          <p class="service-description">Descripci&oacute;n..</p>
+        </div>
+          <div class="col-md-4 service-item">
+          <div class="service-icon"><i class="fa fa-bed"></i></div>
+          <h4 class="service-title"><a href="listar_camas.php">Camas Hospitalizaci&oacute;n</a></h4>
           <p class="service-description">Descripci&oacute;n..</p>
         </div>
         
