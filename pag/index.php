@@ -109,7 +109,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
 
                                          <a href="mostrarpaciente.php?nik='.$id_paciente.'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
 
-                                         <a href="addservicios.php??nik='.$id_paciente.'" title="Nuevo Servicio" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>                     '
+                                         '
                              . '</td>';
                                 echo "</tr>";
                             }

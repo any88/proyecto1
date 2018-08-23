@@ -244,7 +244,7 @@ public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaN
         
         if($p_numerohc!="")
         {
-            $consulta=$consulta."WHERE `numerohc`='$p_numerohc'";
+            $consulta=$consulta."WHERE `numerohc` LIKE '%$p_numerohc%'";
         }
         if($p_nombre!="")
         {
@@ -261,11 +261,11 @@ public function ModificarPaciente($p_id,$p_nombre,$p_numeroHC,$p_docID,$p_fechaN
         {
             if($p_numerohc=="" && $p_nombre=="")
             {
-                $consulta=$consulta."WHERE `docid`='$p_docid'";
+                $consulta=$consulta."WHERE `docid` LIKE '%$p_docid%'";
             }
             else 
             {
-                $consulta=$consulta." and `docid`='$p_docid'";
+                $consulta=$consulta." and `docid` LIKE '%$p_docid%'";
             }
          }
          if($p_id!="")
