@@ -152,7 +152,7 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
         return $result;
     }
     
-    public function BuscarHospitalizacion($p_id, $p_fechaingreso)
+    public function BuscarHospitalizacion($p_id, $p_fechaingreso, $p_idservicio=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -172,7 +172,18 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
             {
                 $consulta=$consulta." and `fechaingreso`='$p_fechaingreso'";
             }
-        }        
+        }
+        if($p_idservicio!="")
+        {
+            if($p_id=="" && $p_fechaingreso=="")
+            {
+                $consulta=$consulta."WHERE `idservicio`='$p_idservicio'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `idservicio`='$p_idservicio'";
+            }
+        }
         
         $consulta=$consulta." order by `idhospitalizacion` ASC";
         $r=$bd->consulta($consulta);

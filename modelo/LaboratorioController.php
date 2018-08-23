@@ -114,42 +114,49 @@ public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_res
         return $result;
     }
     
-    public function BuscarLaboratorio($p_idlaboratorio, $p_idtipoanalisislab, $p_nombre)
+    public function BuscarLaboratorio($p_idlaboratorio, $p_idtipoanalisislab, $p_nombre, $p_idservicio=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
-        $laboratorio="SELECT * FROM `laboratorio` ";
+        $consulta="SELECT * FROM `laboratorio` ";
         
         if($p_idlaboratorio!="")
         {
-            $laboratorio=$laboratorio."WHERE `idlaboratorio`='$p_idlaboratorio'";
+            $consulta=$consulta."WHERE `idlaboratorio`='$p_idlaboratorio'";
         }
         if($p_idtipoanalisislab!="")
         {
             if($p_idlaboratorio=="")
             {
-                $laboratorio=$laboratorio."WHERE `idtipoanalisislaboratorio`='$p_idtipoanalisislab'";
+                $consulta=$consulta."WHERE `idtipoanalisislaboratorio`='$p_idtipoanalisislab'";
             }
             else 
             {
-                $laboratorio=$laboratorio." and `idtipoanalisislaboratorio`='$p_idtipoanalisislab'";
+                $consulta=$consulta." and `idtipoanalisislaboratorio`='$p_idtipoanalisislab'";
             }
         }
         if($p_nombre!="")
         {
             if($p_idlaboratorio=="" && $p_idtipoanalisislab=="")
             {
-                $laboratorio=$laboratorio."WHERE `idnombreanalisis`='$p_nombre'";
+                $consulta=$consulta."WHERE `idnombreanalisis`='$p_nombre'";
             }
             else 
             {
-                $laboratorio=$laboratorio." and `idnombreanalisis`='$p_nombre'";
+                $consulta=$consulta." and `idnombreanalisis`='$p_nombre'";
             }
          }
+         if ($p_idservicio != "") {
+            if ($p_idlaboratorio == "" && $p_idtipoanalisislab == "" && $p_nombre == "") {
+                $consulta = $consulta . "WHERE `idservicio`='$p_idservicio'";
+            } else {
+                $consulta = $consulta . " and `idservicio`='$p_idservicio'";
+            }
+        }
          
         
-        $laboratorio=$laboratorio." order by `idlaboratorio` ASC";
-        $r=$bd->consulta($laboratorio);
+        $consulta=$consulta." order by `idlaboratorio` ASC";
+        $r=$bd->consulta($consulta);
         if($r)
         {
             $a=0;

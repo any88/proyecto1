@@ -15,12 +15,22 @@ include '../modelo/PacienteController.php';
 include '../modelo/ServicioController.php';
 include '../modelo/MedicoController.php';
 include '../modelo/TipoServicioController.php';
+include '../modelo/ConsultaController.php';
+include '../modelo/CirugiaController.php';
+include '../modelo/HospitalizacionController.php';
+include '../modelo/LaboratorioController.php';
+include '../modelo/RadiologiaController.php';
 
 $objPacienteServC=new PacienteServicioController();
 $objPaciente=new PacienteController();
 $objMedicoC=new MedicoController();
 $objServicioC=new ServicioController();
 $objTipoServicio=new TipoServicioController();
+$objConsulta=new ConsultaController();
+$objCirugia= new CirugiaController();
+$objHospitalizacion= new HospitalizacionController();
+$objRadiologia= new RadiologiaController();
+$objLaboratorio= new LaboratorioController();
 
 $listaPacientesDelDia=array();
 $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
@@ -87,11 +97,58 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
                                 if(count($arrServicios)>0)
                                 {
                                     $id_tipo_servicio=$arrServicios[0]->getIdTipoServicio();
+                                    $link="";
+                                    $nik="";
+                                    if($id_tipo_servicio==1)
+                                    {
+                                        $link="mostrar_consulta.php";
+                                        $arrCons=$objConsulta->BuscarConsulta("", "", $id_servicio);
+                                        if(count($arrCons)>0)
+                                            {
+                                                $nik=$arrCons[0]->getIdConsulta();
+                                            }
+                                    }
+                                    if($id_tipo_servicio==2)
+                                    {
+                                        $link="mostrar_cirugia.php";
+                                        $arrCir=$objCirugia->BuscarCirugia("", "", "", $id_servicio);
+                                        if(count($arrCir)>0)
+                                            {
+                                                $nik=$arrCir[0]->getIdCirugia();
+                                            }
+                                    }
+                                    if($id_tipo_servicio==3)
+                                    {
+                                        $link="mostrar_hospitalizacion.php";
+                                        $arrHosp=$objHospitalizacion->BuscarHospitalizacion("", "", $id_servicio);
+                                        if(count($arrCir)>0)
+                                            {
+                                                $nik=$arrCir[0]->getIdCirugia();
+                                            }
+                                    }
+                                    if($id_tipo_servicio==4)
+                                    {
+                                        $link="mostrar_radiologia.php";
+                                        $arrRad=$objRadiologia->BuscarRadiologia("", "", "", $id_servicio);
+                                        if(count($arrRad)>0)
+                                            {
+                                                $nik=$arrRad[0]->getIdRadiologia();
+                                            }
+                                    }
+                                    if($id_tipo_servicio==5)
+                                    {
+                                        $link="mostrar_laboratorio.php";
+                                        $arrLab=$objLaboratorio->BuscarLaboratorio("", "", "", $id_servicio);
+                                        if(count($arrLab)>0)
+                                            {
+                                                $nik=$arrLab[0]->getIdLaboratorio();
+                                            }
+                                    }
 
                                     $arrTipoServicio=$objTipoServicio->BuscarTipoServicio($id_tipo_servicio, "");
                                     if(count($arrTipoServicio)>0)
                                     {
-                                        $nomb_servicio=$arrTipoServicio[0]->getTipoServicio();
+                                        $nomb_servicio=$arrTipoServicio[0]->getTipoServicio();  
                                     }
 
 
@@ -107,7 +164,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
 
                                          <a href="listar_pacientes.php?action=delete&nik='.$id_paciente.'&v='.$nomb_paciente.'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos  de el paciente '.$nomb_paciente.' ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
 
-                                         <a href="mostrarpaciente.php?nik='.$id_paciente.'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                         <a href=" '.$link.'?nik='.$nik.'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
 
                                          '
                              . '</td>';
