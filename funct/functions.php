@@ -424,12 +424,12 @@ return $d;
 }
 function  CompararFechas($f1,$f2)
 {
-   
+    
    $fecha_actual = strtotime("$f1 00:00:00");
    $fecha_entrada = strtotime("$f2 00:00:00");
     
 if($fecha_actual > $fecha_entrada){
-    return 0;##la fehca ya paso
+    return 0;##la fecha ya paso
 }else{
     return 1;
 }

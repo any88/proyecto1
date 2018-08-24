@@ -110,10 +110,10 @@ if(count($arrServH)>0)
         $arrHosp=$objHospitalizacion->BuscarHospitalizacion("", "",$id_servicio);
         
         if(count($arrHosp)>0)
-        {
+        {           
             $fecha_ingreso=$arrHosp[0]->getFechaIngreso();
             $fecha_alta=$arrHosp[0]->getFechaAlta();
-            if($fecha_alta=="0000-00-00" || CompararFechas(FechaActual(), $fecha_alta)==0)
+            if($fecha_alta=="0000-00-00" || CompararFechas($fecha_alta,FechaYMA())==0)
             {
                 $id_hospitalizacion_creado=$arrHosp[0]->getIdHospitalizacion();
                 $nro_cama=$arrHosp[0]->getNroCama();
@@ -139,6 +139,7 @@ if(count($arrServH)>0)
                     $a++;
                 }
             }
+            
             
         }
         
