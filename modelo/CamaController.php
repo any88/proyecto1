@@ -40,15 +40,15 @@ class CamaController
         return $affected;
     }
     
-    public function ModificarEstadoCama($id_cama,$estado)
+    public function ModificarEstadoCama($num_cama,$estado)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
-        $id_cama=$bd->real_scape_string($id_cama);
-        $p_num_cama=$bd->real_scape_string($p_num_cama);
+        $num_cama=$bd->real_scape_string($num_cama);
+        $estado=$bd->real_scape_string($estado);
        
         
-        $consulta="UPDATE `camas_hospitalizacion` SET `estado`='$estado' WHERE (`id_cama`='$id_cama')";
+        $consulta="UPDATE `camas_hospitalizacion` SET `estado`='$estado' WHERE (`num_cama`='$num_cama')";
         $r=$bd->consulta($consulta);
         if($r)
         {

@@ -446,6 +446,53 @@ function EliminarServicio(id)
    
    
 }
+function Chequear(id)
+    {
+        //si se da el caso de que todos estan marcados y se desenmarca una opcion entonces quitar el todos
+        var todos=document.getElementById(id);
+        var nuevo=document.getElementById("nuevo"+id);
+        var editar=document.getElementById("editar"+id);
+        var eliminar=document.getElementById("eliminar"+id);
+        var listar=document.getElementById("listar"+id);
+        var imp=document.getElementById("imp"+id);
+        if(nuevo.checked==true && editar.checked==true && eliminar.checked==true && listar.checked==true && imp.checked==true)
+        {
+            todos.checked=true;
+        }
+        else{todos.checked=false;}
+        
+    }
+    function MarcarTodos(id)
+{
+    var todos=document.getElementById(id);
+    var nuevo=document.getElementById("nuevo"+id);
+    var editar=document.getElementById("editar"+id);
+    var eliminar=document.getElementById("eliminar"+id);
+    var listar=document.getElementById("listar"+id);
+    var imp=document.getElementById("imp"+id);
+    
+    if(todos.checked==true)
+    {
+       
+       
+        nuevo.checked=true;
+        editar.checked=true;
+        eliminar.checked=true;
+        listar.checked=true;
+        imp.checked=true;
+        
+    }
+    else
+    {
+        
+        nuevo.checked=false;
+        editar.checked=false;
+        eliminar.checked=false;
+        listar.checked=false;
+        imp.checked=false;
+        
+    }
+}
 
 /*** poner en la misma pagina que las tabs
  * 

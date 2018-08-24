@@ -264,7 +264,6 @@ if($_POST)
                             
                             echo "<td>$nombre <input type='hidden' name='nombre_menu$id_menu' value='$nombre' ></td>";
                             if(BuscarElementoEnArray('todos'.$id_menu, $arr_checked)){$cheked="checked=true";}else{$cheked="";}
-
                             echo "<td><input type='checkbox' name='todos$id_menu' onclick='MarcarTodos(this.id);'  id='$id_menu' $cheked></td>";
                             
                             if(BuscarElementoEnArray('nuevo'.$id_menu, $arr_checked)){$cheked="checked=true";}else{$cheked="";}
