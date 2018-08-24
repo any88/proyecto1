@@ -1113,7 +1113,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                            if($aff!=0)
                            {
                                //Mostrar([$aff, $id_tipoanalisis, $id_nombreanalisis, $precio_analisis, $resultado_analisis]);
-                               $affected=$objLaboratorio->CrearLaboratorio($aff, $id_tipoanalisis, $id_nombreanalisis, $precio_analisis, $resultado_analisis);
+                               $affected=$objLaboratorio->CrearLaboratorio($aff, $id_tipoanalisis, $id_nombreanalisis, $resultado_analisis);
                                //Mostrar($affected);
                                if($affected!=0)
                                {
