@@ -25,7 +25,7 @@ include '../modelo/HospitalizacionController.php';
 include '../modelo/TrabajadorController.php';
 include '../modelo/CargoController.php';
 include '../modelo/InsumoHospitalizacionController.php';
-
+include '../modelo/CamaController.php';
 
 //$msg="";
 $objConsulta=new ConsultaController();
@@ -52,6 +52,7 @@ $objLabClinico= new labclinicoController();
 $objHospitalizacion= new HospitalizacionController();
 $objCargo=new CargoController();
 $objInsumoHosp=new InsumoHospitalizacionController();
+$objCamaC=new CamaController();
 
 $lista_medicos=$objMedico->MostrarMedico();
 $lista_especialidades=$objEspecialidad->MostrarEspecialidad();
@@ -125,6 +126,7 @@ $temp="";
 $peso="";
 $examfis="";
 $preciohosp="";
+$list_camas_disponibles=$objCamaC->MostrarCamasDisponibles();
 ##variables radiologia
 $idpruebarad="";
 $tiporadiologia="";
@@ -766,7 +768,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                    
                     ##insertar servicio
                    if(isset($_POST['fechaalta'])){$fechaalta=$_POST['fechaalta'];}
-                   if(isset($_POST['duracionhosp'])){$duracionhosp=$_POST['duracionhosp'];}
+                   
                    if(isset($_POST['habit'])){$tipohabit=$_POST['habit'];}
                    if(isset($_POST['numcama'])){$numcama=$_POST['numcama'];}
                    if(isset($_POST['estadopcte'])){$estadopcte=$_POST['estadopcte'];}
@@ -809,18 +811,33 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                                 . "Error! Los campos numero de cama y peso solo admiten numeros</div>"; 
                                 $error++;
                             }
-                       
+                       #que la cama no este ocupada
+                         $arrcama=$objCamaC->BuscarCama("", $numcama, "");
+                         if(count($arrcama)>0)
+                         {
+                             if($arrcama[0]->getEstado()==1)
+                             {
+                                 $msg="<div class='alert alert-danger alert-dismissable'>"
+                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                                . "Error! La cama $numcama ya ha sido ocupada. Por favor escoja una cama nueva. En caso de que no encuentre camas disponibles."
+                                . "Recuerde actualizar la disponibilidad de camas en nomencladores.</div>"; 
+                                $error++;
+                             }
+                         }
+                         
                        if($error==0)
                        { 
                            $aff=$objServicioC->CrearServicio($id_servicio, $preciohosp);  
                            
                            if($aff!=0)
                            {
-                               $id_hospitalizacion_creado=$objHospitalizacion->CrearHospitalizacion($aff, $fechaingreso, $fechaalta, $duracionhosp,
+                               $id_hospitalizacion_creado=$objHospitalizacion->CrearHospitalizacion($aff, $fechaingreso, $fechaalta, "",
                                        $tipohabit, $numcama, $nombrefam, $parentescofam, $estadopcte, $condicatencion, 
                                        $pa, $pulso, $temp, $peso, $examfis, $preciohosp);
-                               //Mostrar($affected);
-
+                               
+                               ##poner la cama como ocupada
+                               $aff=$objCamaC->ModificarEstadoCama($numcama, 1);
+                               
                                if($id_hospitalizacion_creado!=0)
                                {
                                     ##insertar paciente-servicio
@@ -877,7 +894,8 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                                                 $msg="<div class='alert alert-danger alert-dismissable'>"
                                                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
                                                 . "Error! No se pudieron insertar los datos de insumos hospitalizacion.</div>";
-                                        
+                                                ##vaciar cama
+                                                $aff=$objCamaC->ModificarEstadoCama($numcama, 0);
                                             }
                                             
                                         }
@@ -887,6 +905,8 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                                             $msg="<div class='alert alert-danger alert-dismissable'>"
                                             . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
                                             . "Error! No se pudieron insertar los datos del paciente-servicio.</div>";
+                                            ##vaciar cama
+                                            $aff=$objCamaC->ModificarEstadoCama($numcama, 0);
                                         }
                                }
                                else 
@@ -895,6 +915,8 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                                    $msg="<div class='alert alert-danger alert-dismissable'>"
                                     . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
                                     . "Error! No se pudo registrar los datos de la hospitalizacion.</div>"; 
+                                   ##vaciar cama
+                                   $aff=$objCamaC->ModificarEstadoCama($numcama, 0);
                                 }
                            }
                            else
@@ -1434,7 +1456,6 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                   
               </table>
               </div>
-              
                <div class="col-md-12" >
                   <table class="table table-responsive table-bordered" id="tabla_med_equipo">
                     <tr>
@@ -1489,7 +1510,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
               </div>
               
              </div>
-            <br><br><br>
+            <br>
         </form>
         
         <!--HOSPITALIZACION-->
@@ -1501,7 +1522,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                   <tr class="text text-info">
                       <th>Fecha Ingreso</th>
                       <th>Fecha de Alta</th>
-                      <th>Duración</th>
+                      <th colspan="2">Condición de Atención</th>
                   </tr>
                   <tr>
                           <input type="hidden" name="act_select_hidden" id="hospitalizacion_hidden" value="0">
@@ -1509,69 +1530,82 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                           <input type="hidden" name="id_paciente_buscar"  value="<?php echo $idpaciente;?>">
                       <td><input type="date" name="fechaingreso" class="form-control" required="" value="<?php echo $fechaingreso;?>"></td>  
                       <td><input type="date" name="fechaalta" class="form-control" value="<?php echo $fechaalta;?>"></td>
-                      <td><input type="text" name="duracionhosp" class="form-control" value="<?php echo $duracionhosp;?>"></td>
+                      <td colspan="2"><input type="text" name='condicatencion' class="form-control" required="" value='<?php echo $condicatencion;?>'></td>
                   </tr>
                   <tr class="text text-info">
-                      <th>Tipo de Habitación</th>
+                      <th colspan="2">Tipo de Habitación</th>
                       <th>Num. de Cama</th>
-                      <th>Estado del Paciente</th>
+                      <th>Precio</th>
+                      
                   </tr>
                   <tr>
-                      <td>
+                      <td colspan="2">
                           <select name="habit" class="form-control" required="">
                               <option value=''>--SELECCIONE--</option>
                               <option value='f'>Full</option>
                               <option value='c'>Compartida</option>
                           </select>
                       </td>
-                      <td><input type="text" name='numcama' class="form-control" required="" value='<?php echo $numcama;?>'></td>
-                      <td><input type="text" name='estadopcte' class="form-control" required="" value='<?php echo $estadopcte;?>'></td>
+                      <td>
+                          <?php echo $numcama;?>
+                          <select name="numcama" class="form-control">
+                              <option value="0">--SELECCIONE--</option>
+                              <?PHP 
+                                for ($i = 0; $i < count($list_camas_disponibles); $i++)
+                                {
+                                   $selected="" ;
+                                   $ncama=$list_camas_disponibles[$i]->getNum_cama();
+                                   if($ncama==$numcama){$selected="selected";}
+                                   echo "<option value='$ncama' $selected>$ncama</option>";
+                                }
+                              ?>
+                          </select>
+                      </td>
+                      <td><input type="text" name="preciohosp" class="form-control" value='<?php echo $preciohosp;?>'></td>
+                      
                   </tr>
                   <tr class="text text-info">
-                      <th>Nombre del Familiar</th>
+                      <th colspan="2">Nombre del Familiar</th>
                       <th>Parentesco del Familiar</th>
-                      <th>Condición de Atención</th>
+                      <th>Estado del Paciente</th>
                   </tr>
                   <tr>
-                      <td><input type="text" name="nombrefam" class="form-control" value='<?php echo $nombrefam;?>'></td>
+                      <td colspan="2"><input type="text" name="nombrefam" class="form-control" value='<?php echo $nombrefam;?>'></td>
                       <td><input type="text" name="parentescofam" class="form-control" value='<?php echo $parentescofam;?>'></td>
-                      <td><input type="text" name='condicatencion' class="form-control" required="" value='<?php echo $condicatencion;?>'></td>
+                      <td><input type="text" name='estadopcte' class="form-control" required="" value='<?php echo $estadopcte;?>'></td>
                   </tr>
                   <tr class="text text-info">
                       <th>PA</th>
                       <th>Pulso</th>
                       <th>Temperatura</th>
+                      <th>Peso (Kg)</th>
                   </tr>
                   <tr>
                       <td><input type="text" name="pa" class="form-control" required="" value='<?php echo $pa;?>'></td>
                       <td><input type="text" name="pulso" class="form-control" required="" value='<?php echo $pulso;?>'></td>
                       <td><input type="text" name="temp" class="form-control" required="" value='<?php echo $temp;?>'></td>
+                      <td><input type="text" name="peso" class="form-control" required="" value='<?php echo $peso;?>'></td>
                   </tr>
                   <tr class="text text-info">
-                      <th>Peso (Kg)</th>
-                      <th>Examen Físico</th>
-                      <th>Precio</th>
+                      
+                      <th colspan="4">Examen Físico</th>
+                      
                   </tr>
                   <tr>
-                      <td><input type="text" name="peso" class="form-control" required="" value='<?php echo $peso;?>'></td>
-                      <td>
+                      
+                      <td colspan="4">
                           <textarea class="form-control" name="examfis" required=""><?php echo $examfis;?></textarea>
                       </td>
-                      <td><input type="text" name="preciohosp" class="form-control" value='<?php echo $preciohosp;?>'></td>
+                      
                   </tr>
               </table>
-              <div class="text-right">
-                  <button  type="submit" class="btn btn-success">Registrar</button>
-                  <a href='index.php' class="btn btn-danger" >Cancelar</a>
-                  <br>
-                  <br>
-              </div>
-              <div class="col-md-5" >
-                  <table class="table table-responsive" id="tabla_insumosH">
+              
+              
+                  <table class="table table-responsive table-bordered" id="tabla_insumosH">
                     <tr>
                       <th colspan="3" >
                           <input type="hidden" name="cantidad_insumos" id='cantidad_insumosH' value="<?php echo $p_cantidad_insumos;?>">
-                          <label>Listado de Insumos</label>
+                          <label class="text-info">Listado de Insumos</label>
                             <div class="text-right">
                                 <button type='button' class='btn btn-primary btn-xs' title='Adicionar Insumos' data-toggle='modal' data-target='#divModalHosp' style="margin-top: -45px;"><i class='fa fa-medkit'></i> Adicionar Insumos</button>
                             </div>
@@ -1599,8 +1633,13 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                     }
                      ?>
                       
-                  
               </table>
+             
+              <div class="text-right">
+                  <button  type="submit" class="btn btn-success">Registrar</button>
+                  <a href='index.php' class="btn btn-danger" >Cancelar</a>
+                  <br>
+                  <br>
               </div>
               </div>
         </form>

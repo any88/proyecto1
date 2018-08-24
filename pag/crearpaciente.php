@@ -50,7 +50,7 @@ if($_POST)
     
     $error=0;
     ##validar
-    if($nombre_paciente=="" || $docID=="" || $hc=="" || $fecha_nac=="" || $ocupacion=="" || $direccion=="" || $gruposanguineo=="" || $id_aseguradora=="")
+    if($nombre_paciente=="" || $docID=="" || $hc=="" || $fecha_nac=="" || $ocupacion=="" || $direccion=="" || $gruposanguineo=="" || $aseguradora=="")
     {
         $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
