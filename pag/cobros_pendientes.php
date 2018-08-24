@@ -138,9 +138,7 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
 
                              <a href="'.$link_listar.'?action=delete&nik='.$idservicio.'&v='.$nombre_servicio.'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos  de el paciente '.$nombre_servicio.' ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                  
-                             <a href="'.$link_mostrar.'?nik='.$idPaciente.'" title="Mostrar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-
-                             <a href="'.$link_servicio.'?nik='.$idPaciente.'" title="Nuevo Servicio" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>                     '
+                             <a href="'.$link_mostrar.'?nik='.$idPaciente.'" title="Mostrar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'
                  . '</td>';
                    echo "</tr>";
                  }

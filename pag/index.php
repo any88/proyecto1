@@ -159,15 +159,8 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
                                 echo "<td>$nomb_servicio</td>";
                                 echo "<td>$nomb_paciente</td>";
                                 echo '
-                                <td>
-                                         <a href="editarpaciente.php?nik='.$id_paciente.'" title="Editar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-
-                                         <a href="listar_pacientes.php?action=delete&nik='.$id_paciente.'&v='.$nomb_paciente.'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos  de el paciente '.$nomb_paciente.' ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-
-                                         <a href=" '.$link.'?nik='.$nik.'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-
-                                         '
-                             . '</td>';
+                                <td>         
+                                <a href=" '.$link.'?nik='.$nik.'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'. '</td>';
                                 echo "</tr>";
                             }
                              echo "</tbody>";

@@ -403,7 +403,7 @@ if($_POST)
                                                         echo"<td>";
                                                        
                                                             echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";
-                                                             echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'><i class='fa fa-eye'></i></a>";
+                                                            echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'><i class='fa fa-eye'></i></a> ";
                                                                 echo "<input type='hidden' name='idt' value='$id_ps'>";
                                                                 echo "<button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'><i class='fa fa-dollar'></i></button>";
                                                             echo "</form>";
