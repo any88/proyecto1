@@ -121,9 +121,9 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
                                     {
                                         $link="mostrar_hospitalizacion.php";
                                         $arrHosp=$objHospitalizacion->BuscarHospitalizacion("", "", $id_servicio);
-                                        if(count($arrCir)>0)
+                                        if(count($arrHosp)>0)
                                             {
-                                                $nik=$arrCir[0]->getIdCirugia();
+                                                $nik=$arrHosp[0]->getIdHospitalizacion();
                                             }
                                     }
                                     if($id_tipo_servicio==4)

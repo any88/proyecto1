@@ -15,6 +15,7 @@ $objHospitalizacion= new HospitalizacionController();
 $objPacienteC= new PacienteController();
 $objInsumo= new InsumoController();
 $objInsumoHosp= new InsumoHospitalizacionController();
+$objServicioC=new ServicioController();
 
 $datoshosp=array();
 $datosInsumoHosp=array();
@@ -53,7 +54,7 @@ if($_GET)
                  $temp=$datoshosp[0]->getTemp();
                  $peso=$datoshosp[0]->getPeso();
                  $examfis=$datoshosp[0]->getExamenFisico();
-                 $precio=$datoshosp[0]->getPrecio();  //deberia venir de servicio
+                 //$precio=$datoshosp[0]->getPrecio();  //deberia venir de servicio
                  
                  if($tipohab=="f"){$tipohab="Full";}
                  if($tipohab=="c"){$tipohab="Compartida";}    
@@ -76,6 +77,8 @@ if($_GET)
                       }
                      
                  }
+                 $arrS=$objServicioC->BuscarServicio($idservicio, "", "");
+                 if(count($arrS)>0){$precio=$arrS[0]->getPrecio();}
                  
                  ##datos de los insumos x insumo_hospitalizacion
                  $datosInsumoHosp = $objInsumoHosp->BuscarInsumoHospitalizacion("", "", $idhosp);

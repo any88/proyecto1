@@ -762,27 +762,24 @@ for ($i = 0; $i < count($arr_cargos); $i++)
            if(isset($_POST['act_select_hidden']))
             {
                
-               $act_select_hidden=$_POST['act_select_hidden'];  //util aca?
+               $act_select_hidden=$_POST['act_select_hidden']; 
+                if(isset($_POST['fechaalta'])){$fechaalta=$_POST['fechaalta'];}
+                if(isset($_POST['habit'])){$tipohabit=$_POST['habit'];}
+                if(isset($_POST['numcama'])){$numcama=$_POST['numcama'];}
+                if(isset($_POST['estadopcte'])){$estadopcte=$_POST['estadopcte'];}
+                if(isset($_POST['nombrefam'])){$nombrefam=$_POST['nombrefam'];}
+                if(isset($_POST['parentescofam'])){$parentescofam=$_POST['parentescofam'];}
+                if(isset($_POST['condicatencion'])){$condicatencion=$_POST['condicatencion'];}
+                if(isset($_POST['pa'])){$pa=$_POST['pa'];}
+                if(isset($_POST['pulso'])){$pulso=$_POST['pulso'];}
+                if(isset($_POST['temp'])){$temp=$_POST['temp'];}
+                if(isset($_POST['peso'])){$peso=$_POST['peso'];}
+                if(isset($_POST['examfis'])){$examfis=$_POST['examfis'];}
+                if(isset($_POST['preciohosp'])){$preciohosp=$_POST['preciohosp'];}
+                else{$preciohosp=0;}
                 if($act_select_hidden!=1)
                 {
-                   
-                    ##insertar servicio
-                   if(isset($_POST['fechaalta'])){$fechaalta=$_POST['fechaalta'];}
-                   
-                   if(isset($_POST['habit'])){$tipohabit=$_POST['habit'];}
-                   if(isset($_POST['numcama'])){$numcama=$_POST['numcama'];}
-                   if(isset($_POST['estadopcte'])){$estadopcte=$_POST['estadopcte'];}
-                   if(isset($_POST['nombrefam'])){$nombrefam=$_POST['nombrefam'];}
-                   if(isset($_POST['parentescofam'])){$parentescofam=$_POST['parentescofam'];}
-                   if(isset($_POST['condicatencion'])){$condicatencion=$_POST['condicatencion'];}
-                   if(isset($_POST['pa'])){$pa=$_POST['pa'];}
-                   if(isset($_POST['pulso'])){$pulso=$_POST['pulso'];}
-                   if(isset($_POST['temp'])){$temp=$_POST['temp'];}
-                   if(isset($_POST['peso'])){$peso=$_POST['peso'];}
-                   if(isset($_POST['examfis'])){$examfis=$_POST['examfis'];}
-                   if(isset($_POST['preciohosp'])){$preciohosp=$_POST['preciohosp'];}
-                       else{$preciohosp=0;}
-                                                            
+                    ##insertar servicio                
                    if(eliminarblancos($tipohabit)=="" || $numcama=="" || eliminarblancos($estadopcte)=="" || 
                    eliminarblancos($condicatencion)=="" || eliminarblancos($pa)=="" || eliminarblancos($pulso)==""
                     || eliminarblancos($temp)=="" || eliminarblancos($peso)=="" || eliminarblancos($examfis)=="")
@@ -836,7 +833,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                                        $pa, $pulso, $temp, $peso, $examfis, $preciohosp);
                                
                                ##poner la cama como ocupada
-                               $aff=$objCamaC->ModificarEstadoCama($numcama, 1);
+                               $afected_cama=$objCamaC->ModificarEstadoCama($numcama, 1);
                                
                                if($id_hospitalizacion_creado!=0)
                                {
