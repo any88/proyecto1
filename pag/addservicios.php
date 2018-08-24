@@ -187,6 +187,11 @@ if($_POST)
         if($act_select_hidden==2)
         {
             #solo se envio el select de servicios y hay que mostrar el div que el correspopnda
+            $arrTipoServicioP=$objTipoServicio->BuscarTipoServicio($id_servicio, "");
+            if(count($arrTipoServicioP)>0)
+            {
+                $pts=$arrTipoServicioP[0]->getPrecio_base();
+            }
            if($id_servicio==1)
             {##mostrar consulta
                
@@ -195,6 +200,8 @@ if($_POST)
                 $mostrar_hospitalizacion="hidden";
                 $mostrar_radiologia="hidden";
                 $mostrar_laboratorio="hidden";
+                $precio_consulta=$pts;
+                
             }
             if($id_servicio==2)
             {##mostrar cirugia
@@ -204,6 +211,7 @@ if($_POST)
                 $mostrar_hospitalizacion="hidden";
                 $mostrar_radiologia="hidden";
                 $mostrar_laboratorio="hidden";
+                $p_precio_cirugia=$pts;
             }
             if($id_servicio==3)
             {##mostrar hospitalizacion
@@ -213,6 +221,7 @@ if($_POST)
                 $mostrar_hospitalizacion="";
                 $mostrar_radiologia="hidden";
                 $mostrar_laboratorio="hidden";
+                $preciohosp=$pts;
             }
             if($id_servicio==4)
             {##mostrar radiologia
@@ -222,6 +231,7 @@ if($_POST)
                 $mostrar_hospitalizacion="hidden";
                 $mostrar_radiologia="";
                 $mostrar_laboratorio="hidden";
+                $precio_rad=$pts;
                 
             }
             if($id_servicio==5)
@@ -232,6 +242,7 @@ if($_POST)
                 $mostrar_hospitalizacion="hidden";
                 $mostrar_radiologia="hidden";
                 $mostrar_laboratorio="";
+                $precio_analisis=$pts;
             }
         }
        ##para consulta 
@@ -1082,21 +1093,21 @@ for ($i = 0; $i < count($arr_cargos); $i++)
            if(isset($_POST['act_select_hidden']))
             {
                $act_select_hidden=$_POST['act_select_hidden'];
+                if(isset($_POST['nombreanalisis'])){$id_nombreanalisis=$_POST['nombreanalisis'];}
+                if(isset($_POST['fechaanalisis'])){$fecha_analisis=$_POST['fechaanalisis'];}
+                if(isset($_POST['resultadolab'])){$resultado_analisis=$_POST['resultadolab'];}
+                if(isset($_POST['preciolab'])){$precio_analisis=$_POST['preciolab'];}
+                if(isset($_POST['labclin'])){$labclinico=$_POST['labclin'];}
                if($act_select_hidden==1)
                {
                    ##cargar categorias de analisis
-                   $lista_tipoanalisislab=$objTipoAnalisisLab->BuscarTipoAnalisisLaboratorio($id_tipoanalisis, "");
+                   $lista_nombreanalisis=$objNombreAnalisis->BuscarNombreAnalisis("", "", $id_tipoanalisis);
+                  
                }
                else
                {
                     
                    ##insertar servicio
-                   if(isset($_POST['nombreanalisis'])){$id_nombreanalisis=$_POST['nombreanalisis'];}
-                   if(isset($_POST['fechaanalisis'])){$fecha_analisis=$_POST['fechaanalisis'];}
-                   if(isset($_POST['resultadolab'])){$resultado_analisis=$_POST['resultadolab'];}
-                   if(isset($_POST['preciolab'])){$precio_analisis=$_POST['preciolab'];}
-                   if(isset($_POST['labclin'])){$labclinico=$_POST['labclin'];}
-                                     
                    if(eliminarblancos($id_servicio)=="")
                        {
                             $msg="<div class='alert alert-danger alert-dismissable'>"
@@ -1739,16 +1750,16 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                           <input type="hidden" name="act_select_hidden" id="analisis_hidden" value="0">
                           <input type="hidden" name="servicios"  value="<?php echo $id_servicio;?>">
                           <input type="hidden" name="id_paciente_buscar"  value="<?php echo $idpaciente;?>">
-                          <select name="tipoanalisis" class="form-control" required="" onchange="">
+                          <select name="tipoanalisis" class="form-control" required="" onchange="SubmitLaboratorio();">
                               <option value=''>--SELECCIONE--</option>
                               <?php
                             for ($i = 0; $i < count($lista_tipoanalisislab); $i++) 
                             {
-                               $id_tipoanalisis=$lista_tipoanalisislab[$i]->getIdTipoAnalisisLaboratorio();
+                               $tipoanalisis=$lista_tipoanalisislab[$i]->getIdTipoAnalisisLaboratorio();
                                $nombre=$lista_tipoanalisislab[$i]->getTipoAnalisis();
                                $marcar="";
                                if($id_tipoanalisis==$tipoanalisis){$marcar="selected='selected'";}
-                               echo "<option value='$id_tipoanalisis' $marcar>$nombre</option>";
+                               echo "<option value='$tipoanalisis' $marcar>$nombre</option>";
                             }
                               ?>
                           </select>

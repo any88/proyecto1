@@ -113,6 +113,13 @@ function SubmitRadiologia()
     hidden.value=1;
     f.submit();
 }
+function SubmitLaboratorio()
+{
+    var f=document.getElementById('lab_form');
+    var hidden=document.getElementById('analisis_hidden');
+    hidden.value=1;
+    f.submit();
+}
 
 function AddInsumos()
 {
