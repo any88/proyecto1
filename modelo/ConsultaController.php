@@ -115,7 +115,7 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
         return $result;
     }
     
-    public function BuscarConsulta($p_idconsulta, $p_especialidad)
+    public function BuscarConsulta($p_idconsulta, $p_especialidad, $p_idservicio=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -136,6 +136,17 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
                 $consulta=$consulta." and `especialidad`='$p_especialidad'";
             }
         }       
+        if($p_idservicio!="")
+        {
+            if($p_idconsulta=="" && $p_especialidad=="")
+            {
+                $consulta=$consulta."WHERE `idservicio`='$p_idservicio'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `idservicio`='$p_idservicio'";
+            }
+        } 
         
         $consulta=$consulta." order by `idconsulta` ASC";
         $r=$bd->consulta($consulta);

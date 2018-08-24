@@ -106,32 +106,38 @@ class RadiologiaController {
         return $result;
     }
 
-    public function BuscarRadiologia($p_idradiologia, $p_idtiporadiologia, $p_nombre) {
+    public function BuscarRadiologia($p_idradiologia, $p_idtiporadiologia, $p_nombre, $p_idservicio=null) {
         $result = array();
         $bd = new con_mysqli("", "", "", "");
-        $radiologia = "SELECT * FROM `radiologia` ";
+        $consulta = "SELECT * FROM `radiologia` ";
 
         if ($p_idradiologia != "") {
-            $radiologia = $radiologia . "WHERE `idradiologia`='$p_idradiologia'";
+            $consulta = $consulta . "WHERE `idradiologia`='$p_idradiologia'";
         }
         if ($p_idtiporadiologia != "") {
             if ($p_idradiologia == "") {
-                $radiologia = $radiologia . "WHERE `idtiporadiologia`='$p_idtiporadiologia'";
+                $consulta = $consulta . "WHERE `idtiporadiologia`='$p_idtiporadiologia'";
             } else {
-                $radiologia = $radiologia . " and `idtiporadiologia`='$p_idtiporadiologia'";
+                $consulta = $consulta . " and `idtiporadiologia`='$p_idtiporadiologia'";
             }
         }
         if ($p_nombre != "") {
             if ($p_idradiologia == "" && $p_idtiporadiologia == "") {
-                $radiologia = $radiologia . "WHERE `idnombreradiologia`='$p_nombre'";
+                $consulta = $consulta . "WHERE `idnombreradiologia`='$p_nombre'";
             } else {
-                $radiologia = $radiologia . " and `idnombreradiologia`='$p_nombre'";
+                $consulta = $consulta . " and `idnombreradiologia`='$p_nombre'";
+            }
+        }
+        if ($p_idservicio != "") {
+            if ($p_idradiologia == "" && $p_idtiporadiologia == "" && $p_nombre == "") {
+                $consulta = $consulta . "WHERE `idservicio`='$p_idservicio'";
+            } else {
+                $consulta = $consulta . " and `idservicio`='$p_idservicio'";
             }
         }
 
-
-        $radiologia = $radiologia . " order by `idradiologia` ASC";
-        $r = $bd->consulta($radiologia);
+        $consulta = $consulta . " order by `idradiologia` ASC";
+        $r = $bd->consulta($consulta);
         if ($r) {
             $a = 0;
             while ($fila = $bd->fetch_assoc($r)) {
