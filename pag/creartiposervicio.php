@@ -11,15 +11,15 @@ $msg="";
 
 ##variables
 $tiposervicio="";
-
+$preciob="";
 if($_POST)
 {
     //Mostrar($_POST);
     if(isset($_POST['tiposervicio'])){$tiposervicio= eliminarblancos($_POST['tiposervicio']);}
-    
+    if(isset($_POST['preciob'])){$preciob=$_POST['preciob'];}
     $error=0;
     ##validar
-    if($tiposervicio=="")
+    if($tiposervicio=="" || $preciob=="")
     {
         $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
@@ -28,8 +28,6 @@ if($_POST)
     }
     else
     {      
-        ##validar que el ruc no exista en la base de datos
-        
         $list_p=$objTipoServicio->BuscarTipoServicio('',$tiposervicio);
         if(count($list_p)>0)
         {
@@ -42,7 +40,7 @@ if($_POST)
         
         if($error==0)
         {
-            $affected=$objTipoServicio->CrearTipoServicio($tiposervicio);
+            $affected=$objTipoServicio->CrearTipoServicio($tiposervicio,$preciob);
             if($affected==1)
             {
                 
@@ -79,11 +77,16 @@ if($_POST)
               <table class="table table-responsive table-bordered">
                   <tr class="text text-info">
                       <th> Tipo de Servicio</th>
+                      <th> Precio Base</th>
                   </tr>
                   <tr>
                       <td><input type="text" name="tiposervicio" class="form-control" required="" value="<?php echo $tiposervicio;?>"></td>
+                      <td><input type="text" name="preciob" class="form-control" required="" value="<?php echo $preciob;?>"></td>
                   </tr>
-                                    
+                  
+                  <tr>
+                      <td><input type="text" name="tiposervicio" class="form-control" required="" value="<?php echo $tiposervicio;?>"></td>
+                  </tr>                  
               </table>
               <div class="text-right">
                   <button class="btn btn-success" type="submit">Registrar</button>

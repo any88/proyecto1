@@ -15,17 +15,23 @@ class TipoServicio {
     
     private $idTipoServicio;
     private $tipoServicio;
-    
-    public function __construct($idTipoServicio, $tipoServicio) {
+    private $precio_base;
+
+    function __construct($idTipoServicio, $tipoServicio, $precio_base) {
         $this->idTipoServicio = $idTipoServicio;
         $this->tipoServicio = $tipoServicio;
+        $this->precio_base = $precio_base;
+    }
+    function getPrecio_base() {
+        return $this->precio_base;
     }
 
-    public function getIdTipoServicio() {
+    function getIdTipoServicio() {
         return $this->idTipoServicio;
     }
 
-    public function getTipoServicio() {
+    
+     public function getTipoServicio() {
         return $this->tipoServicio;
     }
 

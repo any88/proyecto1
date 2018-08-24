@@ -49,7 +49,7 @@ if($_GET)
                   <tr>
                       <th>Nro</th>
                       <th>Tipo de Servicio</th>
-                                                                  
+                      <th>Precio Base</th>                                            
                       <th>Acci&oacute;n</th>
                   </tr>
               </thead>
@@ -63,6 +63,7 @@ if($_GET)
                     echo "<tr>";
                     echo "<td>".$nro."</td>";
                     echo "<td>".$list_tiposervicio[$i]->getTipoServicio()."</td>";
+                    echo "<td> s/. ".$list_tiposervicio[$i]->getPrecio_base()."</td>";
                     echo '<td>
                              <a href="'.$link_edit.'?nik='.$list_tiposervicio[$i]->getIdTipoServicio().'" title="Editar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
 

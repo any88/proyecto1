@@ -160,7 +160,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
                                 echo "<td>$nomb_paciente</td>";
                                 echo '
                                 <td>         
-                                <a href=" '.$link.'?nik='.$nik.'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'. '</td>';
+                                <a href=" '.$link.'?nik='.$nik.'" title="Mostrar datos" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'. '</td>';
                                 echo "</tr>";
                             }
                              echo "</tbody>";

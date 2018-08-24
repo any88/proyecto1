@@ -18,15 +18,16 @@ class TipoServicioController {
     
     public function TipoServicioController(){}
     
-public function CrearTipoServicio($p_tiposervicio)
+public function CrearTipoServicio($p_tiposervicio,$precio_base)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
     
     ##Validar Iny Sql
         $p_tiposervicio=$bd->real_scape_string($p_tiposervicio);
-                
-        $consulta="INSERT INTO `tiposervicio` (`tiposervicio`) VALUES ('$p_tiposervicio')";
+        $precio_base=$bd->real_scape_string($precio_base);
+        
+        $consulta="INSERT INTO `tiposervicio` (`tiposervicio`,`precio_base`) VALUES ('$p_tiposervicio','$precio_base')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -38,7 +39,7 @@ public function CrearTipoServicio($p_tiposervicio)
         
 }
 
-public function ModificarTipoServicio($p_id, $p_tiposervicio)
+public function ModificarTipoServicio($p_id, $p_tiposervicio,$precio_base)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -46,13 +47,15 @@ public function ModificarTipoServicio($p_id, $p_tiposervicio)
         ##Validar Iny Sql
         $p_id=$bd->real_scape_string($p_id);
         $p_tiposervicio=$bd->real_scape_string($p_tiposervicio);
-                
-        $consulta="UPDATE `tiposervicio` SET `tiposervicio`='$p_tiposervicio' WHERE (`idtiposervicio`='$p_id')";
+        $precio_base=$bd->real_scape_string($precio_base);
+        
+        $consulta="UPDATE `tiposervicio` SET `tiposervicio`='$p_tiposervicio',`precio_base`='$precio_base' WHERE (`idtiposervicio`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
         {
             $affected=$bd->affected_row();
+            if($affected==0){$affected=1;}
         }
         $bd->Close();
         return $affected;
@@ -92,8 +95,8 @@ public function ModificarTipoServicio($p_id, $p_tiposervicio)
                
                 $p_id=$fila["idtiposervicio"];
                 $p_tiposervicio=$fila["tiposervicio"];
-                                                
-                $objTipoServicio=new TipoServicio($p_id, $p_tiposervicio);
+                $p_preciob=$fila['precio_base']; 
+                $objTipoServicio=new TipoServicio($p_id, $p_tiposervicio,$p_preciob);
                 $result[$a]=$objTipoServicio;
                 $a++;
             }
@@ -134,8 +137,8 @@ public function ModificarTipoServicio($p_id, $p_tiposervicio)
                  
                 $p_id=$fila["idtiposervicio"];
                 $p_tiposervicio=$fila["tiposervicio"];
-                                                
-                $objTipoServicio=new TipoServicio($p_id, $p_tiposervicio);
+                $p_preciob=$fila['precio_base']; 
+                $objTipoServicio=new TipoServicio($p_id, $p_tiposervicio,$p_preciob);
                 $result[$a]=$objTipoServicio;
                 $a++;
             }
