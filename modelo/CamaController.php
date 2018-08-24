@@ -49,10 +49,12 @@ class CamaController
        
         
         $consulta="UPDATE `camas_hospitalizacion` SET `estado`='$estado' WHERE (`num_cama`='$num_cama')";
+        
         $r=$bd->consulta($consulta);
         if($r)
         {
             $affected=$bd->affected_row();
+            if($affected==0){$affected=1;}
         }
         $bd->Close();
         return $affected;

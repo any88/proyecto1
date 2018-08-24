@@ -21,6 +21,7 @@ include '../modelo/HospitalizacionController.php';
 include '../modelo/LaboratorioController.php';
 include '../modelo/RadiologiaController.php';
 
+
 $objPacienteServC=new PacienteServicioController();
 $objPaciente=new PacienteController();
 $objMedicoC=new MedicoController();
@@ -31,9 +32,11 @@ $objCirugia= new CirugiaController();
 $objHospitalizacion= new HospitalizacionController();
 $objRadiologia= new RadiologiaController();
 $objLaboratorio= new LaboratorioController();
+$objHospitalizacion=new HospitalizacionController();
 
 $listaPacientesDelDia=array();
 $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
+
 ?>
 
   <section id="services">
@@ -160,7 +163,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
                                 echo "<td>$nomb_paciente</td>";
                                 echo '
                                 <td>         
-                                <a href=" '.$link.'?nik='.$nik.'" title="Mostrar datos" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'. '</td>';
+                                <a href=" '.$link.'?nik='.$nik.'" title="Mostrar datos" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'. '</td>';
                                 echo "</tr>";
                             }
                              echo "</tbody>";
@@ -179,6 +182,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
         </div>
     </div>
 </div>
+    
     <div class="col-md-12"></div>
     
   </div>

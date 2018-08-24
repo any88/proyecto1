@@ -151,7 +151,24 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
         $bd->Close();
         return $result;
     }
-    
+    public function AltaPaciente($id_hosp,$fecha)
+    {
+        $affected=0;
+        $bd=new con_mysqli("", "", "", "");
+        $fecha=$bd->real_scape_string($fecha);
+        $id_hosp=$bd->real_scape_string($id_hosp);
+        
+        $consulta="UPDATE `hospitalizacion` SET `fechaalta`='$fecha' WHERE (`idhospitalizacion`='$id_hosp')";
+        
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $affected=$bd->affected_row();
+        }
+        $bd->Close();
+        return $affected;
+    }
+
     public function BuscarHospitalizacion($p_id, $p_fechaingreso, $p_idservicio=null)
     {
         $result=array();
@@ -186,6 +203,7 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
         }
         
         $consulta=$consulta." order by `idhospitalizacion` ASC";
+       
         $r=$bd->consulta($consulta);
         if($r)
         {

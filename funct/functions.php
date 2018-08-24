@@ -36,26 +36,43 @@ function picarFechas($fecha)
     }
     return $arreglo;
 }
-function CortarNumModelo($p_num_modelo)
+function DuracionHosp($fechaIngreso,$fechaFin)
 {
-    $arr=preg_split("/[-]/", $p_num_modelo);
-    ##el num del modelo tiene el siguiente formato ejemplo: 2017-1
-    if(count($arr)>1)
+   
+    $duracion=0;
+    $f_arrIngreso=preg_split("/[-]/", $fechaIngreso);
+    $f_arr_fin=preg_split("/[-]/", $fechaFin);
+    if(count($f_arrIngreso)==3 && count($f_arr_fin)==3)
     {
-        if(count($arr)==3)
-        {
-            
-            $num= $arr[2];
-        }
-        else 
-        {
-            $num= $arr[1];
-        }
-        
-        if($num < 10){$num="0".$num;}
-        return $num;
+       $mes_ingreso=$f_arrIngreso[1];
+       $dia_ingreso=$f_arrIngreso[2];
+       $anno_ingreso=$f_arrIngreso[0];
+       $mes_fin=$f_arr_fin[1];
+       $dia_fin=$f_arr_fin[2];
+       $anno_fin=$f_arr_fin[0];
+       
+       #caso1
+       if($mes_fin==$mes_ingreso && $anno_ingreso== $anno_fin)
+       {
+           $duracion=$dia_fin-$dia_ingreso;
+       }
+       #caso 2
+       if($mes_fin > $mes_ingreso && $anno_fin==$anno_ingreso)
+       {
+           $cant_dias_mesIngreso= cantidadDiasMes($mes_ingreso, $anno_ingreso);
+           $d1=$cant_dias_mesIngreso-$dia_ingreso;
+           $duracion=$dia_fin+$d1;
+       }
+       
+       #caso 3
+       if($mes_fin< $mes_ingreso && $anno_fin>$anno_ingreso)
+       {
+           $cant_dias_mesIngreso= cantidadDiasMes($mes_ingreso, $anno_ingreso);
+           $d1=$cant_dias_mesIngreso-$dia_ingreso;
+           $duracion=$dia_fin+$d1;
+       }
+       return $duracion;
     }
-    else {return $p_num_modelo;}
 }
 
 function eliminarblancos($cadena)

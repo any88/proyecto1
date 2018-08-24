@@ -161,10 +161,11 @@ if($_GET)
                 
                 echo '</tr>';
                 echo '</table>';
-                
+                echo "<div class='pull-right'>";
                 echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
                 echo "<a href='#' class='btn btn-success'>Editar</a> ";
                 echo "<a href='mostrarpaciente.php?nik=$id_pacienteS' class='btn btn-danger'>Volver</a>";
+                echo "</div>";
           }
           else 
             {
@@ -172,5 +173,6 @@ if($_GET)
             }
           ?>
         </div>
+        <br><br><br>
     </div>
 </section>
