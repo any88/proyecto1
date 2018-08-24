@@ -407,7 +407,7 @@ if($_POST)
                                                                 echo "<input type='hidden' name='idt' value='$id_ps'>";
                                                                 echo "<button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'><i class='fa fa-dollar'></i></button>";
                                                             echo "</form>";
-                                                            echo "<form method='post' action='mostrarpaciente.php' id='f$i' name='delf'  style='margin-top:-23px; margin-left:53px;'>";
+                                                            echo "<form method='post' action='mostrarpaciente.php' id='f$i' name='delf'  style='margin-top:-23px; margin-left:50px;'>";
                                                             $est="PENDIENTE";
                                                             if($estado=="PAGO"){$est="PAGO";}
                                                             echo "<input type='hidden' name='id_servicio' value='$id_paciente_servicio'>";

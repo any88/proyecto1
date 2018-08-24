@@ -263,8 +263,7 @@ if($_GET)
                 echo "</div>";
                 
                 echo"<div class='col-md-12 text-right'>";
-                #echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
-                #echo "<a href='#' class='btn btn-success'>Editar</a> ";
+                echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
                 echo "<a href='mostrarpaciente.php?nik=$idpaciente' class='btn btn-danger'>Volver</a>";
                 echo "</div>";
                 
