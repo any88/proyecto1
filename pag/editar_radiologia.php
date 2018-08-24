@@ -18,12 +18,12 @@ $objTipoRadiologia= new TipoRadiologiaController();
 $objNombreRadiologia= new NombreRadiologiaController();
 $objServicio= new ServicioController();
 $objPacienteServ=new PacienteServicioController();
-$objLabRadiologia=new labradiologiaController();
+$objLabRadiologia=new LaboratorioRadiologiaController();
 $objLabRadPruebaRad= new LaboratorioRadiologia_PruebaRadController();
 
 $lista_tiporadiologia=$objTipoRadiologia->MostrarTipoRadiologia();
 $lista_nombreradiologia=$objNombreRadiologia->MostrarNombreRadiologia();
-$lista_labrad=$objLabRadiologia->MostrarLabRadiologia();
+$lista_labrad=$objLabRadiologia->MostrarLaboratorioRadiologia();
 $lista_labradprbrad=$objLabRadPruebaRad->MostrarLaboratorioRadiologia_PruebaRad();
 $lista_paciente_Serv=$objPacienteServ->MostrarPacienteServicio();
 $lista_servicios=$objServicio->MostrarServicio();
@@ -198,6 +198,7 @@ if($_POST)
                   <tr>
                       <input type="hidden" name="id_radmod" value="<?php echo $id_radmod; ?>">
                       <input type="hidden" name="idservicio" value="<?php echo $idservicio; ?>">
+                      <td>
                       <select name="idtipo" class="form-control" required="">
                               <option value=''>--SELECCIONE--</option>
                               <?php

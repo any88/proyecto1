@@ -120,7 +120,7 @@ if($_GET)
                 echo '</table>';
                 
                 echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
-                echo "<a href='#' class='btn btn-success'>Editar</a> ";
+                echo "<a href='editar_radiologia.php?nik=$idradiologia' class='btn btn-success'>Editar</a> ";
                 echo "<a href='mostrarpaciente.php?nik=$idpaciente' class='btn btn-danger'>Volver</a>";
           }
           else 

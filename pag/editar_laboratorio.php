@@ -18,12 +18,12 @@ $objTipoAnalisisLab= new TipoAnalisisLaboratorioController();
 $objNombreAnalisis= new NombreAnalisisLaboratorioController();
 $objServicio= new ServicioController();
 $objPacienteServ=new PacienteServicioController();
-$objLabClinico=new labclinicoController();
+$objLabClinico=new LaboratorioClinicoController();
 $objLabClinAnalab= new LaboratorioClinico_AnalisisController();
 
 $lista_tipoanalisislab=$objTipoAnalisisLab->MostrarTipoAnalisisLaboratorio();
 $lista_nombreanalisis=$objNombreAnalisis->MostrarNombreAnalisis();
-$lista_labclin=$objLabClinico->MostrarLabClinico();
+$lista_labclin=$objLabClinico->MostrarLaboratorioClinico();
 $lista_labclinanalab=$objLabClinAnalab->MostrarLaboratorioClinico_Analisis();
 $lista_paciente_Serv=$objPacienteServ->MostrarPacienteServicio();
 $lista_servicios=$objServicio->MostrarServicio();
@@ -198,6 +198,7 @@ if($_POST)
                   <tr>
                       <input type="hidden" name="idlabmod" value="<?php echo $idlabmod; ?>">
                       <input type="hidden" name="idservicio" value="<?php echo $idservicio; ?>">
+                      <td>
                       <select name="idtipo" class="form-control" required="">
                               <option value=''>--SELECCIONE--</option>
                               <?php
@@ -250,9 +251,7 @@ if($_POST)
                               ?>
                           </select>
                   </td>
-                  <td>
-                      <textarea class="form-control" name="resultados"><?php echo $resultado;?></textarea>
-                  </td>
+                  <td><textarea class="form-control" name="resultados"><?php echo $resultado;?></textarea></td>                  </td>
                   <td><input type="text" name="precio" class="form-control" value="<?php echo $precio;?>"></td>     
                   </tr>
                                                       

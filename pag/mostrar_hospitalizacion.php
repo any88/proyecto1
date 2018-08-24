@@ -163,9 +163,13 @@ if($_GET)
                 echo '</table>';
                 echo "<div class='pull-right'>";
                 echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
-                echo "<a href='#' class='btn btn-success'>Editar</a> ";
+                echo "<a href='editarhospitalizacionrl.php?nik=$idhosp' class='btn btn-success'>Editar</a> ";
                 echo "<a href='mostrarpaciente.php?nik=$id_pacienteS' class='btn btn-danger'>Volver</a>";
+<<<<<<< HEAD
                 echo "</div>";
+=======
+                echo "<br><br>";
+>>>>>>> f96577e5a61f8e02f24e7fbe587b5daf30321499
           }
           else 
             {

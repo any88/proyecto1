@@ -7,30 +7,25 @@
  */
 
 /**
- * Description of MedicoCirugia
+ * Description of MedicoConsulta
  *
  * @author MARGOTH TAPIA
  */
-class MedicoCirugia {
+class MedicoConsulta {
     
     private $idmc;
     private $idmedico;
-    private $idcirugia;
+    private $idconsulta;
     private $fecha;
     private $idtransaccion;
-    private $rol;
-    private $id_trabajador;
-            
-    function __construct($idmc, $idmedico, $idcirugia, $fecha, $idtransaccion,$prol,$id_trabajador) {
+    
+    function __construct($idmc, $idmedico, $idconsulta, $fecha, $idtransaccion) {
         $this->idmc = $idmc;
         $this->idmedico = $idmedico;
-        $this->idcirugia = $idcirugia;
+        $this->idconsulta = $idconsulta;
         $this->fecha = $fecha;
         $this->idtransaccion = $idtransaccion;
-        $this->rol=$prol;
-        $this->id_trabajador=$id_trabajador;
     }
-
     function getIdmc() {
         return $this->idmc;
     }
@@ -38,12 +33,9 @@ class MedicoCirugia {
     function getIdmedico() {
         return $this->idmedico;
     }
-    function getTrabajador() {
-        return $this->id_trabajador;
-    }
 
-    function getIdcirugia() {
-        return $this->idcirugia;
+    function getIdconsulta() {
+        return $this->idconsulta;
     }
 
     function getFecha() {
@@ -54,8 +46,4 @@ class MedicoCirugia {
         return $this->idtransaccion;
     }
 
-    function getRol() {
-        return $this->rol;
-    }
-    
 }
