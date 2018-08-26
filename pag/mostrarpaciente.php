@@ -100,6 +100,10 @@ if($_POST)
                     $msg="<div class='alert alert-success alert-dismissable'>"
                     . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
                     . "OK! El servicio ha sido eliminado correctamente.</div>";
+                    echo "<script>";
+                        echo "window.location = 'mostrarpaciente.php?nik=$id_pacmod';";
+                   echo "</script>";
+
                 }
                 else
                 {
@@ -141,7 +145,6 @@ if($_POST)
       
         <div class="col-md-12">
        
-          <form name="mostrar_paciente">
               <?php 
               $sexoPaciente="M";
                 $img="../img/paciente_masculino.png";
@@ -242,7 +245,7 @@ if($_POST)
                                 <div class="tab-pane fade" id="profile">
                                     <h4>Servicios</h4>
                                     <div class="col-md-12">
-                                        <form class="form-horizontal">
+                                        
 
                                             <table class="table table-responsive table-hover table-bordered" id='dataTables-example'>
                                           <thead>
@@ -401,13 +404,12 @@ if($_POST)
                                                         IF($id_transaccionebd!=""){$estado="PAGO";}
                                                         echo "<td>$estado</td>";
                                                         echo"<td>";
-                                                       
-                                                            echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";
+                                                          echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";
                                                             echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'><i class='fa fa-eye'></i></a> ";
-                                                                echo "<input type='hidden' name='idt' value='$id_ps'>";
-                                                                echo "<button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'><i class='fa fa-dollar'></i></button>";
+                                                            echo "<input type='hidden' name='idt' value='$id_ps'>";
+                                                            echo "<button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'><i class='fa fa-dollar'></i></button>";
                                                             echo "</form>";
-                                                            echo "<form method='post' action='mostrarpaciente.php' id='f$i' name='delf'  style='margin-top:-23px; margin-left:50px;'>";
+                                                           echo "<form method='post' action='mostrarpaciente.php' id='f$i' name='delf'  style='margin-top:-23px; margin-left:50px;'>";
                                                             $est="PENDIENTE";
                                                             if($estado=="PAGO"){$est="PAGO";}
                                                             echo "<input type='hidden' name='id_servicio' value='$id_paciente_servicio'>";
@@ -424,7 +426,7 @@ if($_POST)
                                           </tbody>
 
                                       </table>
-                                        </form>
+                                      
 
                                 </div>
                                 </div>
@@ -435,7 +437,7 @@ if($_POST)
                     
                     </div>
              
-          </form>
+         
        
         </div>
     
