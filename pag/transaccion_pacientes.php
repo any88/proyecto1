@@ -38,6 +38,7 @@ $error=0;
 $estado="PENDIENTE";
 if($_POST)
 {   
+    
     if(isset($_POST['idt']))
     {
         $id_pacienteS=$_POST['idt'];
@@ -72,8 +73,6 @@ if($_POST)
     }
     ##por la misma pagina
     if(isset($_POST['id_paciente_servicio'])){$id_pacienteS=$_POST['id_paciente_servicio'];
-    
-    if(isset($_POST['id_paciente_servicio'])){$id_pacienteS=$_POST['id_paciente_servicio'];}
     if(isset($_POST['id_aseguradora'])){$id_aseguradora=$_POST['id_aseguradora'];}
     if(isset($_POST['id_paciente'])){$id_paciente=$_POST['id_paciente'];}
     if(isset($_POST['id_servicio'])){$id_servicio=$_POST['id_servicio'];}
@@ -101,7 +100,7 @@ if($_POST)
                 ##validar que el servicio no tenga asignada una transaccion
                 $arrPS=$objPS->BuscarPacienteServicio($id_pacienteS, "", $id_servicio);
                 if(count($arrPS)>0)
-                {
+                {    
                     $id_transaccion_creada=$arrPS[0]->getIdtransaccion();
                     if($id_transaccion_creada=="")
                     {
