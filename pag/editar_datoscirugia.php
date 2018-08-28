@@ -195,6 +195,7 @@ if($_POST)
                    
                    ##modificar en cirugia solo si se modifica la duracion y la especialidad y el nombre de la cirugia
                    $arrCirugia=$objCirugiaC->BuscarCirugia($id_cirugia, $p_idespecialidad_quirurgica, $p_id_cirugia,$id_servicio,1);
+                   
                    if(count($arrCirugia)==0)
                    {
                        $affected=$objCirugiaC->ModificarCirugia($id_cirugia, $p_idespecialidad_quirurgica, $p_id_cirugia, $p_duracion_cirugia, $p_precio_cirugia);
@@ -209,17 +210,32 @@ if($_POST)
                    }
                    
                    ##modificar en medico cirugia solo si se modifica el medico encargado 
-                   $arrMedCir=$objMedicoCC->BuscarMedicoCirugia("", "", $id_cirugia,1);
-                   
+                   $arrMedCir=$objMedicoCC->BuscarMedicoCirugia("", "", $id_cirugia,1, "");
                    if(count($arrMedCir)!=0)
                    {
+                       $bd_cir_principal=$arrMedCir[0]->getIdcirugia();
+                       if($bd_cir_principal!=$p_id_cirujano)
+                       {
+                           $affected=$objMedicoCC->ModificarCirujanoPrincipal($p_id_cirujano, $id_cirugia);
+                            if($affected==0)
+                            {
+                                $msg="<div class='alert alert-danger alert-dismissable'>"
+                             . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                             . "Error! No se pudieron modificar los datos del cirujano principal</div>"; 
+                            }
+                            else {$success++;}
+                       }
                        
-                       $affected=$objMedicoCC->ModificarCirujanoPrincipal($p_id_cirujano, $id_cirugia);
+                   }
+                   else
+                   {
+                       ##caso que no se halla asignado un medico en crear cirugia y se desee asignar a hora al editarm la misma
+                       $affected=$objMedicoCC->CrearMedicoCirugia($p_id_cirujano, $id_cirugia, $p_fecha_cirugia,"", 1, "");
                        if($affected==0)
                        {
                            $msg="<div class='alert alert-danger alert-dismissable'>"
                         . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                        . "Error! No se pudieron modificar los datos del cirujano principal</div>"; 
+                        . "Error! No se pudo agregar los datos del cirujano principal</div>"; 
                        }
                        else {$success++;}
                    }

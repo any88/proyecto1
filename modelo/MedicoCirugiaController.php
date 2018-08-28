@@ -83,7 +83,7 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
         $p_idcirugia=$bd->real_scape_string($p_idcirugia);
          
         $consulta="UPDATE `medico_cirugia` SET  `idmedico`='$p_idmedico'  WHERE (`idcirugia`='$p_idcirugia' and `id_rol_cirugia`='1')";
-        Mostrar($consulta);
+        
         $r=$bd->consulta($consulta);
         if($r)
         {
@@ -217,7 +217,7 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
          }
          
         
-        $consulta=$consulta." order by `id_med_cirugia` ASC";
+        $consulta=$consulta." order by `idmc` ASC";
        
         $r=$bd->consulta($consulta);
         if($r)
@@ -226,7 +226,7 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
             while ($fila=$bd->fetch_assoc($r))
             {
                  
-                $p_id=$fila["id_med_cirugia"];
+                $p_id=$fila["idmc"];
                 $p_idmedico=$fila["idmedico"];
                 $p_idcirugia=$fila["idcirugia"];
                 $p_fecha=$fila["fecha"];
@@ -238,6 +238,7 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
                 $a++;
             }
         }
+        
         $bd->Close();
         return $result;
         

@@ -67,6 +67,7 @@ public function ModificarCirugia($p_id,$p_idespecialidad,$p_idnombrec,$p_duracio
         if($r)
         {
             $affected=$bd->affected_row();
+            if($affected==0){$affected=1;}
         }
         $bd->Close();
         return $affected;

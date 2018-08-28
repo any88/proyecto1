@@ -151,7 +151,7 @@ $p_cantidad_medicos= count($p_lista_medicos);
     
 }
 if($_POST)
-{
+{   
     if(isset($_POST['cantidad_medicos'])){$p_cantidad_medicos=$_POST['cantidad_medicos'];}
      if(isset($_POST['id_cirugia'])){$id_cirugia=$_POST['id_cirugia'];}
      if(isset($_POST['id_paciente_buscar'])){$idpaciente=$_POST['id_paciente_buscar'];}
@@ -167,16 +167,32 @@ if($_POST)
                    $var_id_medico="med$j";
                    $var_id_trabajador="trab$j";
                    $var_id_cargo="cargo$j";
-                   
+                   $nm="";
                    if(isset($_POST[$var_id_medico]))
-                  {$p_lista_medicos[$c_i]['med']=$_POST[$var_id_medico];$x++;}
+                  {
+                       $arrMM=$objMedico->BuscarMedico($var_id_medico, "", "");
+                       if(count($arrMM)>0){$nm=$arrMM[0]->getNombre();}
+                       $p_lista_medicos[$c_i]['med_nomb']=$nm;
+                       $p_lista_medicos[$c_i]['med']=$_POST[$var_id_medico];$x++;}
                   else 
                   {
                       if(isset($_POST[$var_id_trabajador]))
-                          {$p_lista_medicos[$c_i]['trab']=$_POST[$var_id_trabajador];$x++;}
+                       {
+                          $arr=$objTrabajador->BuscarTrabajador($var_id_trabajador, "", "");
+                          if(count($arr)>0){$nm=$arr[0]->getNombre();}
+                          $p_lista_medicos[$c_i]['trab_nomb']=$nm;
+                          $p_lista_medicos[$c_i]['trab']=$_POST[$var_id_trabajador];$x++;
+                          
+                       }
                   }
                   if(isset($_POST[$var_id_cargo]))
-                          {$p_lista_medicos[$c_i]['cargo']=$_POST[$var_id_cargo];$x++;}
+                   {
+                      $arrC=$objCargo->BuscarCargo($var_id_cargo, "");
+                      if(count($arrC)>0){$nm=$arrC[0]->getNombreCargo();}
+                      $p_lista_medicos[$c_i]['cargo_nomb']=$nm;
+                      $p_lista_medicos[$c_i]['cargo']=$_POST[$var_id_cargo];$x++;
+                      
+                   }
                   
                   if($x!=0){$c_i++;}
                }
@@ -187,7 +203,6 @@ if($_POST)
               ##elimino todos los trabajadores o medicos de medico cirugia donde el id_cirugia =id cirugia
               if($p_cantidad_medicos>0)
               {
-                  
                   $affected=$objMedicoCC->EliminarPordCirugia($id_cirugia);
                     if($affected==1)
                     {
@@ -292,7 +307,7 @@ if($_POST)
               
               
                 
-          }
+        }
           
           
 }
@@ -336,20 +351,32 @@ if($_POST)
                          for ($i = 0; $i < count($p_lista_medicos); $i++) 
                          {
                              $med="";
+                             $med_nombre="";
                              $trab="";
+                             $trab_nombre="";
+                             Mostrar($p_lista_medicos);
+                             if(isset($p_lista_medicos[$i]['med_nomb'])){$med_nombre=$p_lista_medicos[$i]['med'];  }
                              if(isset($p_lista_medicos[$i]['med'])){$med=$p_lista_medicos[$i]['med'];  }
+                             if(isset($p_lista_medicos[$i]['trab_nomb'])){$trab_nombre=$p_lista_medicos[$i]['trab'];  }
                              if(isset($p_lista_medicos[$i]['trab'])){$trab=$p_lista_medicos[$i]['trab'];  }
                            
                            $carg=$p_lista_medicos[$i]['cargo']; 
+                           $carg_nombre=$p_lista_medicos[$i]['cargo']; 
                            
                            echo "<tr id='e$i'>";
                            if($med!="")
                            {
-                                echo "<td><input type='text' name='med$i' value='$med' readonly='readonly' class='form-control' id='med$i'></td>";
+                                echo "<td>"
+                               ."<input type='hidden' name='med$i' value='$med'  class='form-control' id='med$i'>"
+                               . "<input type='text' name='med_nombre$i' value='$med_nombre' readonly='readonly' class='form-control' id='medN$i'>"
+                               . "</td>";
                            }
                            if($trab!="")
                            {
-                               echo "<td><input type='text' name='trab$i' value='$trab' readonly='readonly' class='form-control' id='med$i'></td>";
+                               echo "<td>"
+                               ."<input type='hidden' name='trab$i' value='$trab'  class='form-control' id='med$i'>"
+                               . "<input type='text' name='trab_nombre$i' value='$trab_nombre' readonly='readonly' class='form-control' id='medT$i'>"
+                               . "</td>";
                            }
                           
                            echo "<td><input type='text' name='cargo$i' class='form-control'  value='$carg' readonly='readonly'></td>";
@@ -396,7 +423,7 @@ if($_POST)
                       {
                          $id_m=$lista_medicos[$i]->getIdMedico();
                          $nombre=$lista_medicos[$i]->getNombre();
-                         echo "<option value='$nombre' >$nombre</option>";
+                         echo "<option value='$id_m' >$nombre</option>";
                       }
                         ?>
                     </select>
@@ -408,7 +435,7 @@ if($_POST)
                       {
                          $id_m=$lista_roles_medicos[$i]['id_rol'];
                          $nombre=$lista_roles_medicos[$i]['nombre'];
-                         echo "<option value='$nombre' >$nombre</option>";
+                         echo "<option value='$id_m' >$nombre</option>";
                       }
                         ?>
                     </select>
@@ -425,7 +452,7 @@ if($_POST)
                          $id_trab=$lista_trabajadores[$i]->getIdTrabajador();
                          $nombre=$lista_trabajadores[$i]->getNombre();
                          
-                         echo "<option value='$nombre'>$nombre</option>";
+                         echo "<option value='$id_trab'>$nombre</option>";
                       }
                         ?>
                     </select>
@@ -438,7 +465,7 @@ if($_POST)
                          $id_trab=$lista_roles_enf[$i]['id_rol'];
                          $nombre=$lista_roles_enf[$i]['nombre'];
                          
-                         echo "<option value='$nombre'>$nombre</option>";
+                         echo "<option value='$id_trab'>$nombre</option>";
                       }
                         ?>
                     </select>

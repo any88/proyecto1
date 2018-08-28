@@ -45,6 +45,7 @@ if($_GET)
             $idcirugia=$_GET["nik"];
             $datosCirugia=$objCirugia->BuscarCirugia($idcirugia, "", "");
             
+            
         }
     }
 ?>
@@ -95,10 +96,12 @@ if($_GET)
                 ##buscar cirujano principal
                 $nom_cirujano_principal="---";
                 $datosMCP=$objMedicoCirugia->BuscarMedicoCirugia("", "", $idcirugia,1);
+                
                 if(count($datosMCP)>0)
                 {
-                    $id_mcp=$datosMCP[0]->getIdmc();
-                    $nom_cirujano_principal=$objMedico->BuscarMedico($id_mcp, "", "")[0]->getNombre();
+                    $id_mcp=$datosMCP[0]->getIdmedico();
+                    $arrCP=$objMedico->BuscarMedico($id_mcp, "","");
+                    if(count($arrCP)>0){$nom_cirujano_principal=$arrCP[0]->getNombre();}
                 }
                  ##datos del equipo medico x medico_cirugia
                 $datosMedicoCirugia=$objMedicoCirugia->BuscarMedicoCirugia("", "", $idcirugia);

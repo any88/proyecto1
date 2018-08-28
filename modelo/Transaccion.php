@@ -27,7 +27,7 @@ class Transaccion {
         $this->fecha = $fecha;
         $this->monto = $monto;
         $this->motivo = $motivo;
-        $this->fecha=$fpago;
+        $this->fpago=$fpago;
     }
     
     public function getIdTransaccion() {
