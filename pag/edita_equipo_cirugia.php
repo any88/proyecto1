@@ -109,7 +109,8 @@ for ($index = 0; $index < count($lista_trabajadores); $index++)
    {
        for ($index1 = 0; $index1 < count($arr); $index1++)
        {
-           $p_lista_medicos[$contador]['trab']=$lista_trabajadores[$index]->getNombre();
+           $p_lista_medicos[$contador]['trab']=$lista_trabajadores[$index]->getIdTrabajador();
+           $p_lista_medicos[$contador]['trab_nomb']=$lista_trabajadores[$index]->getNombre();
            $p_lista_medicos[$contador]['cargo']=$nombre_cargo;
            $contador++;
        }
@@ -127,7 +128,9 @@ for ($index = 0; $index < count($lista_medicos); $index++)
    {
        for ($index1 = 0; $index1 < count($arr); $index1++)
        {
-            $p_lista_medicos[$contador]['med']=$lista_medicos[$index]->getNombre();
+            $p_lista_medicos[$contador]['med']=$lista_medicos[$index]->getIdMedico();
+            $p_lista_medicos[$contador]['med_nomb']=$lista_medicos[$index]->getNombre();
+
             $id_rol=$arr[$index1]->getRol();
             $arrrol=array();
             $cg=new ConsultasG();
@@ -158,7 +161,16 @@ if($_POST)
      if(isset($_POST['servicios'])){$id_servicio=$_POST['servicios'];}
      if(isset($_POST['act_select_hidden'])) {$act_select_hidden=$_POST['act_select_hidden'];}  
     
-    if($p_cantidad_medicos>0)
+     if($act_select_hidden==0)
+     {
+         ##adicionar
+         Mostrar($_POST);
+     }
+     if($act_select_hidden==1)
+     {
+         ##eliminar
+     }
+    /*if($p_cantidad_medicos>0)
            {          
                $c_i=0;
                for ($j = 0; $j <= $p_cantidad_medicos; $j++) 
@@ -197,8 +209,8 @@ if($_POST)
                   if($x!=0){$c_i++;}
                }
                
-           }
-          if($act_select_hidden==0)
+           }*/
+         /* if($act_select_hidden==0)
           {  
               ##elimino todos los trabajadores o medicos de medico cirugia donde el id_cirugia =id cirugia
               if($p_cantidad_medicos>0)
@@ -307,7 +319,7 @@ if($_POST)
               
               
                 
-        }
+        }*/
           
           
 }
@@ -317,7 +329,7 @@ if($_POST)
 <section class="about-text">
     <div class="container ">
         <div class="col-md-12">
-            <form name='cirugia' method="post" action="edita_equipo_cirugia.php" id='cirugia_form'>
+            
                 <input type="hidden" name="act_select_hidden" id="cirugia_hidden" value="0">
                 <input type="hidden" name="servicios"  value="<?php echo $id_servicio;?>">
                 <input type="hidden" name="id_paciente_buscar"  value="<?php echo $idpaciente;?>">
@@ -346,18 +358,17 @@ if($_POST)
                       <th>Acci&oacute;n</th>
                   </tr>
                   <?php 
-                     if($p_cantidad_medicos!=0)
-                    {                                     
+                                                        
                          for ($i = 0; $i < count($p_lista_medicos); $i++) 
                          {
                              $med="";
                              $med_nombre="";
                              $trab="";
                              $trab_nombre="";
-                             Mostrar($p_lista_medicos);
-                             if(isset($p_lista_medicos[$i]['med_nomb'])){$med_nombre=$p_lista_medicos[$i]['med'];  }
+                             
+                             if(isset($p_lista_medicos[$i]['med_nomb'])){$med_nombre=$p_lista_medicos[$i]['med_nomb'];  }
                              if(isset($p_lista_medicos[$i]['med'])){$med=$p_lista_medicos[$i]['med'];  }
-                             if(isset($p_lista_medicos[$i]['trab_nomb'])){$trab_nombre=$p_lista_medicos[$i]['trab'];  }
+                             if(isset($p_lista_medicos[$i]['trab_nomb'])){$trab_nombre=$p_lista_medicos[$i]['trab_nomb'];  }
                              if(isset($p_lista_medicos[$i]['trab'])){$trab=$p_lista_medicos[$i]['trab'];  }
                            
                            $carg=$p_lista_medicos[$i]['cargo']; 
@@ -380,25 +391,25 @@ if($_POST)
                            }
                           
                            echo "<td><input type='text' name='cargo$i' class='form-control'  value='$carg' readonly='readonly'></td>";
-                           echo "<td><button class='btn btn-danger brn-xs fa fa-close' id='e$i' onclick='deleteRowEquipoMedico(this.id);'></button></td>";
+                           echo "<td><button class='btn btn-danger brn-xs fa fa-close' id='e$i' onclick='ElimiarEquipoMed();'></button></td>";
                            echo '</tr>';
                          }
-                    }
+                    
                      ?>
               </table>
               </div>
               
               <div class="text-right col-md-12">
-                  <button  type="submit" class="btn btn-success">Registrar</button>
                   <a href='mostrar_cirugia.php?nik=<?php echo $id_cirugia;?>' class="btn btn-danger" >Cancelar</a>
               </div>
-          </form>
+         
         </div>
     </div>
 </section>
 
 <div id="divModalMed" class='modal fade'  tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' > 
     <div class="modal-dialog">
+        <form name="m" method="post" action="edita_equipo_cirugia.php" id="modal_equipo_c">
         <div class="modal-content">
        <div class="modal-header" style="background-color: #004731;"> 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -408,11 +419,11 @@ if($_POST)
         <div class="modal-body ">
             <img src="../img/doctores.png" style="width: 120px;" id='imagen_modal'>
                 <div style="margin-left: 155px;width: 70%!important; margin-top: -85px;">
-                    
+                    <input type="hidden" name="act_select_hidden" value="0" id="act_hiddenModal">
                     <input type="radio" name="medic" id="tipoM" onclick="MostrarSelect();" checked="checked"> M&eacute;dico
                     <input type="radio" name="medic" id="tipoE" onclick="MostrarSelect();" > Enfermer&iacute;a
                 </div>
-                
+            
                 <div style="margin-left: 155px;width: 70%!important; margin-top: -30px;" class="" id='select_med' >
                     <br><br>
                     <label>Selecccione el personal M&eacute;dico</label>
@@ -477,10 +488,11 @@ if($_POST)
        
         <br>
         <div class="modal-footer">
-            <button  type="button" class="btn btn-success" onclick="AddEquipo();">Adicionar</button>
+            <button  type="button" class="btn btn-success" onclick="AddEquipoCirugia();">Adicionar</button>
             <button class="btn btn-danger " data-dismiss="modal" id="m_equipoMF">Cancelar</button>
         </div>
          </div>
+        </form>
     </div>
 </div>
 

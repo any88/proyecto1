@@ -500,7 +500,17 @@ function Chequear(id)
         
     }
 }
-
+function ElimiarEquipoMed()
+{
+    alert('equipo medico delete');
+}
+function AddEquipoCirugia()
+{
+    var act_hiddenModal=document.getElementById('act_hiddenModal');
+    act_hiddenModal.value=0;
+    var formModal=document.getElementById('modal_equipo_c');
+    formModal.submit();
+}
 /*** poner en la misma pagina que las tabs
  * 
 // Select all tabs

@@ -146,10 +146,10 @@ if($_POST)
         <div class="col-md-12">
        
               <?php 
-              $sexoPaciente="M";
+              $sexoPaciente=$sexo;
                 $img="../img/paciente_masculino.png";
                 if($sexoPaciente=="F"){$img="../img/paciente_femenino.png";}
-                
+
                 if($msg!=""){echo $msg;}
               ?>
               <div class="panel panel-default">
