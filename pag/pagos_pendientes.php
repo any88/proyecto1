@@ -19,6 +19,9 @@ include '../modelo/LaboratorioRadiologiaController.php';
 include '../modelo/LaboratorioClinicoController.php';
 include '../modelo/LaboratorioRadiologia_PruebaRadController.php';
 include '../modelo/LaboratorioClinico_AnalisisController.php';
+include '../modelo/MedicoCirugiaController.php';
+include '../modelo/TrabajadorController.php';
+include '../modelo/RolesCirugiaController.php';
 
 $objPacienteServC=new PacienteServicioController();
 $objPaciente=new PacienteController();
@@ -35,6 +38,9 @@ $objLabClinico= new LaboratorioClinicoController();
 $objLabRadiologia= new LaboratorioRadiologiaController();
 $objLabClinAnalab= new LaboratorioClinico_AnalisisController();
 $objLabRadPruebaRad= new LaboratorioRadiologia_PruebaRadController();
+$objMedicoCirugia= new MedicoCirugiaController();
+$objTrabajador= new TrabajadorController();
+$objRolesCirugia= new RolesCirugiaController();
 
 $list_pacientes=array();
 $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
@@ -80,6 +86,11 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                      $idpacserv=$list_pacientes[$i]->getIdps();
                      $nombrePaciente="";
                      $acreedor="";
+                     $idmedico="";
+                     $idtrabajador="";
+                     $medico="";
+                     $trabajador="";
+                     $rol="";
                      $nombre_servicio="";
                      $docID="";
                      $numhc="";
@@ -124,8 +135,8 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                             $pago_real=$arrTrans[0]->getMonto();
                             $fecha_de_pago=$arrTrans[0]->getFecha();
                             $fpago=$arrTrans[0]->getFpago();
-                            if($pago_real==0 ||$pago_real==""){$estado="PENDIENTE";}
-                            if($pago_real>=$precio_plan){$estado="REALIZADO";}
+                            //if($pago_real==0 ||$pago_real==""){$estado="PENDIENTE";}
+                            //if($pago_real>=$precio_plan){$estado="REALIZADO";}
                         } 
                      }
                     
@@ -138,16 +149,30 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                     if($id_ts==2)
                     {
                         $idcirugia=$objCirugia->BuscarCirugia("", "", "", $idservicio)[0]->getIdCirugia();
-                        //COMPLETAR
-                        $idmedico=$objMedicoConsulta->BuscarMedicoConsulta("", "", $idconsulta)[0]->getIdmedico();
-                        //$acreedor=$objMedicoC->BuscarMedico($idmedico, "", "")[0]->getNombre();
-                        $acreedor="cualquiera";
+                        
+                        if($objMedicoCirugia->BuscarMedicoCirugia("", "", $idcirugia, "", "")[0]->getIdmedico()!="")
+                        {        
+                            $idmedico=$objMedicoCirugia->BuscarMedicoCirugia("", "", $idcirugia, "", "")[0]->getIdmedico();
+                            $medico=$objMedicoC->BuscarMedico($idmedico, "", "", "")[0]->getNombre();
+                            $idrol=$objMedicoCirugia->BuscarMedicoCirugia("", $idmedico, $idcirugia, "", "")[0]->getRol();
+                            $rol=$objRolesCirugia->BuscarRolesCirugia($idrol, "", "")[0]->getNombre();
+                        }    
+                        if($objMedicoCirugia->BuscarMedicoCirugia("", "", $idcirugia, "", "")[0]->getTrabajador()!="")
+                        {        
+                            $idtrabajador=$objMedicoCirugia->BuscarMedicoCirugia("", "", $idcirugia, "", "")[0]->getTrabajador();
+                            $trabajador=$objTrabajador->BuscarTrabajador($idtrabajador, "", "", "")[0]->getNombre();
+                            $idrol=$objMedicoCirugia->BuscarMedicoCirugia("", $idtrabajador, $idcirugia, "", "")[0]->getRol();
+                            $rol=$objRolesCirugia->BuscarRolesCirugia($idrol, "", "")[0]->getNombre();
+                        }
+                        
+                        if($medico!=""){$acreedor=$medico;}
+                        if($trabajador!=""){$acreedor=$trabajador;}
+                        
                     } 
                     if($id_ts==4)
                     {
                         $idradiologia=$objRadiologia->BuscarRadiologia("", "", "", $idservicio)[0]->getIdRadiologia();
                         $idlabrad=$objLabRadPruebaRad->BuscarLaboratorioRadiologia_PruebaRad("", "", $idradiologia)[0]->getIdlabradiologia();
-                        //$acreedor=$objLabRadiologia->BuscarLabRadiologia($idlabrad, "", "")[0]->getNombrelabradiologia();
                         $acreedor=$objLabRadiologia->BuscarLaboratorioRadiologia($idlabrad, "", "")[0]->getNombrelabrad();
                     } 
                     if($id_ts==5)
@@ -156,11 +181,10 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                         
                         $idanalisis=$objLaboratorio->BuscarLaboratorio("", "", "", "", $idservicio)[0]->getIdLaboratorio();
                         $labclin=$objLabClinAnalab->BuscarLaboratorioClinico_Analisis("", "", $idanalisis)[0]->getIdlabclinico();
-                        //$acreedor=$objLabClinico->BuscarLabClinico($idlabclin, "", "")[0]->getNombrelabclinico();
                         $acreedor=$objLabClinico->BuscarLaboratorioClinico($labclin, "", "")[0]->getNombrelabclin();
                     } 
                      
-                    if($pago_real>=$precio_plan && $precio_plan!=0 && $id_ts!=3)
+                    if($pago_real<$precio_plan && $precio_plan!=0 && $id_ts!=3)
                     {    
                     echo "<tr>";
                     echo "<td>".$nro."</td>";
@@ -168,7 +192,7 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                     echo "<td>".$nombrePaciente."</td>";
                     echo "<td>".$docID."</td>";
                     echo "<td>".$nombre_servicio."</td>";
-                    echo "<td>Rol</td>";
+                    echo "<td>".$rol."</td>";
                     echo "<td>".$fechaserv."</td>";
                     echo "<td>s/. $precio_plan</td>";
                     echo "<td>s/. $pago_real</td>";
@@ -195,6 +219,8 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                     }
                     echo '
                     <td>                            
+                             <a href="#" title="Pagar (Añadir Funcionalidad)" onclick="" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></a>
+
                              <a href="'.$link_listar.'?action=delete&nik='.$idservicio.'&v='.$nombre_servicio.'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos  del servicio seleccionado ('.$nombre_servicio.') ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                  
                              <a href="'.$link_mostrar.'?nik='.$idservicio.'" title="Mostrar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'

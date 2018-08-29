@@ -84,8 +84,8 @@
           <li class="menu-has-children" ><a href="#">Caja</a>
           <ul>
               <li><a href="cobros_pendientes.php" >Cobros Pendientes</a></li>
-              <li><a href="#" onclick="Msg();">Pagos Pendientes</a></li>
-              <li><a href="#" onclick="Msg();">Cobros Realizados</a></li>
+              <li><a href="pagos_pendientes.php" >Pagos Pendientes</a></li>
+              <li><a href="cobros_realizados.php" >Cobros Realizados</a></li>
               <li><a href="#" onclick="Msg();">Pagos Realizados</a></li>
               <li><a href="#" onclick="Msg();">Balance de Caja</a></li>
           </ul>

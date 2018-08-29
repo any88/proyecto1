@@ -44,12 +44,13 @@ if($_GET)
 $list_pacientes=array();
 $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
 
+include './menu_caja.php';
 ?>
 <br><br>
 <section class="about-text">
-    <div class="container ">
+    <div class="ingres_costo ">
       
-        <div class="col-md-12">
+        <div class="">
           <h3 class="text-left"><i class="fa fa-user text-info"> Listado de Cobros pendientes</i></h3>
         </div>
         <?php 
