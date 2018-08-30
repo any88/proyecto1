@@ -227,7 +227,7 @@ if($_POST)
                       <td><input type="date" name="fecha" class="form-control" value="<?php echo $fecha;?>"></td>
                   </tr>
                   <tr class="text text-info">
-                      <th >Indicaciones</th>
+                      <th >Motivo</th> <!--El campo al que hace referencia es "indicaciones"-->
                       <th>Resultados</th>
                       <th>Precio</th>
                   </tr>

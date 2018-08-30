@@ -111,7 +111,7 @@ if($_GET)
                 echo "<td>$nombre_paciente</td>";
                 echo '</tr>';
                 echo '<tr class="text text-info">';
-                echo '<th>Indicaciones</th>';
+                echo '<th>Motivo</th>';     //El campo al que hace referencia es "indicaciones"
                 echo '<th>Resultado</th>';
                 echo '<th>Precio</th>';
                 echo '</tr>';

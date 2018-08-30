@@ -51,7 +51,7 @@ include './menu_caja.php';
     <div class="ingres_costo ">
       
         <div class="">
-          <h3 class="text-left"><i class="fa fa-user text-info"> Listado de Cobros pendientes</i></h3>
+          <h3 class="text-left"><i class="fa fa-user text-info"> Listado de Cobros Pendientes</i></h3>
         </div>
         <?php 
         if(count($list_pacientes)>0)
@@ -88,6 +88,7 @@ include './menu_caja.php';
                      $nombre_servicio="";
                      $docID="";
                      $numhc="";
+                     $estado="";
                      $precio_plan=0;
                      $pago_real=0;
                      $arrP=$objPaciente->BuscarPaciente("", "", "", $idPaciente);
