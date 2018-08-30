@@ -265,7 +265,7 @@ if($_POST)
                    if(isset($_POST['medicos'])){$id_medico_consulta=$_POST['medicos'];}
                    if(isset($_POST['fecha'])){$fecha_consulta=$_POST['fecha'];}
                    if(isset($_POST['indicaciones'])){$indicaciones_consulta=$_POST['indicaciones'];}
-                   if(isset($_POST['resultados'])){$resultados_consulta=$_POST['resultados'];}
+                   if(isset($_POST['resultados'])){$resultado_consulta=$_POST['resultados'];}
                    if(isset($_POST['precio'])){$precio_consulta=$_POST['precio'];}
                    if(isset($_POST['id_tipo_servicio'])){$id_servicio=$_POST['id_tipo_servicio'];}
                   
@@ -1325,7 +1325,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                       <td><input type="date" name="fecha" class="form-control" value="<?php echo $fecha_consulta;?>"></td>
                   </tr>
                   <tr class="text text-info">
-                      <th >Indicaciones</th>
+                      <th >Motivo</th> <!--El campo al que hace referencia es "indicaciones"-->
                       <th>Resultados</th>
                       <th> Precio</th>
                   </tr>

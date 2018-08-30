@@ -27,7 +27,7 @@ $cant_dias=  cantidadDiasMes($mes_actual, $anno_actual);
 <br><br>
 <section class="about-text">
     <div class="container">
-         <h3 class="text-left"><i class="fa fa-institution text-info"><?php echo "Agenda de consultas para la fecha".$fecha_comparar;?></i></h3>
+         <h3 class="text-left"><i class="fa fa-institution text-info"><?php echo " Agenda de Servicios para el perído ".$fecha_comparar;?></i></h3>
           
           <?php 
         if($msg!="")
