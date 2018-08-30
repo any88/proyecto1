@@ -1856,7 +1856,7 @@ $('.btnModal').on("click", function(event) {
         <div class="modal-header" style="background-color: #004731;"> 
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <img src='../img/clinica_logo.png' id="logo" class="pull-left" style="width: 50px; margin-top: -10px;">
-            <h4 class="modal-title" id="H1" style="color: white;">Listado de Insumos para la Cirug&i&iacute;a</h4>
+            <h4 class="modal-title" id="H1" style="color: white;">Listado de Insumos para la Cirug&iacute;a</h4>
         </div>
         <div class="modal-body ">
                 <img src="../img/medicamento.jpg" style="width: 120px;">

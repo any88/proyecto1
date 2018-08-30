@@ -500,9 +500,14 @@ function Chequear(id)
         
     }
 }
-function ElimiarEquipoMed()
+function ElimiarEquipoMed(id)
 {
-    alert('equipo medico delete');
+    var valor='hidenV'+id;
+    var act_hiddenModal=document.getElementById(valor);
+    act_hiddenModal.value=1;
+    var a='form'+id;
+    var formModal=document.getElementById(a);
+    formModal.submit();
 }
 function AddEquipoCirugia()
 {
@@ -511,6 +516,53 @@ function AddEquipoCirugia()
     var formModal=document.getElementById('modal_equipo_c');
     formModal.submit();
 }
+
+function AgregarInsumos()
+{
+    var act_hiddenModal=document.getElementById('act_hiddenMInsumos');
+    act_hiddenModal.value=1;
+    var formModal=document.getElementById('form_insumos');
+    formModal.submit();
+}
+
+function EditarInsumos(id)
+{
+    var varhidden="act_hiddenMIns"+id;
+    var form="formuladioInsumos"+id;
+    var readonlycant="cantInsumo"+id;
+    var button=document.getElementById(id);
+    var act_hiddenModal=document.getElementById(varhidden);
+    var formModal=document.getElementById(form);
+    var input_cantidad=document.getElementById(readonlycant);
+    if(input_cantidad.readOnly==true)
+    {
+        input_cantidad.readOnly=false;
+        button.setAttribute("class","btn btn-success");
+       
+    }
+    else
+    {
+        act_hiddenModal.value=2;
+        input_cantidad.readOnly=true;
+        button.setAttribute("class","btn btn-warning");
+        formModal.submit();
+    }
+    
+}
+function EliminarInsumos(id)
+{
+    var varhidden="act_hiddenMIns"+id;
+    var form="formuladioInsumos"+id;
+    
+    var act_hiddenModal=document.getElementById(varhidden);
+    var formModal=document.getElementById(form);
+    
+    act_hiddenModal.value=0;
+    formModal.submit();
+    
+    
+}
+
 /*** poner en la misma pagina que las tabs
  * 
 // Select all tabs

@@ -227,7 +227,7 @@ if($_GET)
                                 ##insumos
                                 echo "<div class='tab-pane fade' id='insumos'>";
                                     echo "<h4>Insumos Utilizados</h4>";
-                                    echo"<div class=' text-right'><a href='editar_cirugia.php'><i class=' fa fa-pencil' style='color:#666666;'> Editar</i></a></div>";
+                                    echo"<div class=' text-right'><a href='editar_insumos_cirugia.php?nik=$idcirugia'><i class=' fa fa-pencil' style='color:#666666;'> Editar</i></a></div>";
                                     echo '<table class="table table-responsive table-bordered">';
 
                                     echo '<tr class="text text-info">';
