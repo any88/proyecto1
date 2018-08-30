@@ -51,7 +51,7 @@ public function ModificarInsumoCirugia($p_id,$p_idinsumo,$p_idcirugia, $p_cantid
         $p_idcirugia=$bd->real_scape_string($p_idcirugia);
         $p_cantidadinsumo=$bd->real_scape_string($p_cantidadinsumo);
                 
-        $consulta="UPDATE `insumo_cirugia` SET `idinsumo`='$p_idinsumo', `idcirugia`='$p_idcirugia', `cantidadinsumo`='$p_cantidadinsumo' WHERE (`id_ins_cirugia`='$p_id')";
+        $consulta="UPDATE `insumo_cirugia` SET `idinsumo`='$p_idinsumo', `idcirugia`='$p_idcirugia', `cantidadinsumo`='$p_cantidadinsumo' WHERE (`idic`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -71,7 +71,7 @@ public function ModificarInsumoCirugia($p_id,$p_idinsumo,$p_idcirugia, $p_cantid
         ##Validar Iny Sql
         $p_id=$bd->real_scape_string($p_id);
         
-        $consulta="DELETE FROM `insumo_cirugia` WHERE (`id_ins_cirugia`='$p_id')";
+        $consulta="DELETE FROM `insumo_cirugia` WHERE (`idic`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -95,7 +95,7 @@ public function ModificarInsumoCirugia($p_id,$p_idinsumo,$p_idcirugia, $p_cantid
             while ($fila=$bd->fetch_assoc($r))
             {
                
-                $p_id=$fila["id_ins_cirugia"];
+                $p_id=$fila["idic"];
                 $p_idinsumo=$fila["idinsumo"];
                 $p_idcirugia=$fila["idcirugia"];
                 $p_cantidadinsumo=$fila["cantidadinsumo"];
@@ -117,7 +117,7 @@ public function ModificarInsumoCirugia($p_id,$p_idinsumo,$p_idcirugia, $p_cantid
         
         if($p_id!="")
         {
-            $consulta=$consulta."WHERE `id_ins_cirugia`='$p_id'";
+            $consulta=$consulta."WHERE `idic`='$p_id'";
         }
         if($p_idinsumo!="")
         {
@@ -142,7 +142,7 @@ public function ModificarInsumoCirugia($p_id,$p_idinsumo,$p_idcirugia, $p_cantid
             }
         }  
         
-        $consulta=$consulta." order by `id_ins_cirugia` ASC";
+        $consulta=$consulta." order by `idic` ASC";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -151,7 +151,7 @@ public function ModificarInsumoCirugia($p_id,$p_idinsumo,$p_idcirugia, $p_cantid
             while ($fila=$bd->fetch_assoc($r))
             {
                  
-                $p_id=$fila["id_ins_cirugia"];
+                $p_id=$fila["idic"];
                 $p_idinsumo=$fila["idinsumo"];
                 $p_idcirugia=$fila["idcirugia"];
                 $p_cantidadinsumo=$fila["cantidadinsumo"];

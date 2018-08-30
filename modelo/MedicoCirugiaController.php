@@ -38,9 +38,9 @@ public function CrearMedicoCirugia($p_idmedico, $p_idcirugia, $p_fecha, $p_idtra
         {
             $consulta="INSERT INTO `medico_cirugia` (`idcirugia`, `fecha`,`id_rol_cirugia`,`id_trabajador`) VALUES ('$p_idcirugia', '$p_fecha', '$prol','$p_idTrabajador')";
         }
-        
+       
         $r=$bd->consulta($consulta);
-        //Mostrar($consulta);
+        
         if($r)
         {
             $affected=$bd->affected_row();
@@ -100,7 +100,7 @@ public function ModificarMedicoCirugia($p_id,$p_idmedico,$p_idcirugia,$p_fecha,$
         ##Validar Iny Sql
         $p_id=$bd->real_scape_string($p_id);
         
-        $consulta="DELETE FROM `medico_cirugia` WHERE (`id_med_cirugia`='$p_id')";
+        $consulta="DELETE FROM `medico_cirugia` WHERE (`idmc`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
