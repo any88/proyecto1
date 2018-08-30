@@ -31,6 +31,7 @@ $nombre_servicio="";
 $id_aseguradora="";
 $precio=0;
 $monto=0;
+$saldo=0;
 $f_pago="";
 $nombre_aseguradora="";
 $msg="";
@@ -179,7 +180,7 @@ echo "</script>";
 <section class="about-text">
     <div class="container ">
         <?php if($msg!=""){echo $msg;}?>
-        <div class="col-md-2"></div>
+       
         <div class="col-md-8 form-group">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -219,9 +220,9 @@ echo "</script>";
                                     ?>
                                   <div class="form-horizontal">
 
-                                      <b>Pago Libre: </b> <input type="radio" name='f_pago' <?php echo $chekedL;?> value='PL' class="radio radio-inline">
+                                      <b>Pago Libre: </b> <input type="radio" name='f_pago' <?php echo $chekedL;?> value='PL' class="radio radio-inline" id='radio_libre'>
                                       &nbsp;&nbsp;
-                                      <b>Pago por Aseguradora (<?php echo $nombre_aseguradora;?>):  </b><input type="radio" name='f_pago' <?php echo $chekedA;?> value="PA" class="radio radio-inline">
+                                      <b>Pago por Aseguradora (<?php echo $nombre_aseguradora;?>):  </b><input type="radio" name='f_pago' <?php echo $chekedA;?> value="PA" class="radio radio-inline" id='radio_aseguradora'>
                                   </div>
 
                               </td>
@@ -232,7 +233,16 @@ echo "</script>";
                           </tr> 
                           <tr>
                               <th>Monto a Pagar:</th>
-                              <td><input type="text" name='monto' value='<?php echo $monto;?>' required class="form-control"></td>
+                              <td><input type="text" name='monto' value='<?php echo $monto;?>' required class="form-control" id='monto' onkeyup="Vuelto();"></td>
+                          </tr>
+                          <tr>
+                              <th>Abonado por el cliente</th>
+                              <td><input type="text" name='saldo' value='<?php echo $saldo;?>' class="form-control" id='abonado' onkeyup="Vuelto();"></td>
+                          </tr>
+                          <tr>
+                              <th>Vuelto a entregar</th>
+                             
+                              <td><input type="text" name='saldo' value='s/. 0' class="form-control"  readonly="true" id='vueltos'></td>
                           </tr>
                           <tr>
                               <td colspan="2">
@@ -253,7 +263,10 @@ echo "</script>";
           
           
         </div>
-        <div class="col-md-2"></div>
+        
+        <div class="col-md-4 about-container">
+            hola
+        </div>
     </div>
 </section>
 

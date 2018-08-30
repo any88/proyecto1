@@ -562,6 +562,47 @@ function EliminarInsumos(id)
     
     
 }
+function Vuelto()
+{
+    var abonado=document.getElementById('abonado').value;
+    var vuelto=document.getElementById('vueltos');
+    var monto=document.getElementById('monto').value;
+    
+    var radioLibre=document.getElementById('radio_libre');
+    var radioAseguradora=document.getElementById('radio_aseguradora');
+    if(radioLibre.checked==true)
+    {
+       /**solo si el tipo de pago es libre se calculara el vuelto*/
+       /***si el numero abonado o el monto no es un numero entero mostrar error*/
+       var error=0;
+        if(isNaN(monto)){error++;}
+        if(isNaN(abonado)){error++;}
+        if(error>0)
+        {
+            alert("Asegurece que el monto a pagar y la cantidad abonada por el cliente sean numeros.");
+        }
+        else
+        {
+            if(abonado==""){error++;}
+            if(monto==""){error++;}
+            if(error>0)
+            {
+                vuelto.value="Usted debe de especificar un monto y una cantidad abonada por el cliente para calcular el vuelto.";
+            }
+            else
+            {
+                var v=abonado-monto;
+                vuelto.value='s/. '+v;
+                var clase="";
+                if(v>0){clase="form-control alert-danger";}
+                if(v==0){clase="form-control alert-success";}
+                if(v<0){clase="form-control alert-warning"; vuelto.value='s/.'+v+ " (La cantidad entrada por el cliente es menor al monto a pagar!!!)";}
+                vuelto.setAttribute("class",clase);
+            }
+        }
+        
+    }
+}
 
 /*** poner en la misma pagina que las tabs
  * 
