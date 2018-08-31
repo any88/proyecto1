@@ -10,6 +10,13 @@ include '../modelo/PacienteServicioController.php';
 include '../modelo/ServicioController.php';
 include '../modelo/TipoServicioController.php';
 include '../modelo/TransaccionController.php';
+include '../modelo/ConsultaController.php';
+include '../modelo/EspecialidadController.php';
+include '../modelo/InsumoCirugiaController.php';
+include '../modelo/HospitalizacionController.php';
+include '../modelo/CirugiaController.php';
+include '../modelo/InsumoController.php';
+include '../modelo/InsumoHospitalizacionController.php';
 
 $objPS=new PacienteServicioController();
 $objP= new PacienteController();
@@ -17,6 +24,12 @@ $objServicioC=new ServicioController();
 $objTipoServicio=new TipoServicioController();
 $objTransaccion=new TransaccionController();
 $objA=new AseguradoraController();
+$objConsultaC=new ConsultaController();
+$objEspecialidad= new EspecialidadController();
+$objInsumoCirugia=new InsumoCirugiaController();
+$objInsumoHosp=new InsumoHospitalizacionController();
+$objCirugiaC=new CirugiaController();
+$objInsumoController=new InsumoController();
 
 
 #id_paciente_servicio
@@ -29,6 +42,10 @@ $id_servicio="";
 $nombre_paciente="";
 $nombre_servicio="";
 $id_aseguradora="";
+$especialidad="";
+$dni="";
+$direccion="";
+$id_ts="";
 $precio=0;
 $monto=0;
 $saldo=0;
@@ -54,6 +71,8 @@ if($_POST)
             if(count($arrPaciente)>0)
             {
                 $nombre_paciente=$arrPaciente[0]->getNombre();
+                $dni=$arrPaciente[0]->getDocID();
+                $direccion=$arrPaciente[0]->getDireccion();
                 $id_aseguradora=$arrPaciente[0]->getIdAseguradora();
                 $arrAseguradora=$objA->BuscarAseguradora($id_aseguradora, "", "");
                 if(count($arrAseguradora)>0){$nombre_aseguradora=$arrAseguradora[0]->getNombre();}
@@ -185,7 +204,10 @@ echo "</script>";
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="text-left"><i class="fa fa-user text-info"> Cobro de Servicios</i></h3>
-                    <div class="pull-right" style="margin-top: -30px;"> Estado (<?php echo $estado;?>)</div>
+                    <div class="pull-right" style="margin-top: -30px;"> 
+                        <span class="text text-success"><b>s/. 200</b> en caja</span>
+                        
+                    </div>
                 </div>
                 <div class="panel-body">
                     <form name="ft" method="post" action="transaccion_pacientes.php" >
@@ -227,10 +249,7 @@ echo "</script>";
 
                               </td>
                           </tr> 
-                          <tr>
-                              <th>Precio Acordado:</th>
-                              <td>s/. <?php echo $precio;?></td>
-                          </tr> 
+                          
                           <tr>
                               <th>Monto a Pagar:</th>
                               <td><input type="text" name='monto' value='<?php echo $monto;?>' required class="form-control" id='monto' onkeyup="Vuelto();"></td>
@@ -265,7 +284,104 @@ echo "</script>";
         </div>
         
         <div class="col-md-4 about-container">
-            hola
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-dollar text-info"> Resumen del Servicio Prestado</i>
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <label>Cliente: </label> <?php echo $nombre_paciente;?><br>
+                        <label>Documento Identidad: </label> <?php echo $dni;?><br>
+                        <label>Direcci&oacute;n: </label> <?php echo $direccion;?><br>
+                        <label>Servicio Prestado: </label> <?php echo $nombre_servicio;?><br>
+                        <?php 
+                        $arrCons=$objConsultaC->BuscarConsulta("", "",$id_servicio);
+                        if(count($arrCons)>0)
+                        {
+                           $id_especialidad=$arrCons[0]->getEspecialidad();
+                           $arrEspecialidad=$objEspecialidad->BuscarEspecialidad($id_especialidad, "", "");
+                           if(count($arrEspecialidad)>0){$especialidad=$arrEspecialidad[0]->getNombreespecialidad();}
+                        }
+                            if($id_ts==1)
+                            {
+                                ##consulta
+                                echo "<label>Especialidad: </label> $especialidad <br>";
+                            }
+                            if($id_ts==2)
+                            {
+                                ##cirugia
+                                $total_por_insumos=0;
+                                $listaInsumosCirugia=array();
+                                $arrCir=$objCirugiaC->BuscarCirugia("", "", "",$id_servicio);
+                                $id_cirugia="";
+                                if(count($arrCir)>0)
+                                   {
+                                    $id_cirugia=$arrCir[0]->getIdCirugia();
+                                    $id_especialidad=$arrCir[0]->getIdEspecialidad();
+                                    $arrEspecialidad=$objEspecialidad->BuscarEspecialidad($id_especialidad, "", "");
+                                    if(count($arrEspecialidad)>0)
+                                    {
+                                        $especialidad=$arrEspecialidad[0]->getNombreespecialidad();
+                                    }
+                                   }
+                                echo "<label>Especialidad: </label> $especialidad <br>";
+                                echo "<label>Desgloce por Insumos: </label> <br>";
+                                echo "<table class='table table-responsive'>";
+                                echo "<tr>";
+                                    echo "<th>Insumo</th>";
+                                    echo "<th>Cantidad</th>";
+                                    echo "<th>Precio Unitario</th>";
+                                    echo "<th>Sub. Total</th>";
+                                echo "</tr>";
+                                
+                                if($id_cirugia!="")
+                                {
+                                    $listaInsumosCirugia=$objInsumoCirugia->BuscarInsumoCirugia("", "", $id_cirugia);
+                                    if(count($listaInsumosCirugia)>0)
+                                    {
+                                        for ($k = 0; $k < count($listaInsumosCirugia); $k++) 
+                                        {
+                                            $subT=0;
+                                            $id_insumo=$listaInsumosCirugia[$k]->getIdinsumo();
+                                            $cant_insumos=$listaInsumosCirugia[$k]->getCantidadinsumo();
+                                            $nombre_insumo="-";
+                                            $precio_insumo=0;
+                                            $arrInsumos=$objInsumoController->BuscarInsumo($id_insumo, "", "");
+                                            if(count($arrInsumos)>0)
+                                            {
+                                                $nombre_insumo=$arrInsumos[0]->getNombre();
+                                                $precio_insumo=$arrInsumos[0]->getPrecioUnitario();
+                                                echo "<tr>";
+                                                echo "<td>$nombre_insumo</td>";
+                                                echo "<td>$cant_insumos</td>";
+                                                echo "<td>$precio_insumo</td>";
+                                                $subT=$cant_insumos*$precio_insumo;
+                                                echo "<td>s/.$subT</td>";
+                                                $total_por_insumos=$total_por_insumos+$subT;
+                                                echo "</tr>";
+                                            }
+                                        }
+                                        echo "<tr>";
+                                        echo "<td colspan='3'><b>Precio Total</b></td>";
+                                        echo "<td><b> s/.$total_por_insumos</b></td>";
+                                        echo "</tr>";
+                                    }
+                                }
+                                
+                                echo "</table>";
+                            }
+                            if($id_ts==3)
+                            {
+                                ##hospitalizacion
+                                echo "<label>Cantidad dias Hospitalizados: </label> 3 <br>";
+                                
+                            }
+                        ?>
+                        <label>Monto a Pagar: </label> s/.<?php echo $precio;?>
+                    </div>
+                </div>
+                
+            </div>
         </div>
     </div>
 </section>
