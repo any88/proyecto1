@@ -401,7 +401,8 @@ if($_POST)
                                                         echo "<td>s/. $precio_servicio</td>";
                                                         echo "<td>s/. $precio_real</td>";
                                                         $estado="<b class='text-danger'>PENDIENTE</b>";
-                                                        IF($id_transaccionebd!=""){$estado="PAGO";}
+                                                        if($id_transaccionebd!="" && $precio_servicio<=$precio_real){$estado="<b class='text-success'>PAGO</b>";}
+                                                        if($id_transaccionebd!="" && $precio_servicio>$precio_real){$estado="<b class='text-warning'>PARCIAL</b>";}
                                                         echo "<td>$estado</td>";
                                                         echo"<td>";
                                                           echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";

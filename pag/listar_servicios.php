@@ -136,6 +136,7 @@ if($_POST)
                     $id_serviciobd=$list_serv[$i]->getIdservicio();
                     $id_tipo_servbd="";
                     $preciobd="";
+                    $montotransaccion="";
                     $estado="PAGO";
                     $nombre_paciente="";
                     $nombre_servicio="";
@@ -145,7 +146,9 @@ if($_POST)
                     $arrPacietnes=$objPaciente->BuscarPaciente("", "", "", $idPaciente);
                         if(count($arrPacietnes)>0){$nombre_paciente=$arrPacietnes[0]->getNombre();}
                     $id_transaccionebd=$list_serv[$i]->getIdtransaccion();
-                        if($id_transaccionebd==""){$estado="PENDIENTE";}    
+                        if($id_transaccionebd==""){$estado="PENDIENTE";}
+                        if($id_transaccionebd!=""){$montotransaccion=$objTransaccion->BuscarTransaccion($id_transaccionebd, "", "")[0]->getMonto();}
+                        
                     $arr_servicios=$objServicio->BuscarServicio($id_serviciobd, "", "");
                     if(count($arr_servicios)>0)
                     {
@@ -153,7 +156,8 @@ if($_POST)
                        $id_tipo_servbd=$arr_servicios[0]->getIdTipoServicio();
                        $arrTipoServicios=$objTS->BuscarTipoServicio($id_tipo_servbd, "");
                        if(count($arrTipoServicios)>0){$nombre_servicio=$arrTipoServicios[0]->getTipoServicio();}
-                    
+                       if($montotransaccion<$preciobd && $montotransaccion>0){$estado="PARCIAL";}
+                       
                     }
 
                     

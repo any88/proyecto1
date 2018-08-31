@@ -68,7 +68,7 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                 echo "<th>Rol (Cirugías)</th>";
                 echo "<th>Fecha del Servicio</th>";
                 echo "<th>Precio</th>";
-                echo "<th>Deuda</th>";
+                //echo "<th>Deuda</th>";
                 echo "<th>Acci&oacute;n</th>";
             echo "</tr>";
             echo "</thead>";
@@ -184,7 +184,7 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                         $acreedor=$objLabClinico->BuscarLaboratorioClinico($labclin, "", "")[0]->getNombrelabclin();
                     } 
                      
-                    if($pago_real<$precio_plan && $precio_plan!=0 && $id_ts!=3)
+                    if($id_ts!=3)
                     {    
                     echo "<tr>";
                     echo "<td>".$nro."</td>";
@@ -195,7 +195,7 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                     echo "<td>".$rol."</td>";
                     echo "<td>".$fechaserv."</td>";
                     echo "<td>s/. $precio_plan</td>";
-                    echo "<td>s/. $pago_real</td>";
+                    //echo "<td>s/. $pago_real</td>";
                                         
                     if($nombre_servicio=="Consulta")
                     {

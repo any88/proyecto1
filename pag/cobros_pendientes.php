@@ -121,10 +121,12 @@ include './menu_caja.php';
                         {
                             $pago_real=$arrTrans[0]->getMonto();
                             if($pago_real==0 ||$pago_real==""){$estado="PENDIENTE";}
+                            if($pago_real>0 && $pago_real<$precio_plan && $pago_real!=""){$estado="PARCIAL";}
                             $total_real=$pago_real+$total_real;
                         } 
                      }
-                     
+                    if($pago_real<$precio_plan || $precio_plan==0)
+                    { 
                     echo "<tr>";
                     echo "<td>".$nro."</td>";
                     echo "<td>".$nombrePaciente."</td>";
@@ -143,22 +145,11 @@ include './menu_caja.php';
                              <a href="'.$link_mostrar.'?nik='.$idPaciente.'" title="Mostrar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'
                  . '</td>';
                    echo "</tr>";
+                    }
                  }
                  
               echo "</tbody";
-              echo "<tfoot>";
-              echo "<tr>";
-                    echo "<th></th>";
-                    echo "<th></th>";
-                    echo "<th></th>";
-                    echo "<th></th>";
-                    echo "<th></th>";
-                    echo "<th></th>";
-                    echo "<th><b>s/. $total_plan</b></th>";
-                    echo "<th><b>s/. $total_real</b></th>";
-                    echo "<th></th>";
-                   echo "</tr>";
-              echo "</tfoot>";
+              
             echo "</table>";
         }
         else 
