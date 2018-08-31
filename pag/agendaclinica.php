@@ -109,6 +109,10 @@ $cant_dias=  cantidadDiasMes($mes_actual, $anno_actual);
                                              if(count($arrPacientes)>0)
                                             {
                                                  $nomb_paciente=$arrPacientes[0]->getNombre();
+                                                 $nomb_paciente= eliminarblancos($nomb_paciente);
+                                                 $arrN= preg_split("/\s+/ ", $nomb_paciente);
+                                                 
+                                                 $nomb_paciente=$arrN[0];
                                             }
                                             $arrServicios=$objServicio->BuscarServicio($id_servicio, "", "");
                                             if(count($arrServicios)>0)
@@ -120,11 +124,12 @@ $cant_dias=  cantidadDiasMes($mes_actual, $anno_actual);
                                                     $nomb_servicio=$arrTS[0]->getTipoServicio();
                                                 }
                                             }
-                                             
-                                             $iniciales=$nomb_paciente.'-'.$nomb_servicio;
+                                             $cad=substr($nomb_servicio,0,1);
+                                             $cad=$cad.substr($nomb_servicio,1,1);
+                                             $iniciales=$nomb_paciente.'-'.$cad;
                                              $icon_estado="";
                                              $icon_color="";
-                                               $icon_estado="<i class='fa fa-user ' style='color:#8cff70 !important;'></i>";
+                                               $icon_estado="<i class='fa fa-user '></i>";
                                             
                                             
                                              #echo "<a href='modal_tarea.php?id=$id_acc' class='btnModal  pull-left btn btn-sm ' style='color:#000 !important; ' data-idmodal='#divModal' title='$nombre_tipo_contenido' '> <i class='$icon_medip form-control pull-left' style='background-color:$color_medio; width:30px!important;color:white;  position:relative;' ></i>$iniciales $icon_estado</a>&nbsp;";
