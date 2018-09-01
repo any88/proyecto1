@@ -7,7 +7,6 @@ include './header.php';
 include '../modelo/NombreRadiologiaController.php';
 include '../modelo/TipoRadiologiaController.php';
 
-
 $objNombreRadiologia=new NombreRadiologiaController();
 $objTipoRadiologia= new TipoRadiologiaController();
 $lista_tiporadiologia= $objTipoRadiologia->MostrarTipoRadiologia();

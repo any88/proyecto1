@@ -61,6 +61,26 @@ public function ModificarServicio($p_id,$p_idtiposervicio,$p_precio)
         $p_precio=$bd->real_scape_string($p_precio);
         
         $consulta="UPDATE `servicio` SET `idtiposervicio`='$p_idtiposervicio', `precio`='$p_precio' WHERE (`idservicio`='$p_id')";
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $affected=$bd->affected_row();
+        }
+        $bd->Close();
+        return $affected;
+    }
+    
+    public function ModificarPrecioporIdServicio($p_idservicio,$p_precio)
+    {
+        $affected=0;
+        $bd=new con_mysqli("", "", "", "");
+        
+        ##Validar Iny Sql
+        $p_idservicio=$bd->real_scape_string($p_idservicio);
+        $p_precio=$bd->real_scape_string($p_precio);
+       
+               
+        $consulta="UPDATE `servicio` SET `precio`='$p_precio' WHERE (`idservicio`='$p_idservicio')";
         
         $r=$bd->consulta($consulta);
         if($r)

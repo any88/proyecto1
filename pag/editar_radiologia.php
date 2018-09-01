@@ -28,20 +28,22 @@ $lista_labradprbrad=$objLabRadPruebaRad->MostrarLaboratorioRadiologia_PruebaRad(
 $lista_paciente_Serv=$objPacienteServ->MostrarPacienteServicio();
 $lista_servicios=$objServicio->MostrarServicio();
 
-if(isset($_REQUEST['nik']))
-    {
-    $idradmod=$_REQUEST['nik'];
-    $radmod=$objRadiologia->BuscarRadiologia($idradmod, "", "");
-    }
-
 ##variables
+$idradmod="";
 $idservicio="";
 $idtipo="";
 $idnombre="";
 $fecha="";
 $idlabrad="";
+$nombrelabrad="";
 $resultado="";
 $precio="";
+
+if(isset($_REQUEST['nik']))
+    {
+    $idradmod=$_REQUEST['nik'];
+    $radmod=$objRadiologia->BuscarRadiologia($idradmod, "", "");
+    }
 
 if(isset($radmod))
 {
@@ -49,31 +51,20 @@ if(isset($radmod))
     $idtipo=$radmod[0]->getIdTipoRadiologia();
     $idnombre=$radmod[0]->getNombre();
     $resultado=$radmod[0]->getResultados();
-    
-    for ($i = 0; $i < count($lista_labradprbrad); $i++) 
-    {
-        if($lista_labradprbrad[$i]->getIdradiologia()==$idradmod)
+           
+    $labradiologia=$objLabRadPruebaRad->BuscarLaboratorioRadiologia_PruebaRad("", "", $idradmod);
+    if(count($labradiologia)>0)
         {
-            $idlabrad=$lista_labradprbrad[$i]->getIdlabradiologia();
+        $idlabrad=$labradiologia[0]->getIdlabradiologia();
+        $arraynombres=$objLabRadiologia->BuscarLaboratorioRadiologia($idlabrad, "", "");
+        if(count($arraynombres)>0){$nombrelabrad=$arraynombres[0]->getNombrelabrad();}
         }
-    }
     
-    for ($i = 0; $i < count($lista_paciente_Serv); $i++) 
-    {
-        if($lista_paciente_Serv[$i]->getIdservicio()==$idservicio)
-        {
-            $fecha=$lista_paciente_Serv[$i]->getFecha();
-            $idpaciente=$lista_paciente_Serv[$i]->getIdpaciente();
-        }
-    }
-    
-    for ($i = 0; $i < count($lista_servicios); $i++) 
-    {
-        if($lista_servicios[$i]->getIdServicio()==$idservicio)
-        {
-            $precio=$lista_servicios[$i]->getPrecio();
-        }
-    }
+    $pacienteserv=$objPacienteServ->BuscarPacienteServicio("", "", $idservicio);
+    if(count($pacienteserv)>0){$fecha=$pacienteserv[0]->getFecha();}
+        
+    $serv=$objServicio->BuscarServicio($idservicio, "", "");
+    if(count($serv)>0){$precio=$serv[0]->getPrecio();}
     
 }
 
@@ -82,6 +73,7 @@ if($_POST)
 {
     //Mostrar($_POST);
     if(isset($_POST['id_radmod'])){$idradmod= eliminarblancos($_POST['id_radmod']);}
+    if(isset($_POST['idservicio'])){$idservicio= eliminarblancos($_POST['idservicio']);}
     if(isset($_POST['idtipo'])){$idtipo=eliminarblancos($_POST['idtipo']);}
     if(isset($_POST['idnombre'])){$idnombre= eliminarblancos($_POST['idnombre']);}
     if(isset($_POST['fecha'])){$fecha=eliminarblancos($_POST['fecha']);}
@@ -112,70 +104,57 @@ if($_POST)
            
         if($error==0)
         {
-            $modenservicio=$objServicio->ModificarServicio($idservicio, "", $precio);
-            if($modenservicio!=0)
-            {
-                $modenradiologia=$objRadiologia->ModificarRadiologia($idradmod, $idtipo, $idnombre, $resultado, $precio);
-            
-            if($modenradiologia==1)
-            {
-                $amodenpcteserv=$objPacienteServ->BuscarPacienteServicio("", "", $p_idservicio, "");
-                
-                    if($amodenpcteserv!=0)
-                    {
-                        $idamodenpcteserv=$amodenpcteserv->getIdps();
-                        $modenpcteserv=$objPacienteServ->ModificarPacienteServicio($idamodenpcteserv, "", "", $fecha, "");
+            $affcont=0;
+            $arrayrad=$objRadiologia->BuscarRadiologia($idradmod, $idtipo, $idnombre, "", $resultado);
+            if(count ($arrayrad)==0)
+                {
+                $modenradiologia=$objRadiologia->ModificarRadiologia($idradmod, $idtipo, $idnombre, $resultado);
+                if($modenradiologia==0){$affcont++;}
+                }
                     
-                        if($modenpcteserv!=0)
-                            {
-                                $idamodenlabradprbrad=$objLabRadPruebaRad->BuscarLaboratorioRadiologia_PruebaRad("", "", $idradmod)[0]->getId_labradpruebarad();
-                                //$idamodenlabradprbrad=$amodenmedcons->getIdmc();
-                                $modlabradprbrad=$objLabRadPruebaRad->ModificarLaboratorioRadiologia_PruebaRad($idamodenlabradprbrad, $idlabrad, "", $fecha, "");
-                            
-                                $msg="<div class='alert alert-success alert-dismissable'>"
-                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                                . "Datos actualizados satisfactoriamente</div>"; 
-                                echo "<script>";
-                                echo "window.location = 'mostrarpaciente.php?nik=$idpaciente';";
-                                echo "</script>";
-                            }
-                            else
-                            {
-                                $msg="<div class='alert alert-danger alert-dismissable'>"
-                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                                . "Error de nivel 4. Actualizacion de datos fallida</div>"; 
-                            }
-                    }
-                    else
-                    {
-                        $msg="<div class='alert alert-danger alert-dismissable'>"
-                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                        . "Error de nivel 3. Actualizacion de datos fallida</div>"; 
-                    }   
-            }
-            else
+            $arrayserv=$objServicio->BuscarServicio($idservicio, "", $precio);
+            if(count ($arrayserv)==0)
+                {
+                $modenservicio=$objServicio->ModificarPrecioporIdServicio($idservicio, $precio);
+                if($modenservicio==0){$affcont++;}
+                }
+                         
+            $arraypacserv=$objPacienteServ->BuscarPacienteServicio("", "", $idservicio, $fecha);
+            if(count ($arraypacserv)==0)
+                {
+                $modenpacserv=$objPacienteServ->ModificarFechaporIdServicio($idservicio, $fecha);
+                if($modenpacserv==0){$affcont++;}
+                }
+            
+            $arraylabradprbrad=$objLabRadPruebaRad->BuscarLaboratorioRadiologia_PruebaRad("", $idlabrad, $idradmod);
+            if(count ($arraylabradprbrad)==0)
+                {
+                $modenlabradprbrad=$objLabRadPruebaRad->ModificarIdlabRadporIdAnalisisLab($idradmod, $idlabrad);
+                if($modenlabradprbrad==0){$affcont++;}
+                }
+            if($affcont>0)
             {
                 $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 2. Actualizacion de datos fallida</div>"; 
-            }
+                . "Error. Actualizacion de datos fallida</div>";
             }
             else
             {
-                $msg="<div class='alert alert-danger alert-dismissable'>"
+                $msg="<div class='alert alert-success alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 1. Actualizacion de datos fallida</div>"; 
+                . "Datos actualizados satisfactoriamente</div>"; 
+                echo "<script>";
+                echo "window.location = 'mostrar_radiologia.php?nik=$idradmod';";
+                echo "</script>";
             }
         }
         else
             {
                 $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 0. Actualizacion de datos fallida</div>"; 
+                . "Error. Actualizacion de datos fallida</div>"; 
             }
-        
-    }
-    
+        } 
 }
 ?>
 
@@ -196,7 +175,7 @@ if($_POST)
                       <th>Fecha</th>
                   </tr>
                   <tr>
-                      <input type="hidden" name="id_radmod" value="<?php echo $id_radmod; ?>">
+                      <input type="hidden" name="id_radmod" value="<?php echo $idradmod; ?>">
                       <input type="hidden" name="idservicio" value="<?php echo $idservicio; ?>">
                       <td>
                       <select name="idtipo" class="form-control" required="">
@@ -237,13 +216,14 @@ if($_POST)
                   </tr>
                   <tr>
                   <td>
+                      
                       <select name="idlabrad" class="form-control" required="">
                          <option value=''>--SELECCIONE--</option>
                             <?php
                             for ($i = 0; $i < count($lista_labrad); $i++) 
                             {
                                $id_labrad=$lista_labrad[$i]->getIdlabradiologia();
-                               $nombre=$lista_labrad[$i]->getNombrelabradiologia();
+                               $nombre=$lista_labrad[$i]->getNombrelabrad();
                                $marcar="";
                                if($id_labrad==$idlabrad){$marcar="selected='selected'";}
                                echo "<option value='$id_labrad' $marcar>$nombre</option>";

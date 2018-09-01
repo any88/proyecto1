@@ -64,6 +64,27 @@ public function ModificarLaboratorioRadiologia_PruebaRad($p_id,$p_idlabrad,$p_id
         return $affected;
     }
     
+    public function ModificarIdlabRadporIdAnalisisLab($p_idlaboratorio,$p_idlabrad)
+    {
+        $affected=0;
+        $bd=new con_mysqli("", "", "", "");
+        
+        ##Validar Iny Sql
+        $p_idlaboratorio=$bd->real_scape_string($p_idlaboratorio);
+        $p_idlabrad=$bd->real_scape_string($p_idlabrad);
+       
+               
+        $consulta="UPDATE `labrad_pruebarad` SET `idlabradiologia`='$p_idlabrad' WHERE (`idradiologia`='$p_idlaboratorio')";
+        
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $affected=$bd->affected_row();
+        }
+        $bd->Close();
+        return $affected;
+    }
+    
     public function EliminarLaboratorioRadiologia_PruebaRad($p_id)
     {
         $affected=0;

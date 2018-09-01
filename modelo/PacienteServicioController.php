@@ -65,6 +65,7 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
         $bd->Close();
         return $affected;
     }
+    
     public function EfectuarPago($id_ps,$id_transaccion)
     {
         $affected=0;

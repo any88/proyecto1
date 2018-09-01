@@ -56,9 +56,9 @@ class RadiologiaController {
         $p_nombre = $bd->real_scape_string($p_nombre);
         $p_resultado = $bd->real_scape_string($p_resultado);
         
-        $radiologia = "UPDATE `radiologia` SET `idtiporadiologia`='$p_idtiporadiologia', `idnombreradiologia`='$p_nombre', `resultado`='$p_resultado' WHERE (`idradiologia`='$p_id')";
+        $consulta = "UPDATE `radiologia` SET `idtiporadiologia`='$p_idtiporadiologia', `idnombreradiologia`='$p_nombre', `resultado`='$p_resultado' WHERE (`idradiologia`='$p_id')";
 
-        $r = $bd->radiologia($radiologia);
+        $r = $bd->consulta($consulta);
         if ($r) {
             $affected = $bd->affected_row();
         }
@@ -106,7 +106,7 @@ class RadiologiaController {
         return $result;
     }
 
-    public function BuscarRadiologia($p_idradiologia, $p_idtiporadiologia, $p_nombre, $p_idservicio=null) {
+    public function BuscarRadiologia($p_idradiologia, $p_idtiporadiologia, $p_nombre, $p_idservicio=null, $p_resultado=null) {
         $result = array();
         $bd = new con_mysqli("", "", "", "");
         $consulta = "SELECT * FROM `radiologia` ";
@@ -133,6 +133,13 @@ class RadiologiaController {
                 $consulta = $consulta . "WHERE `idservicio`='$p_idservicio'";
             } else {
                 $consulta = $consulta . " and `idservicio`='$p_idservicio'";
+            }
+        }
+        if ($p_resultado != "") {
+            if ($p_idradiologia == "" && $p_idtiporadiologia == "" && $p_nombre == "" && $p_idservicio=="") {
+                $consulta = $consulta . "WHERE `resultado`='$p_resultado'";
+            } else {
+                $consulta = $consulta . " and `resultado`='$p_resultado'";
             }
         }
 
