@@ -97,18 +97,19 @@ if($_GET)
                 ####datos
                 
                 echo '<table class="table table-responsive table-bordered">';
-                echo "<h4>Consulta de $nombre_especialidad</h4>";
+                //echo "<h4>Consulta de $nombre_especialidad</h4>";
                 echo '<tr class="text text-info">';
+                echo '<th>Especialidad</th>';
                 echo '<th>Doctor</th>';
                 echo '<th>Fecha</th>';
-                
-                echo '<th>Paciente</th>';
+                //echo '<th>Paciente</th>';
                 echo '</tr>';
                 echo '<tr>';
+                echo "<td>$nombre_especialidad</td>";
                 echo "<td>$nombre_medico</td>";
                 echo "<td>$fecha</td>";
                
-                echo "<td>$nombre_paciente</td>";
+                //echo "<td>$nombre_paciente</td>";
                 echo '</tr>';
                 echo '<tr class="text text-info">';
                 echo '<th>Motivo</th>';     //El campo al que hace referencia es "indicaciones"

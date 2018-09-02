@@ -58,8 +58,8 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
         $p_indicaciones=$bd->real_scape_string($p_indicaciones);
         $p_resultados=$bd->real_scape_string($p_resultados);
                        
-        $consulta="UPDATE `consulta` SET `especialidad`='$p_especialidad', `indicaciones`='$p_indicaciones', `resultados`='$p_resultados' WHERE (`idconsulta`='$p_id')";
-        
+        $consulta="UPDATE `consulta` SET `idespecialidad`='$p_especialidad', `indicaciones`='$p_indicaciones', `resultados`='$p_resultados' WHERE (`idconsulta`='$p_id')";
+        //Mostrar($consulta);
         $r=$bd->consulta($consulta);
         if($r)
         {
@@ -115,7 +115,7 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
         return $result;
     }
     
-    public function BuscarConsulta($p_idconsulta, $p_especialidad, $p_idservicio=null)
+    public function BuscarConsulta($p_idconsulta, $p_especialidad, $p_idservicio=null, $p_indicaciones=null, $p_resultados=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -129,11 +129,11 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
         {
             if($p_idconsulta=="")
             {
-                $consulta=$consulta."WHERE `especialidad`='$p_especialidad'";
+                $consulta=$consulta."WHERE `idespecialidad`='$p_especialidad'";
             }
             else 
             {
-                $consulta=$consulta." and `especialidad`='$p_especialidad'";
+                $consulta=$consulta." and `idespecialidad`='$p_especialidad'";
             }
         }       
         if($p_idservicio!="")
@@ -146,9 +146,32 @@ public function ModificarConsulta($p_id,$p_especialidad,$p_indicaciones,$p_resul
             {
                 $consulta=$consulta." and `idservicio`='$p_idservicio'";
             }
-        } 
+        }
+        if($p_indicaciones!="")
+        {
+            if($p_idconsulta=="" && $p_especialidad=="" && $p_idservicio=="")
+            {
+                $consulta=$consulta."WHERE `indicaciones`='$p_indicaciones'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `indicaciones`='$p_indicaciones'";
+            }
+        }
+        if($p_resultados!="")
+        {
+            if($p_idconsulta=="" && $p_especialidad=="" && $p_idservicio=="" && $p_indicaciones=="")
+            {
+                $consulta=$consulta."WHERE `resultados`='$p_resultados'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `resultados`='$p_resultados'";
+            }
+        }
         
         $consulta=$consulta." order by `idconsulta` ASC";
+        //Mostrar($consulta);
         $r=$bd->consulta($consulta);
         if($r)
         {

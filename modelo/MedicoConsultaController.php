@@ -71,6 +71,27 @@ public function ModificarMedicoConsulta($p_id,$p_idmedico,$p_idconsulta,$p_fecha
         return $affected;
     }
     
+    public function ModificarIdMedporIdConsulta($p_idconsulta,$p_idmedico)
+    {
+        $affected=0;
+        $bd=new con_mysqli("", "", "", "");
+        
+        ##Validar Iny Sql
+        $p_idconsulta=$bd->real_scape_string($p_idconsulta);
+        $p_idmedico=$bd->real_scape_string($p_idmedico);
+       
+               
+        $consulta="UPDATE `medico_consulta` SET `idmedico`='$p_idmedico' WHERE (`idconsulta`='$p_idconsulta')";
+        
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $affected=$bd->affected_row();
+        }
+        $bd->Close();
+        return $affected;
+    }
+    
     public function EliminarMedicoConsulta($p_id)
     {
         $affected=0;

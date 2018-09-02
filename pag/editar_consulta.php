@@ -25,12 +25,6 @@ $lista_medicoConsulta=$objMedicoConsulta->MostrarMedicoConsulta();
 $lista_paciente_Serv=$objPacienteServ->MostrarPacienteServicio();
 $lista_servicios=$objServicio->MostrarServicio();
 
-if(isset($_REQUEST['nik']))
-    {
-    $idconsmod=$_REQUEST['nik'];
-    $consmod=$objConsulta->BuscarConsulta($idconsmod, "", "");
-    }
-
 ##variables
 $idservicio="";
 $idespecialidad="";
@@ -40,6 +34,12 @@ $indicaciones="";
 $resultado="";
 $precio="";
 
+if(isset($_REQUEST['nik']))
+    {
+    $idconsmod=$_REQUEST['nik'];
+    $consmod=$objConsulta->BuscarConsulta($idconsmod, "", "");
+    }
+
 if(isset($consmod))
 {
     $idservicio=$consmod[0]->getIdServicio();
@@ -47,45 +47,33 @@ if(isset($consmod))
     $indicaciones=$consmod[0]->getIndicaciones();
     $resultado=$consmod[0]->getResultados();
     
-    for ($i = 0; $i < count($lista_medicoConsulta); $i++) 
-    {
-        if($lista_medicoConsulta[$i]->getIdconsulta()==$idconsmod)
+    $medcons=$objMedicoConsulta->BuscarMedicoConsulta("", "", $idconsmod);
+    if(count($medcons)>0)
         {
-            $idmedico=$lista_medicoConsulta[$i]->getIdmedico();
+        $idmedico=$medcons[0]->getIdmedico();
+        $arraynombres=$objMedico->BuscarMedico($idmedico, "", "");
+        if(count($arraynombres)>0){$nombremedico=$arraynombres[0]->getNombre();}
         }
-    }
     
-    for ($i = 0; $i < count($lista_paciente_Serv); $i++) 
-    {
-        if($lista_paciente_Serv[$i]->getIdservicio()==$idservicio)
-        {
-            $fecha=$lista_paciente_Serv[$i]->getFecha();
-            $idpaciente=$lista_paciente_Serv[$i]->getIdpaciente();
-        }
-    }
-    
-    for ($i = 0; $i < count($lista_servicios); $i++) 
-    {
-        if($lista_servicios[$i]->getIdServicio()==$idservicio)
-        {
-            $precio=$lista_servicios[$i]->getPrecio();
-        }
-    }
-    
+    $pacienteserv=$objPacienteServ->BuscarPacienteServicio("", "", $idservicio);
+    if(count($pacienteserv)>0){$fecha=$pacienteserv[0]->getFecha();}
+        
+    $serv=$objServicio->BuscarServicio($idservicio, "", "");
+    if(count($serv)>0){$precio=$serv[0]->getPrecio();}   
 }
-
 
 if($_POST)
 {
     //Mostrar($_POST);
-    if(isset($_POST['id_consmod'])){$idconsmod= eliminarblancos($_POST['id_consmod']);}
+    if(isset($_POST['idconsmod'])){$idconsmod= eliminarblancos($_POST['idconsmod']);}
+    if(isset($_POST['idservicio'])){$idservicio=eliminarblancos($_POST['idservicio']);}
     if(isset($_POST['idespecialidad'])){$idespecialidad=eliminarblancos($_POST['idespecialidad']);}
     if(isset($_POST['idmedico'])){$idmedico= eliminarblancos($_POST['idmedico']);}
     if(isset($_POST['fecha'])){$fecha=eliminarblancos($_POST['fecha']);}
+    if(isset($_POST['indicaciones'])){$indicaciones=eliminarblancos($_POST['indicaciones']);}
     if(isset($_POST['resultados'])){$resultado=eliminarblancos($_POST['resultados']);}
     if(isset($_POST['precio'])){$precio=eliminarblancos($_POST['precio']);}
-    if(isset($_POST['idservicio'])){$idservicio=eliminarblancos($_POST['idservicio']);}
-                
+                    
     $error=0;
     ##validar
     
@@ -108,68 +96,58 @@ if($_POST)
            
         if($error==0)
         {
-            $modenservicio=$objServicio->ModificarServicio($idservicio, "", $precio);
-            if($modenservicio!=0)
-            {
-                $modenconsulta=$objConsulta->ModificarConsulta($idconsmod, $idespecialidad, $indicaciones, $resultado, $precio);
-            
-            if($modenconsulta==1)
-            {
-                $amodenpcteserv=$objPacienteServ->BuscarPacienteServicio("", "", $p_idservicio, "");
-                
-                    if($amodenpcteserv!=0)
-                    {
-                        $idamodenpcteserv=$amodenpcteserv->getIdps();
-                        $modenpcteserv=$objPacienteServ->ModificarPacienteServicio($idamodenpcteserv, "", "", $fecha, "");
+            $affcont=0;
+            $arraycons=$objConsulta->BuscarConsulta($idconsmod, $idespecialidad, "", $indicaciones, $resultado);
+            //Mostrar($arraycons);
+            if(count ($arraycons)==0)
+                {
+                $modenconsulta=$objConsulta->ModificarConsulta($idconsmod, $idespecialidad, $indicaciones, $resultado);
+                if($modenconsulta==0){$affcont++;}
+                }
                     
-                        if($modenpcteserv!=0)
-                            {
-                                $idamodenmedcons=$objMedicoConsulta->BuscarMedicoConsulta("", "", $idconsmod)[0]->getIdmc();
-                                //$idamodenmedcons=$amodenmedcons->getIdmc();
-                                $modmedcons=$objMedicoConsulta->ModificarMedicoConsulta($idamodenmedcons, $idmedico, "", $fecha, "");
-                            
-                                $msg="<div class='alert alert-success alert-dismissable'>"
-                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                                . "Datos actualizados satisfactoriamente</div>"; 
-                                echo "<script>";
-                                echo "window.location = 'mostrarpaciente.php?nik=$idpaciente';";
-                                echo "</script>";
-                            }
-                            else
-                            {
-                                $msg="<div class='alert alert-danger alert-dismissable'>"
-                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                                . "Error de nivel 4. Actualizacion de datos fallida</div>"; 
-                            }
-                    }
-                    else
-                    {
-                        $msg="<div class='alert alert-danger alert-dismissable'>"
-                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                        . "Error de nivel 3. Actualizacion de datos fallida</div>"; 
-                    }   
-            }
-            else
+            $arrayserv=$objServicio->BuscarServicio($idservicio, "", $precio);
+            if(count ($arrayserv)==0)
+                {
+                //Mostrar($arrayserv);
+                $modenservicio=$objServicio->ModificarPrecioporIdServicio($idservicio, $precio);
+                if($modenservicio==0){$affcont++;}
+                }
+                         
+            $arraypacserv=$objPacienteServ->BuscarPacienteServicio("", "", $idservicio, $fecha);
+            if(count ($arraypacserv)==0)
+                {
+                $modenpacserv=$objPacienteServ->ModificarFechaporIdServicio($idservicio, $fecha);
+                if($modenpacserv==0){$affcont++;}
+                }
+            
+            $arraymedcons=$objMedicoConsulta->BuscarMedicoConsulta("", $idmedico, $idconsmod);
+            if(count ($arraymedcons)==0)
+                {
+                $modenmedcons=$objMedicoConsulta->ModificarIdMedporIdConsulta($idconsmod, $idmedico);
+                if($modenmedcons==0){$affcont++;}
+                }
+            if($affcont>0)
             {
                 $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 2. Actualizacion de datos fallida</div>"; 
-            }
+                . "Error. Actualizacion de datos fallida</div>";
             }
             else
             {
-                $msg="<div class='alert alert-danger alert-dismissable'>"
+                $msg="<div class='alert alert-success alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 1. Actualizacion de datos fallida</div>"; 
+                . "Datos actualizados satisfactoriamente</div>"; 
+                echo "<script>";
+                echo "window.location = 'mostrar_consulta.php?nik=$idconsmod';";
+                echo "</script>";
             }
         }
         else
             {
                 $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 0. Actualizacion de datos fallida</div>"; 
-            }
-        
+                . "Error. Actualizacion de datos fallida</div>"; 
+            }   
     }
     
 }
@@ -192,7 +170,7 @@ if($_POST)
                       <th>Fecha</th>
                   </tr>
                   <tr>
-                      <input type="hidden" name="id_consmod" value="<?php echo $id_consmod; ?>">
+                      <input type="hidden" name="idconsmod" value="<?php echo $idconsmod; ?>">
                       <input type="hidden" name="idservicio" value="<?php echo $idservicio; ?>">
                       <td>
                           <select name="idespecialidad" class="form-control" required="">
@@ -245,9 +223,6 @@ if($_POST)
               <div class="text-right">
                   <button class="btn btn-success" type="submit">Actualizar</button>
                   <a href='mostrar_consulta.php<?php echo "?nik=$idconsmod"?>' class="btn btn-danger" type="submit">Cancelar</a>
-                  <!--
-                  echo"<td><a href='$link?nik=$nik' class='btn btn-primary  btn-xs'><i class='fa fa-eye'></i></a></td>";
-                  -->
               </div>
               
           </form>
