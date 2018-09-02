@@ -57,9 +57,9 @@ public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_res
         $p_nombre=$bd->real_scape_string($p_nombre);
         $p_resultados=$bd->real_scape_string($p_resultados);
                
-        $laboratorio="UPDATE `laboratorio` SET `idtipoanalisislaboratorio`='$p_idtipoanalisislab', `idnombreanalisis`='$p_nombre', `resultados`='$p_resultados' WHERE (`idlaboratorio`='$p_id')";
+        $consulta="UPDATE `laboratorio` SET `idtipoanalisislaboratorio`='$p_idtipoanalisislab', `idnombreanalisis`='$p_nombre', `resultados`='$p_resultados' WHERE (`idlaboratorio`='$p_id')";
         
-        $r=$bd->laboratorio($laboratorio);
+        $r=$bd->consulta($consulta);
         if($r)
         {
             $affected=$bd->affected_row();
@@ -114,7 +114,7 @@ public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_res
         return $result;
     }
     
-    public function BuscarLaboratorio($p_idlaboratorio, $p_idtipoanalisislab, $p_nombre, $p_idservicio=null)
+    public function BuscarLaboratorio($p_idlaboratorio, $p_idtipoanalisislab, $p_nombre, $p_idservicio=null, $p_resultados=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -153,7 +153,13 @@ public function ModificarLaboratorio($p_id,$p_idtipoanalisislab,$p_nombre,$p_res
                 $consulta = $consulta . " and `idservicio`='$p_idservicio'";
             }
         }
-         
+        if ($p_resultados != "") {
+            if ($p_idlaboratorio == "" && $p_idtipoanalisislab == "" && $p_nombre == "" && $p_idservicio=="") {
+                $consulta = $consulta . "WHERE `resultados`='$p_resultados'";
+            } else {
+                $consulta = $consulta . " and `resultados`='$p_resultados'";
+            }
+        }         
         
         $consulta=$consulta." order by `idlaboratorio` ASC";
         $r=$bd->consulta($consulta);

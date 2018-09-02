@@ -28,20 +28,22 @@ $lista_labclinanalab=$objLabClinAnalab->MostrarLaboratorioClinico_Analisis();
 $lista_paciente_Serv=$objPacienteServ->MostrarPacienteServicio();
 $lista_servicios=$objServicio->MostrarServicio();
 
-if(isset($_REQUEST['nik']))
-    {
-    $idlabmod=$_REQUEST['nik'];
-    $labmod=$objLaboratorio->BuscarLaboratorio($idlabmod, "", "");
-    }
-
 ##variables
+$idlabmod="";
 $idservicio="";
 $idtipo="";
 $idnombre="";
 $fecha="";
 $idlabclin="";
+$nombrelabclin="";
 $resultado="";
 $precio="";
+
+if(isset($_REQUEST['nik']))
+    {
+    $idlabmod=$_REQUEST['nik'];
+    $labmod=$objLaboratorio->BuscarLaboratorio($idlabmod, "", "");
+    }
 
 if(isset($labmod))
 {
@@ -50,46 +52,33 @@ if(isset($labmod))
     $idnombre=$labmod[0]->getNombre();
     $resultado=$labmod[0]->getResultados();
     
-    for ($i = 0; $i < count($lista_labclinanalab); $i++) 
-    {
-        if($lista_labclinanalab[$i]->getIdlaboratorio()==$idlabmod)
+    $labanalisis=$objLabClinAnalab->BuscarLaboratorioClinico_Analisis("", "", $idlabmod);
+    if(count($labanalisis)>0)
         {
-            $idlabclin=$lista_labclinanalab[$i]->getIdlabclinico();
+        $idlabclin=$labanalisis[0]->getIdlabclinico();
+        $arraynombres=$objLabClinico->BuscarLaboratorioClinico($idlabclin, "", "");
+        if(count($arraynombres)>0){$nombrelabclin=$arraynombres[0]->getNombrelabclin();}
         }
-    }
     
-    for ($i = 0; $i < count($lista_paciente_Serv); $i++) 
-    {
-        if($lista_paciente_Serv[$i]->getIdservicio()==$idservicio)
-        {
-            $fecha=$lista_paciente_Serv[$i]->getFecha();
-            $idpaciente=$lista_paciente_Serv[$i]->getIdpaciente();
-        }
-    }
-    
-    for ($i = 0; $i < count($lista_servicios); $i++) 
-    {
-        if($lista_servicios[$i]->getIdServicio()==$idservicio)
-        {
-            $precio=$lista_servicios[$i]->getPrecio();
-        }
-    }
-    
+    $pacienteserv=$objPacienteServ->BuscarPacienteServicio("", "", $idservicio);
+    if(count($pacienteserv)>0){$fecha=$pacienteserv[0]->getFecha();}
+        
+    $serv=$objServicio->BuscarServicio($idservicio, "", "");
+    if(count($serv)>0){$precio=$serv[0]->getPrecio();}    
 }
-
 
 if($_POST)
 {
     //Mostrar($_POST);
     if(isset($_POST['idlabmod'])){$idlabmod= eliminarblancos($_POST['idlabmod']);}
+    if(isset($_POST['idservicio'])){$idservicio=eliminarblancos($_POST['idservicio']);}
     if(isset($_POST['idtipo'])){$idtipo=eliminarblancos($_POST['idtipo']);}
     if(isset($_POST['idnombre'])){$idnombre= eliminarblancos($_POST['idnombre']);}
     if(isset($_POST['fecha'])){$fecha=eliminarblancos($_POST['fecha']);}
     if(isset($_POST['idlabclin'])){$idlabclin=eliminarblancos($_POST['idlabclin']);}
     if(isset($_POST['resultados'])){$resultado=eliminarblancos($_POST['resultados']);}
     if(isset($_POST['precio'])){$precio=eliminarblancos($_POST['precio']);}
-    if(isset($_POST['idservicio'])){$idservicio=eliminarblancos($_POST['idservicio']);}
-                
+                    
     $error=0;
     ##validar
     
@@ -112,70 +101,57 @@ if($_POST)
            
         if($error==0)
         {
-            $modenservicio=$objServicio->ModificarServicio($idservicio, "", $precio);
-            if($modenservicio!=0)
-            {
-                $modenlaboratorio=$objLaboratorio->ModificarLaboratorio($idlabmod, $idtipo, $idnombre, $precio, $resultado);
-            
-            if($modenlaboratorio==1)
-            {
-                $amodenpcteserv=$objPacienteServ->BuscarPacienteServicio("", "", $p_idservicio, "");
-                
-                    if($amodenpcteserv!=0)
-                    {
-                        $idamodenpcteserv=$amodenpcteserv->getIdps();
-                        $modenpcteserv=$objPacienteServ->ModificarPacienteServicio($idamodenpcteserv, "", "", $fecha, "");
+            $affcont=0;
+            $arraylab=$objLaboratorio->BuscarLaboratorio($idlabmod, $idtipo, $idnombre, "", $resultado);
+            if(count ($arraylab)==0)
+                {
+                $modenlaboratorio=$objLaboratorio->ModificarLaboratorio($idlabmod, $idtipo, $idnombre, $resultado);
+                if($modenlaboratorio==0){$affcont++;}
+                }
                     
-                        if($modenpcteserv!=0)
-                            {
-                                $idamodenlabclinanalab=$objLabClinAnalab->BuscarLaboratorioClinico_Analisis("", "", $idlabmod)[0]->getLabclinanalab();
-                                //$idamodenlabclinanalab=$amodenmedcons->getIdmc();
-                                $modlabclinanalab=$objLabClinAnalab->ModificarLaboratorioClinico_Analisis($idamodenlabclinanalab, $idlabclin, "", $fecha, "");
-                            
-                                $msg="<div class='alert alert-success alert-dismissable'>"
-                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                                . "Datos actualizados satisfactoriamente</div>"; 
-                                echo "<script>";
-                                echo "window.location = 'mostrarpaciente.php?nik=$idpaciente';";
-                                echo "</script>";
-                            }
-                            else
-                            {
-                                $msg="<div class='alert alert-danger alert-dismissable'>"
-                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                                . "Error de nivel 4. Actualizacion de datos fallida</div>"; 
-                            }
-                    }
-                    else
-                    {
-                        $msg="<div class='alert alert-danger alert-dismissable'>"
-                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                        . "Error de nivel 3. Actualizacion de datos fallida</div>"; 
-                    }   
-            }
-            else
+            $arrayserv=$objServicio->BuscarServicio($idservicio, "", $precio);
+            if(count ($arrayserv)==0)
+                {
+                $modenservicio=$objServicio->ModificarPrecioporIdServicio($idservicio, $precio);
+                if($modenservicio==0){$affcont++;}
+                }
+                         
+            $arraypacserv=$objPacienteServ->BuscarPacienteServicio("", "", $idservicio, $fecha);
+            if(count ($arraypacserv)==0)
+                {
+                $modenpacserv=$objPacienteServ->ModificarFechaporIdServicio($idservicio, $fecha);
+                if($modenpacserv==0){$affcont++;}
+                }
+            
+            $arraylabclinanalab=$objLabClinAnalab->BuscarLaboratorioClinico_Analisis("", $idlabclin, $idlabmod);
+            if(count ($arraylabclinanalab)==0)
+                {
+                $modenlabclinanalab=$objLabClinAnalab->ModificarIdlabClinporIdAnalisisLab($idlabmod, $idlabclin);
+                if($modenlabclinanalab==0){$affcont++;}
+                }
+            if($affcont>0)
             {
                 $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 2. Actualizacion de datos fallida</div>"; 
-            }
+                . "Error. Actualizacion de datos fallida</div>";
             }
             else
             {
-                $msg="<div class='alert alert-danger alert-dismissable'>"
+                $msg="<div class='alert alert-success alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 1. Actualizacion de datos fallida</div>"; 
+                . "Datos actualizados satisfactoriamente</div>"; 
+                echo "<script>";
+                echo "window.location = 'mostrar_laboratorio.php?nik=$idlabmod';";
+                echo "</script>";
             }
         }
         else
             {
                 $msg="<div class='alert alert-danger alert-dismissable'>"
                 . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                . "Error de nivel 0. Actualizacion de datos fallida</div>"; 
+                . "Error. Actualizacion de datos fallida</div>"; 
             }
-        
-    }
-    
+    }  
 }
 ?>
 
@@ -243,7 +219,7 @@ if($_POST)
                             for ($i = 0; $i < count($lista_labclin); $i++) 
                             {
                                $id_labclin=$lista_labclin[$i]->getIdlabclinico();
-                               $nombre=$lista_labclin[$i]->getNombrelabclinico();
+                               $nombre=$lista_labclin[$i]->getNombrelabclin();
                                $marcar="";
                                if($id_labclin==$idlabclin){$marcar="selected='selected'";}
                                echo "<option value='$id_labclin' $marcar>$nombre</option>";

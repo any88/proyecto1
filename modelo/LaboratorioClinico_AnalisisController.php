@@ -64,6 +64,27 @@ public function ModificarLaboratorioClinico_Analisis($p_id,$p_idlabclin,$p_idlab
         return $affected;
     }
     
+    public function ModificarIdlabClinporIdAnalisisLab($p_idlaboratorio,$p_idlabclin)
+    {
+        $affected=0;
+        $bd=new con_mysqli("", "", "", "");
+        
+        ##Validar Iny Sql
+        $p_idlaboratorio=$bd->real_scape_string($p_idlaboratorio);
+        $p_idlabclin=$bd->real_scape_string($p_idlabclin);
+       
+               
+        $consulta="UPDATE `labclin_analab` SET `idlabclinico`='$p_idlabclin' WHERE (`idlaboratorio`='$p_idlaboratorio')";
+        
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $affected=$bd->affected_row();
+        }
+        $bd->Close();
+        return $affected;
+    }
+    
     public function EliminarLaboratorioClinico_Analisis($p_id)
     {
         $affected=0;

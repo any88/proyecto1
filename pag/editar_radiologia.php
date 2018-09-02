@@ -80,8 +80,7 @@ if($_POST)
     if(isset($_POST['idlabrad'])){$idlabrad=eliminarblancos($_POST['idlabrad']);}
     if(isset($_POST['resultados'])){$resultado=eliminarblancos($_POST['resultados']);}
     if(isset($_POST['precio'])){$precio=eliminarblancos($_POST['precio']);}
-    if(isset($_POST['idservicio'])){$idservicio=eliminarblancos($_POST['idservicio']);}
-                
+                    
     $error=0;
     ##validar
     
