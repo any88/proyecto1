@@ -1208,8 +1208,41 @@ body {
 .label_consulas
 {
     width:80px; 
-    border:solid 1px;
+    border-radius: 3px;
     background-color: #286090;
+    height: 20px;
+    word-wrap:break-word;
+}
+.label_cirugia
+{
+    width:80px; 
+    border-radius: 3px;
+    background-color: #004731;
+    height: 20px;
+    word-wrap:break-word;
+}
+.label_hospitalizacion
+{
+    width:80px; 
+    border-radius: 3px;
+    background-color: #FF803E;
+    height: 20px;
+    word-wrap:break-word;
+    
+}
+.label_radiologia
+{
+    width:80px;
+    border-radius: 3px;
+    background-color: #800080;
+    height: 20px;
+    word-wrap:break-word;
+}
+.label_laboratorio
+{
+    width:80px; 
+    border-radius: 3px;
+    background-color: #FF0000;
     height: 20px;
     word-wrap:break-word;
 }
