@@ -263,4 +263,23 @@ public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo,$
     
         return $result;
     }
+    
+    public function TotalIngresoPorFecha($fecha)
+    {
+        $total=0;
+        $bd= new con_mysqli("", "", "", "");
+        $fecha=$bd->real_scape_string($fecha);
+        $consulta="SELECT SUM(monto) from transaccion WHERE fecha='$fecha' and motivo=1";
+        
+       $r=$bd->consulta($consulta);
+        if($r)
+        {
+            
+           $fila=$bd->fetch_array($r);
+           $total=$fila[0];
+                
+           
+        }
+        $bd->Close();
+    return $total;}
 }
