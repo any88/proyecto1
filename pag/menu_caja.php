@@ -6,7 +6,7 @@
   
             <ul id="menu-content" class="menu-content collapse out">
                 <li>
-                    <a href="#">
+                    <a href="balance_caja.php">
                   <i class="fa fa-dashboard fa-lg"></i>BALANCE DE CAJA
                   </a>
                 </li>

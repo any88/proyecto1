@@ -81,6 +81,7 @@ include './menu_caja.php';
                  for ($i = 0; $i < count($list_pacientes); $i++) 
                  {
                      $nro=$i+1;
+                     $idps=$list_pacientes[$i]->getIdps();
                      $idPaciente=$list_pacientes[$i]->getIdpaciente();
                      $idservicio=$list_pacientes[$i]->getIdservicio();
                      $id_transaccion=$list_pacientes[$i]->getIdtransaccion();
@@ -136,14 +137,21 @@ include './menu_caja.php';
                     echo "<td>".$estado."</td>";
                     echo "<td>s/. $precio_plan</td>";
                     echo "<td>s/. $pago_real</td>";
-                    echo '
+                   /* echo '
                     <td>
-                             <a href="'.$link_edit.'?nik='.$idservicio.'" title="Pagar servicios" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></a>
+                    
+                             <a href="transaccion_caja.php?nik='.$id_transaccion.'" title="Pagar servicios" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></a>
 
                              <a href="'.$link_listar.'?action=delete&nik='.$idservicio.'&v='.$nombre_servicio.'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos  de el paciente '.$nombre_servicio.' ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                  
                              <a href="'.$link_mostrar.'?nik='.$idPaciente.'" title="Mostrar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'
-                 . '</td>';
+                 . '</td>';*/
+                    echo '<td>'; 
+                     echo "<div style='margin-left:25px;'><form action='transaccion_caja.php' name='f$i' method='post' >";                       
+                        echo "<input type='hidden' name='idt' value='$idps'>";
+                        echo "<button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'> <i class='fa fa-dollar'></i></button>";
+                    echo "</form></div>";
+                    echo '</td>';
                    echo "</tr>";
                     }
                  }
