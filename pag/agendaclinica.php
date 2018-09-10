@@ -63,7 +63,7 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
 <br><br>
 <section class="about-text">
     <div class="container">
-         <h3 class="text-left"><i class="fa fa-institution text-info"><?php echo " Agenda de Servicios para el perído ".$fecha_comparar;?></i></h3>
+         <h3 class="text-left"><i class="fa fa-calendar text-info"><?php echo " Agenda de Servicios para el perído ".$fecha_comparar;?></i></h3>
           
           <?php 
         if($msg!="")
@@ -84,11 +84,11 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                 echo "<input type='hidden' name='fecha' value='$fecha_comparar'>";
                 echo "<div class='btn-group pull-right' style='margin-top:-5px;'>";
                 
-                echo "<a href='#' title='CONSULTAS' class='btn btn-responsive'><i style='color:#FFF;'>CONSULTAS </i><span class='badge' style='background-color:#286081; color:#FFF;'>$contador_consultas</span></a>";
-                echo "<a href='#' title='CIRUGIAS' class='btn btn-responsive'><i style='color:#FFF;'>CIRUGIAS </i><span class='badge' style='background-color:#004731; color:#FFF;'>$contador_ciruga</span></a>";
-                echo "<a href='#' title='HOSPITALIZACION' class='btn btn-responsive'><i style='color:#FFF;'>HOSPITALIZACION </i> <span class='badge' style='background-color:#FF803E; color:#FFF;'>$contador_hospitalizacion</span></a>";
-                echo "<a href='#' title='RADIOLOGIA' class='btn  btn-responsive'><i style='color:#FFF;'>RADIOLOGIAS </i><span class='badge' style='background-color:#800080; color:#FFF;'>$contador_radiologia</span></a>";
-                echo "<a href='#' title='LABORATORIO' class='btn  btn-responsive'><i style='color:#FFF;'>LABORATORIOS </i> <span class='badge' style='background-color:#FF0000; color:#FFF;'>$contador_laboratorio</span></a>";
+                echo "<a href='#' title='CONSULTAS' class='btn btn-responsive'><i style='color:#FFF;' class='fa fa-user'> </i> <span class='badge'color:#FFF;'> $contador_consultas</span></a>";
+                echo "<a href='#' title='CIRUGIAS' class='btn btn-responsive'><i style='color:#FFF;' class='fa fa-heartbeat'> </i> <span class='badge' style='background-color:#004731; color:#FFF;'>$contador_ciruga</span></a>";
+                echo "<a href='#' title='HOSPITALIZACION' class='btn btn-responsive'><i style='color:#FFF;' class='fa fa-bed'> </i> <span class='badge' color:#FFF;' style='background-color:#FF803E';>$contador_hospitalizacion</span></a>";
+                echo "<a href='#' title='RADIOLOGIA' class='btn  btn-responsive'><i style='color:#FFF;' class='fa fa-plus-square'></i> <span class='badge' style='background-color:#800080; color:#FFF;'>$contador_radiologia</span></a>";
+                echo "<a href='#' title='LABORATORIO' class='btn  btn-responsive'><i style='color:#FFF;' class='fa fa-flask'></i> <span class='badge' style='background-color:#FF0000; color:#FFF;'>$contador_laboratorio</span></a>";
              
                 echo "</div>";
                 
@@ -113,6 +113,7 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                           echo "</thead>";
                           echo "<tbody>";
                           $dia=1;
+                          $icon_estado="<i class='fa fa-user '></i>";
                           for ($j = 0; $j < $cant_dias; $j++) ###matriz de 7 *5
                           {
 
@@ -158,6 +159,7 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                                             $label_clase="label_consulas";
                                             $link="";
                                             $nik="";
+                                            
                                             if(count($arrServicios)>0)
                                             {
                                                 $id_tipoS=$arrServicios[0]->getIdTipoServicio();
@@ -170,7 +172,7 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                                                                 $nik=$arrCons[0]->getIdConsulta();
                                                             }
                                                         $link="mostrar_consulta.php?nik=$nik";
-                                                    
+                                                        $icon_estado="<i class='fa fa-user '></i>";
                                                     }
                                                 if($id_tipoS==2)
                                                     {
@@ -181,6 +183,8 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                                                                 $nik=$arrCir[0]->getIdCirugia();
                                                             }
                                                          $link="mostrar_cirugia.php?nik=$nik";
+                                                         $icon_estado="<i class='fa fa-heartbeat'></i>";
+                                                         
                                                     }
                                                 if($id_tipoS==3)
                                                     { 
@@ -191,6 +195,7 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                                                                 $nik=$arrHosp[0]->getIdHospitalizacion();
                                                             }
                                                          $link="mostrar_hospitalizacion.php?nik=$nik";
+                                                         $icon_estado="<i class='fa fa-bed'></i>";
                                                     }
                                                 if($id_tipoS==4)
                                                     { 
@@ -201,6 +206,7 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                                                                 $nik=$arrRad[0]->getIdRadiologia();
                                                             }
                                                         $link="mostrar_radiologia.php?nik=$nik";
+                                                        $icon_estado="<i class='fa fa-plus-square '></i>";
                                                     }
                                                 if($id_tipoS==5)
                                                     { 
@@ -211,6 +217,7 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                                                                 $nik=$arrLab[0]->getIdLaboratorio();
                                                             }
                                                         $link="mostrar_laboratorio.php?nik=$nik";
+                                                        $icon_estado="<i class='fa fa-flask '></i>";
                                                     }
                                                
                                                 $arrTS=$objTipoS->BuscarTipoServicio($id_tipoS, "");
@@ -222,9 +229,9 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
                                             /* $cad=substr($nomb_servicio,0,1);
                                              $cad=$cad.substr($nomb_servicio,1,1);*/
                                              $iniciales=$nomb_paciente;
-                                             $icon_estado="";
+                                             
                                              $icon_color="";
-                                             $icon_estado="<i class='fa fa-user '></i>";
+                                            
                                              $pull='pull-left';
                                              if($pull_fila==2){$pull='pull-right';$pull_fila=0;}
                                              $tooltip="Servicio de $nomb_servicio para el paciente $nomb_paciente_completo. Fecha $fecha_buscar";
