@@ -198,12 +198,12 @@ function Hora()
 }
 function FechaYMA()
 {
-    date_default_timezone_set("Cuba");
+    date_default_timezone_set("America/Lima");
     return $fecha=date("Y-m-d");
 }
 function FechaYMA2()
 {
-    date_default_timezone_set("Cuba");
+    date_default_timezone_set("America/Lima");
     return $fecha=date("d/m/Y");
 }
 function AnnoActual()

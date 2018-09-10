@@ -1,5 +1,5 @@
 <?php
-include './caja.php';
+include 'caja.php';
 class CajaController
 {
     public function CajaController(){}
@@ -40,10 +40,11 @@ class CajaController
         $result=array();
         $bd=new con_mysqli("", "", "", "");
         $consulta="SELECT * FROM `caja`";
+        $r=$bd->consulta($consulta);
         if($r)
         {
             $a=0;
-            while ($fila=$bd->fetch_assoc($f))
+            while ($fila=$bd->fetch_assoc($r))
             {
                 $id=$fila['id_caja'];
                 $cantidad=$fila['cantidad'];

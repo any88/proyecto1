@@ -10,6 +10,7 @@ include '../modelo/ServicioController.php';
 include '../modelo/MedicoController.php';
 include '../modelo/TipoServicioController.php';
 include '../modelo/TransaccionController.php';
+include '../modelo/CajaController.php';
 
 $objPacienteServC=new PacienteServicioController();
 $objPaciente=new PacienteController();
@@ -17,6 +18,7 @@ $objMedicoC=new MedicoController();
 $objServicioC=new ServicioController();
 $objTipoServicio=new TipoServicioController();
 $objTransaccion=new TransaccionController();
+$objCaja=new CajaController();
 
 include './menu_caja.php';
 $fecha= FechaYMA();
@@ -46,6 +48,9 @@ if(count($lista_transacciones)>0)
 }
 $total_gestion_caja=$aporte_a_caja-$extraccion_caja;
 
+$arr_caja=$objCaja->MostrarCaja();
+$total_caja=0;
+if(count($arr_caja)>0){$total_caja=$arr_caja[0]->getCantidad();}
 ?>
 
 <br><br>
@@ -53,25 +58,60 @@ $total_gestion_caja=$aporte_a_caja-$extraccion_caja;
     <div class="ingres_costo ">
       
         <div class="">
-          <h3 class="text-left"><i class="fa fa-user text-info"> Balance de Caja para la fecha <?php echo $fecha;?></i></h3>
+          <h3 class="text-left"><i class="fa fa-usd text-info"> Balance de Caja para la fecha <?php echo $fecha;?></i></h3>
           <div class="form-horizontal">
               <form method="post" action="balance_caja.php" name="fbc">
                   <div class="col-lg-2"><input type="date" name="fecha_balance" class="form-control" value="<?php echo $fecha;?>"></div>
                   <button type="submit" class="btn btn-success">Buscar</button>
               </form>
-              
-              <hr>
-              <div class="col-md-10" style="background-color: #d6cfcf;border-radius: 5px;color: black;margin-top: 5px;padding-top: 10px;">
-                  <h4>Gesti&oacute;n de Caja</h4>
-                 Aporte a Caja  <p class="pull-right">s/.<?php echo $aporte_a_caja;?></p><br>
-                 Extracci&oacute;n de Caja <p class="pull-right" style="margin-right: -20px;">s/.<?php echo $extraccion_caja;?></p><br>
-                 Total <p class="pull-right" style="margin-right: -20px;">s/.<?php echo $total_gestion_caja;?></p>
+              <div class="pull-right">
+                  <form name="imp" method="post" action="imprimir_cierre.php">
+                      <input type="hidden" name="fecha_balance" value="<?php echo $fecha;?>">
+                      <button type='submit' class="btn btn-primary" target="_blank"><i class="fa fa-print"> </i> Imprimir Cierre</button>
+                  </form>
+                 
               </div>
-              <div class="col-md-10" style="background-color: #d6cfcf;border-radius: 5px;color: black;margin-top: 5px;padding-top: 10px;">
+              <hr>
+              <div class="col-md-12" style="background-color: #d6cfcf;border-radius: 5px;color: black;margin-top: 5px;padding-top: 10px;">
+                  <h4>Gesti&oacute;n de Caja</h4>
+                  <table class="table table-responsive">
+                      <tr>
+                          <td>Aporte a Caja</td> <td class="pull-right">s/.<?php echo $aporte_a_caja;?></td>
+                      </tr>
+                      <tr>
+                          <td>Extracci&oacute;n de Caja</td><td class="pull-right">s/.<?php echo $extraccion_caja;?></td>
+                      </tr>
+                      <tr>
+                          <th>Total</th><td class="pull-right">s/.<?php echo $total_gestion_caja;?></td>
+                      </tr>
+                  </table>
+                 
+              </div>
+              <div class="col-md-12" style="background-color: #d6cfcf;border-radius: 5px;color: black;margin-top: 5px;padding-top: 10px;">
                   <h4>Cobros de Servicio</h4>
-                  Por Aseguradora <p class="pull-right">s/.<?php echo $pago_aseguradora;?></p><br>
-                  Pago en Efectivo<p class="pull-right" style="margin-right: -30px;">s/.<?php echo $pago_efectivo;?></p><br>
-                  Total <p class="pull-right" style="margin-right: -30px;">s/.<?php echo $pago_aseguradora+$pago_efectivo;?></p>
+                  <table class="table table-responsive">
+                      <tr>
+                          <td>Por Aseguradora</td> <td class="pull-right">s/.<?php echo $pago_aseguradora;?></td>
+                      </tr>
+                      <tr>
+                          <td>Pago en Efectivo</td><td class="pull-right">s/.<?php echo $pago_efectivo;?></td>
+                      </tr>
+                      <tr>
+                          <th>Total</th><td class="pull-right">s/.<?php echo $pago_aseguradora+$pago_efectivo;?></td>
+                      </tr>
+                  </table>
+                  
+              </div>
+              <div class="col-md-12" style="background-color: #d6cfcf;border-radius: 5px;color: black;margin-top: 5px;padding-top: 10px;">
+                  <h4>Efectivo en Caja</h4>
+                  <p>Fecha: <?php echo FechaActual();?></p>
+                  <p>Usuario: <?php echo "Jorge Ernesto Fernandez de la Torre";?></p>
+                  <table class="table table-responsive">
+                      <tr>
+                          <th>Total</th><td class="pull-right">s/.<?php echo $total_caja;?></td>
+                      </tr>
+                  </table>
+                  
               </div>
               
           </div>
