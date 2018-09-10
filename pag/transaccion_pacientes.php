@@ -242,9 +242,9 @@ echo "</script>";
                                     ?>
                                   <div class="form-horizontal">
 
-                                      <b>Pago Libre: </b> <input type="radio" name='f_pago' <?php echo $chekedL;?> value='PL' class="radio radio-inline" id='radio_libre'>
+                                      <b>Pago Libre: </b> <input type="radio" name='f_pago' <?php echo $chekedL;?> value='PL' class="radio radio-inline" id='radio_libre' onclick="TrVisibles();">
                                       &nbsp;&nbsp;
-                                      <b>Pago por Aseguradora (<?php echo $nombre_aseguradora;?>):  </b><input type="radio" name='f_pago' <?php echo $chekedA;?> value="PA" class="radio radio-inline" id='radio_aseguradora'>
+                                      <b>Pago por Aseguradora (<?php echo $nombre_aseguradora;?>):  </b><input type="radio" name='f_pago' <?php echo $chekedA;?> value="PA" class="radio radio-inline" id='radio_aseguradora' onclick="TrOcultos();">
                                   </div>
 
                               </td>
@@ -254,11 +254,11 @@ echo "</script>";
                               <th>Monto a Pagar:</th>
                               <td><input type="text" name='monto' value='<?php echo $monto;?>' required class="form-control" id='monto' onkeyup="Vuelto();"></td>
                           </tr>
-                          <tr>
+                          <tr class="hidden" id="trabondo_hidden">
                               <th>Abonado por el cliente</th>
                               <td><input type="text" name='saldo' value='<?php echo $saldo;?>' class="form-control" id='abonado' onkeyup="Vuelto();"></td>
                           </tr>
-                          <tr>
+                          <tr class="hidden" id="trvuelto_hidden">
                               <th>Vuelto a entregar</th>
                              
                               <td><input type="text" name='saldo' value='s/. 0' class="form-control"  readonly="true" id='vueltos'></td>
