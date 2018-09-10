@@ -604,6 +604,22 @@ function Vuelto()
     }
 }
 
+function TrVisibles()
+{
+    var trabonado=document.getElementById('trabondo_hidden');
+    var trvuelto=document.getElementById('trvuelto_hidden');
+    
+    trabonado.setAttribute("class","");
+    trvuelto.setAttribute("class","");
+}
+function TrOcultos()
+{
+    var trabonado=document.getElementById('trabondo_hidden');
+    var trvuelto=document.getElementById('trvuelto_hidden');
+    
+    trabonado.setAttribute("class","hidden");
+    trvuelto.setAttribute("class","hidden");
+}
 /*** poner en la misma pagina que las tabs
  * 
 // Select all tabs
