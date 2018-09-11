@@ -49,7 +49,7 @@ if($_POST)
                      $msg="<div class='alert alert-success alert-dismissable'>"
                     . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
                     . "Se ha registrado el ingreso de efectivo en caja correctamente, Si desea imprimir un comprobante del ingreso acceder"
-                    . " aqui <a href='imprimir_declarar_caja_ingresos.php?nik=$id_ultimo_insert_logCaja' class='btn btn-primary'><i class='fa fa-print'></i>Imprimir</a>.</div>";
+                    . " aqui <a href='imprimir_declarar_caja_ingresos.php?nik=$id_ultimo_insert_logCaja' target='_blank' class='btn btn-primary'><i class='fa fa-print'></i>Imprimir</a>.</div>";
                      $_SESSION['msg_imp']=$msg;
                      echo "<script>";
                         echo "window.location = 'caja_declarar_ingreso.php';";

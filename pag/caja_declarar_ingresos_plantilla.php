@@ -75,7 +75,7 @@
 		  
 	  </table>
 	<br><br>
-	<p>Para que asi conste firman la Presente:</p>
+        <p>Para que asi conste firman la Presente:</p><br><br><br>
 		<table class="table">
                 
 		<tr>
@@ -85,8 +85,8 @@
 		</tr>
 			<tr>
                             <td style="width: 250px;">Quien Entrega:<br> <?php echo $nombre_persona_entrega;?></td>
-                            <td></td>
-			<td>Quien Entrega: <br><?php echo $usuario_recibe;?></td>
+                            <td style="width: 50px;"></td>
+			<td style="width: 250px;">Quien Entrega: <br><?php echo $usuario_recibe;?></td>
 		</tr>
 		</table>
 	</div>

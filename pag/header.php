@@ -81,14 +81,8 @@
               <li><a href="listar_servicios.php" >Listar Servicios</a></li>
            </ul>
           </li>
-          <li class="menu-has-children" ><a href="#">Caja</a>
-          <ul>
-              <li><a href="cobros_pendientes.php" >Cobros Pendientes</a></li>
-              <li><a href="pagos_pendientes.php" >Pagos Pendientes</a></li>
-              <li><a href="cobros_realizados.php" >Cobros Realizados</a></li>
-              <li><a href="#" onclick="Msg();">Pagos Realizados</a></li>
-              <li><a href="#" onclick="Msg();">Balance de Caja</a></li>
-          </ul>
+          <li class="menu-has-children" ><a href="cobros_pendientes.php">Caja</a>
+          
           </li>
          <li class="menu-has-children" ><a href="#" onclick="Msg();">Farmacia</a></li>
          <li><a href="#" onclick="Msg();">Reportes</a></li>

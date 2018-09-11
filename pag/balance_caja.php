@@ -20,7 +20,7 @@ $objTipoServicio=new TipoServicioController();
 $objTransaccion=new TransaccionController();
 $objCaja=new CajaController();
 
-include './menu_caja.php';
+
 $fecha= FechaYMA();
 if($_POST)
 {
@@ -51,6 +51,12 @@ $total_gestion_caja=$aporte_a_caja-$extraccion_caja;
 $arr_caja=$objCaja->MostrarCaja();
 $total_caja=0;
 if(count($arr_caja)>0){$total_caja=$arr_caja[0]->getCantidad();}
+
+##el total en caja debe de ser el total en efectivo + el total en caja
+$total_caja=$total_caja+$pago_efectivo;
+
+
+include './menu_caja.php';
 ?>
 
 <br><br>

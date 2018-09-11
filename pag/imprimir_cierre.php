@@ -49,7 +49,7 @@ $total_gestion_caja=$aporte_a_caja-$extraccion_caja;
 $arr_caja=$objCaja->MostrarCaja();
 $total_caja=0;
 if(count($arr_caja)>0){$total_caja=$arr_caja[0]->getCantidad();}
-
+$total_caja=$total_caja+$pago_efectivo;
 //Imprimir
  require_once  ('../includes/pdf/html2pdf.class.php');
  include  ('balance_cierre_imprimir_plantilla.php');
