@@ -17,6 +17,7 @@ include '../modelo/HospitalizacionController.php';
 include '../modelo/CirugiaController.php';
 include '../modelo/InsumoController.php';
 include '../modelo/InsumoHospitalizacionController.php';
+include '../modelo/CajaController.php';
 
 $objPS=new PacienteServicioController();
 $objP= new PacienteController();
@@ -30,7 +31,14 @@ $objInsumoCirugia=new InsumoCirugiaController();
 $objInsumoHosp=new InsumoHospitalizacionController();
 $objCirugiaC=new CirugiaController();
 $objInsumoController=new InsumoController();
+$objCajaC=new CajaController();
 
+$saldo_caja=0;
+$arrCaja=$objCajaC->MostrarCaja();
+if(count($arrCaja)>0)
+{
+    $saldo_caja=$arrCaja[0]->getCantidad();
+}
 
 #id_paciente_servicio
 ##tipo Transaccion en este caso es 1 de ingreso
@@ -205,7 +213,7 @@ echo "</script>";
                 <div class="panel-heading">
                     <h3 class="text-left"><i class="fa fa-user text-info"> Cobro de Servicios</i></h3>
                     <div class="pull-right" style="margin-top: -30px;"> 
-                        <span class="text text-success"><b>s/. 200</b> en caja</span>
+                        <span class="text text-success"><b>s/. <?php echo $saldo_caja;?></b> en caja</span>
                         
                     </div>
                 </div>

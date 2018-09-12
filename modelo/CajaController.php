@@ -68,7 +68,7 @@ class CajaController
         if($r)
         {
             
-            while ($fila=$bd->fetch_assoc($f))
+            while ($fila=$bd->fetch_assoc($r))
             {
                 $nc=$nc+$fila['cantidad'];
             }
