@@ -60,7 +60,7 @@ class LogCajaController
         return $affected;
     }
     
-    public function EliminarConsulta($p_id)
+    public function EliminarLogCaja($p_id)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -131,11 +131,11 @@ class LogCajaController
         {
             if($id_log_caja=="" && $accion=="")
             {
-                $consulta=$consulta."WHERE `fecha`='$fecha'";
+                $consulta=$consulta."WHERE `fecha` LIKE '%$fecha%'";
             }
             else 
             {
-                $consulta=$consulta." and `fecha`='$fecha'";
+                $consulta=$consulta." and `fecha` LIKE '%$fecha%'";
             }
         }
         if($id_usuario!="")
@@ -173,5 +173,6 @@ class LogCajaController
         return $result;
         
     }
+    
 }
 

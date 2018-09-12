@@ -11,6 +11,7 @@ include '../modelo/MedicoController.php';
 include '../modelo/TipoServicioController.php';
 include '../modelo/TransaccionController.php';
 include '../modelo/CajaController.php';
+include '../modelo/LogCajaController.php';
 
 $objPacienteServC=new PacienteServicioController();
 $objPaciente=new PacienteController();
@@ -19,7 +20,7 @@ $objServicioC=new ServicioController();
 $objTipoServicio=new TipoServicioController();
 $objTransaccion=new TransaccionController();
 $objCaja=new CajaController();
-
+$objLogCajaC=new LogCajaController();
 
 $fecha= FechaYMA();
 if($_POST)
@@ -35,6 +36,27 @@ $extraccion_caja=0;
 $total_gestion_caja=0;
 $total_ingreso=$objTransaccion->TotalIngresoPorFecha($fecha);
 $lista_transacciones=$objTransaccion->BuscarTransaccion("", $fecha, "");
+
+##aporte a caja
+$arrAporteCaja=$objLogCajaC->BuscarLogCaja(1, $fecha, "", "");
+if(count($arrAporteCaja)>0)
+{
+    for ($i = 0; $i < count($arrAporteCaja); $i++) 
+    {
+        $aporte_a_caja=$aporte_a_caja+$arrAporteCaja[$i]->getCantidad();
+    }
+}
+
+##extraccion de caja
+$arrExtraccionCaja=$objLogCajaC->BuscarLogCaja('0', $fecha, "", "");
+if(count($arrExtraccionCaja)>0)
+{
+    for ($i = 0; $i < count($arrExtraccionCaja); $i++) 
+    {
+        $extraccion_caja=$extraccion_caja+$arrExtraccionCaja[$i]->getCantidad();
+    }
+}
+
 if(count($lista_transacciones)>0)
 {
     for ($i = 0; $i < count($lista_transacciones); $i++) 

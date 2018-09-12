@@ -7,9 +7,8 @@ include './header.php';
 
 
 include '../modelo/LogCajaController.php';
-include '../modelo/CajaController.php';
+
 $objLogCajaC=new LogCajaController();
-$objCajaC=new CajaController();
 
 $fecha= FechaActual();
 $nomb_p="";
@@ -47,23 +46,10 @@ if($_POST)
                 
                 if($id_ultimo_insert_logCaja!=0)
                 {
-                    ##sumarle la nueva cantidad a lo que hay en efectivo en caja
-                    $aff=$objCajaC->ModificarCantidad($cantidad);
-                    if($aff==1)
-                    {
-                         $msg="<div class='alert alert-success alert-dismissable'>"
+                     $msg="<div class='alert alert-success alert-dismissable'>"
                     . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
                     . "Se ha registrado el ingreso de efectivo en caja correctamente, Si desea imprimir un comprobante del ingreso acceder"
                     . " aqui <a href='imprimir_declarar_caja_ingresos.php?nik=$id_ultimo_insert_logCaja' target='_blank' class='btn btn-primary'><i class='fa fa-print'></i>Imprimir</a>.</div>";
-                    }
-                    else
-                    {
-                         $msg="<div class='alert alert-warning alert-dismissable'>"
-                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                    . "Error!!! no se pudo actualizar la cantidad de efectivo en caja.</div>";
-                     $aff=$objLogCajaC->EliminarLogCaja($id_ultimo_insert_logCaja);
-                    
-                    }
                      $_SESSION['msg_imp']=$msg;
                      echo "<script>";
                         echo "window.location = 'caja_declarar_ingreso.php';";
