@@ -17,6 +17,15 @@ include '../modelo/HospitalizacionController.php';
 include '../modelo/CirugiaController.php';
 include '../modelo/InsumoController.php';
 include '../modelo/InsumoHospitalizacionController.php';
+include '../modelo/CajaController.php';
+$objCajaC=new CajaController();
+
+$saldo_caja=0;
+$arrCaja=$objCajaC->MostrarCaja();
+if(count($arrCaja)>0)
+{
+    $saldo_caja=$arrCaja[0]->getCantidad();
+}
 
 $objPS=new PacienteServicioController();
 $objP= new PacienteController();
@@ -145,12 +154,27 @@ if($_POST)
                             }
                             else 
                             {
-                                $msg="<div class='alert alert-success alert-dismissable'>"
-                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                                . "OK! Pago efectuado correctamente.</div>";
-                                echo "<script>";
-                                    echo "window.location = 'mostrarpaciente.php?nik=$id_paciente';";
-                               echo "</script>";
+                                if($f_pago=="PL")
+                                {
+                                    $aff=$objCajaC->ModificarCantidad($monto);
+                                    if($aff==1)
+                                    {
+                                        $msg="<div class='alert alert-success alert-dismissable'>"
+                                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                                        . "OK! Pago efectuado correctamente.</div>";
+                                        echo "<script>";
+                                            echo "window.location = 'cobros_pendientes.php';";
+                                       echo "</script>";
+                                    }
+                                    else
+                                    {
+                                        $msg="<div class='alert alert-danger alert-dismissable'>"
+                                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                                        . "Error! No se pudo modificar la cantidad de efectivo en caja.</div>";
+                                        ##eliminar la transacion
+                                        $aff=$objTransaccion->EliminarTransaccion($id_transaccion_creada);
+                                    }
+                                }
 
                             }
                         }
@@ -205,7 +229,7 @@ echo "</script>";
                 <div class="panel-heading">
                     <h3 class="text-left"><i class="fa fa-user text-info"> Cobro de Servicios</i></h3>
                     <div class="pull-right" style="margin-top: -30px;"> 
-                        <span class="text text-success"><b>s/. 200</b> en caja</span>
+                        <span class="text text-success"><b>s/. <?php echo $saldo_caja;?></b> en caja</span>
                         
                     </div>
                 </div>

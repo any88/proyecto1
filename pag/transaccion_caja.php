@@ -153,12 +153,28 @@ if($_POST)
                             }
                             else 
                             {
-                                $msg="<div class='alert alert-success alert-dismissable'>"
-                                . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                                . "OK! Pago efectuado correctamente.</div>";
-                                echo "<script>";
-                                    echo "window.location = 'cobros_pendientes.php';";
-                               echo "</script>";
+                                if($f_pago=="PL")
+                                {
+                                    $aff=$objCajaC->ModificarCantidad($monto);
+                                    if($aff==1)
+                                    {
+                                        $msg="<div class='alert alert-success alert-dismissable'>"
+                                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                                        . "OK! Pago efectuado correctamente.</div>";
+                                        echo "<script>";
+                                            echo "window.location = 'cobros_pendientes.php';";
+                                       echo "</script>";
+                                    }
+                                    else
+                                    {
+                                        $msg="<div class='alert alert-danger alert-dismissable'>"
+                                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                                        . "Error! No se pudo modificar la cantidad de efectivo en caja.</div>";
+                                        ##eliminar la transacion
+                                        $aff=$objTransaccion->EliminarTransaccion($id_transaccion_creada);
+                                    }
+                                }
+                                
 
                             }
                         }
