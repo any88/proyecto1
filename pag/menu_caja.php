@@ -29,7 +29,7 @@
                 </li>  
                 <ul class="sub-menu collapse" id="service">
                     <li class="active" ><a href="caja_declarar_ingreso.php">Declarar Ingreso de Efectivo</a></li>
-                    <li><a href="#" onclick="Msg();">Extracci&oacute;n de Efectivo</a></li>
+                    <li><a href="extraccion_efectivo.php" >Extracci&oacute;n de Efectivo</a></li>
                     <li><a href="#" onclick="Msg();">Ver Movimientos de Caja</a></li>
                     
                 </ul>

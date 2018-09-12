@@ -74,9 +74,7 @@ $arr_caja=$objCaja->MostrarCaja();
 $total_caja=0;
 if(count($arr_caja)>0){$total_caja=$arr_caja[0]->getCantidad();}
 
-##el total en caja debe de ser el total en efectivo + el total en caja
 
-$total_caja=$total_caja+$pago_efectivo;
 
 
 

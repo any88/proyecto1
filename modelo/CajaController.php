@@ -86,5 +86,33 @@ class CajaController
         $bd->Close();
         return $affected;
     }
+    public function ExtraerCantidad($nueva_cantidad)
+    {
+        $affected=0;
+        $bd=new con_mysqli("", "", "", "");
+        $nc=0;
+        $consulta="SELECT * FROM `caja`";
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            
+            while ($fila=$bd->fetch_assoc($r))
+            {
+                $nc=$nc+$fila['cantidad'];
+            }
+        }
+        $nueva_cantidad=$nc-$nueva_cantidad;
+        ##Validar Iny Sql
+        $nueva_cantidad=$bd->real_scape_string($nueva_cantidad);
+        $consulta="UPDATE `caja` SET `cantidad`='$nueva_cantidad' WHERE (`id_caja`='1')";
+        
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $affected=$bd->affected_row();
+        }
+        $bd->Close();
+        return $affected;
+    }
 }
 

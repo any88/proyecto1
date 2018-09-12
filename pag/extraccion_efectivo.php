@@ -7,8 +7,10 @@ include './header.php';
 
 
 include '../modelo/LogCajaController.php';
+include '../modelo/CajaController.php';
 
 $objLogCajaC=new LogCajaController();
+$objCajaC=new CajaController();
 
 $fecha= FechaActual();
 $nomb_p="";
@@ -16,6 +18,12 @@ $observaciones="";
 $cantidad=0;
 $msg="";
 $id_usuario="";
+$total_caja=0;
+$arrCaja=$objCajaC->MostrarCaja();
+if(count($arrCaja)>0)
+{
+    $total_caja=$arrCaja[0]->getCantidad();
+}
 if(isset($_SESSION['msg_imp'])){$msg=$_SESSION['msg_imp'];unset($_SESSION['msg_imp']);}
 
 if($_POST)
@@ -42,26 +50,52 @@ if($_POST)
             }
             else
             {
-                $id_ultimo_insert_logCaja=$objLogCajaC->NuevoLogcaja(1, $observaciones, $cantidad, $fecha, 1,$nomb_p);
-                
-                if($id_ultimo_insert_logCaja!=0)
+                ##si la cantidad que se desea sustraer es mayor que la cantidad de dinero en caja
+                if($total_caja<$cantidad)
                 {
-                     $msg="<div class='alert alert-success alert-dismissable'>"
-                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                    . "Se ha registrado el ingreso de efectivo en caja correctamente, Si desea imprimir un comprobante del ingreso acceder"
-                    . " aqui <a href='imprimir_declarar_caja_ingresos.php?nik=$id_ultimo_insert_logCaja' target='_blank' class='btn btn-primary'><i class='fa fa-print'></i>Imprimir</a>.</div>";
-                     $_SESSION['msg_imp']=$msg;
-                     echo "<script>";
-                        echo "window.location = 'caja_declarar_ingreso.php';";
-                     echo "</script>";
-
+                    $msg="<div class='alert alert-danger alert-dismissable'>"
+                   . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                   . "La cantidad que desea sustraer es mayor que la cantidad de dinero disponible en caja. (disponible en caja $total_caja soles)</div>";
+                        
                 }
                 else
                 {
-                     $msg="<div class='alert alert-danger alert-dismissable'>"
-                    . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-                    . "Error! No se pudo registrar el ingreso en caja.</div>";
+                    $id_ultimo_insert_logCaja=$objLogCajaC->NuevoLogcaja('0', $observaciones, $cantidad, $fecha, 1,$nomb_p);
+                
+                    if($id_ultimo_insert_logCaja!=0)
+                     {
+                        ##sumarle la nueva cantidad a lo que hay en efectivo en caja
+                        $aff=$objCajaC->ExtraerCantidad($cantidad);
+                        if($aff==1)
+                        {
+                             $msg="<div class='alert alert-success alert-dismissable'>"
+                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                        . "Se ha registrado la extracci&oacute;n de efectivo en caja correctamente, Si desea imprimir un comprobante,acceder"
+                        . " aqui <a href='imprimir_declarar_caja_extraccion.php?nik=$id_ultimo_insert_logCaja' target='_blank' class='btn btn-primary'><i class='fa fa-print'></i>Imprimir</a>.</div>";
+                        }
+                        else
+                        {
+                             $msg="<div class='alert alert-warning alert-dismissable'>"
+                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                        . "Error!!! no se pudo actualizar la cantidad de efectivo en caja.</div>";
+                         $aff=$objLogCajaC->EliminarLogCaja($id_ultimo_insert_logCaja);
+
+                        }
+                         $_SESSION['msg_imp']=$msg;
+                         echo "<script>";
+                            echo "window.location = 'caja_declarar_ingreso.php';";
+                         echo "</script>";
+
+                    }
+                    else
+                    {
+                         $msg="<div class='alert alert-danger alert-dismissable'>"
+                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                        . "Error! No se pudo registrar la extracci&oacute;n de efectivo en caja.</div>";
+                    }
                 }
+                
+                
             }
         }
     }
@@ -80,7 +114,7 @@ include './menu_caja.php';
     <div class="ingres_costo ">
       
         <div class="">
-          <h3 class="text-left"><i class="fa fa-usd text-info"> Declaraci&oacute;n de Ingresos en Caja</i></h3>
+          <h3 class="text-left"><i class="fa fa-usd text-info"> Declaraci&oacute;n de Extracci&oacute;n de efectivo en Caja</i></h3>
           <div class="alert alert-warning alert-dismissable">
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <i class="fa fa-exclamation-circle"> Se recomienda al cajero llevar un registro fiel de los ingresos y extracciones
@@ -89,16 +123,16 @@ include './menu_caja.php';
           <br>
           <?php if($msg!=""){echo $msg;}?>
               <div class="panel panel-default">
-                  <div class="panel-heading"> <b> Declaraci&oacute;n de ingreso de Efectivo, fecha (<?php echo $fecha;?>)</b></div>
+                  <div class="panel-heading"> <b> Declaraci&oacute;n de Extracci&oacute; de Efectivo, fecha (<?php echo $fecha;?>)</b></div>
                   <div class="panel-body">
-                      <form name="dIng" method="post" action="caja_declarar_ingreso.php">
+                      <form name="dIng" method="post" action="extraccion_efectivo.php">
                           <table class="table table-responsive">
                           <tr>
-                              <td class="col-md-4">Nombre persona que ingresa el efectivo</td>
+                              <td class="col-md-4">Nombre persona que sustrae el efectivo</td>
                               <td><input type="text" class="form-control" name="nombre_p"></td>
                           </tr>
                           <tr>
-                              <td class="col-md-4">Cantidad Ingresada</td>
+                              <td class="col-md-4">Cantidad </td>
                               <td><input type="text" class="form-control" name="cantidad"></td>
                           </tr>
                           <tr>
