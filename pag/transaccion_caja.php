@@ -133,6 +133,7 @@ if($_POST)
                     if($id_transaccion_creada=="")
                     {
                         $id_transaccion_creada=$objTransaccion->CrearTransaccion(1, $fecha, $monto, 1,$f_pago);
+                       
                         if($id_transaccion_creada==0)
                         {
                             $msg="<div class='alert alert-danger alert-dismissable'>"
@@ -143,6 +144,7 @@ if($_POST)
                         {
                             ##modificar el idtransaccion en paciente servicio
                             $affected=$objPS->EfectuarPago($id_pacienteS, $id_transaccion_creada);
+                           
                             if($affected==0)
                             {
                                 $msg="<div class='alert alert-danger alert-dismissable'>"
@@ -173,6 +175,15 @@ if($_POST)
                                         ##eliminar la transacion
                                         $aff=$objTransaccion->EliminarTransaccion($id_transaccion_creada);
                                     }
+                                }
+                                else
+                                {
+                                    $msg="<div class='alert alert-success alert-dismissable'>"
+                                        . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
+                                        . "OK! Pago efectuado correctamente.</div>";
+                                        echo "<script>";
+                                            echo "window.location = 'cobros_pendientes.php';";
+                                       echo "</script>";
                                 }
                                 
 
@@ -240,6 +251,7 @@ echo "</script>";
                         <input type="hidden" name='id_paciente' value="<?php echo $id_paciente;?>">
                         <input type="hidden" name='id_servicio' value="<?php echo $id_servicio;?>">
                         <input type="hidden" name='precio_base' value="<?php echo $precio;?>">
+                        <input type="hidden" name="idt" value="<?php echo $id_pacienteS;?>">
                         <table class="table table-responsive">
                           <tr>
                               <th>Nombre Paciente:</th>

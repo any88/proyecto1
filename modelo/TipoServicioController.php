@@ -128,6 +128,7 @@ public function ModificarTipoServicio($p_id, $p_tiposervicio,$precio_base)
         }      
         
         $consulta=$consulta." order by `idtiposervicio` ASC";
+        
         $r=$bd->consulta($consulta);
         if($r)
         {

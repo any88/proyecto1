@@ -153,7 +153,7 @@ public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo,$
         
     }
 
-    public function BuscarTransaccion($p_idtransaccion, $p_fecha, $p_monto)
+    public function BuscarTransaccion($p_idtransaccion, $p_fecha, $p_monto,$forma_pago=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -183,6 +183,17 @@ public function ModificarTransaccion($p_id,$p_tipo,$p_fecha,$p_monto,$p_motivo,$
             else 
             {
                 $consulta=$consulta." and `monto`='$p_monto'";
+            }
+         }
+         if($forma_pago!="")
+        {
+            if($p_idtransaccion=="" && $p_fecha=="" && $p_monto=="")
+            {
+                $consulta=$consulta."WHERE `forma_pago`='$forma_pago'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `forma_pago`='$forma_pago'";
             }
          }
          

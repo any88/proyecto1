@@ -182,7 +182,7 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
         return $result;
      }
 
-        public function BuscarPacienteServicio($p_id_ps, $p_idpaciente, $p_idservicio,$p_fecha=null)
+        public function BuscarPacienteServicio($p_id_ps, $p_idpaciente, $p_idservicio,$p_fecha=null,$id_transaccion=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -225,9 +225,20 @@ public function ModificarPacienteServicio($p_id,$p_idpaciente,$p_idservicio,$p_f
                 $consulta=$consulta." and `fecha`='$p_fecha'";
             }
          }
+          if($id_transaccion!="")
+        {
+            if($p_id_ps=="" && $p_idpaciente=="" && $p_idservicio=="" && $p_fecha=="")
+            {
+                $consulta=$consulta."WHERE `idtransaccion`='$id_transaccion'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `idtransaccion`='$id_transaccion'";
+            }
+         }
         
-        $consulta=$consulta." order by `id_ps` ASC";
-        
+        $consulta=$consulta." ORDER BY id_ps ASC";
+        //Mostrar($consulta);
         $r=$bd->consulta($consulta);
         if($r)
         {
