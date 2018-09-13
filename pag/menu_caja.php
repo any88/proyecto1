@@ -33,6 +33,10 @@
                     <li><a href="movimientos_caja.php" >Ver Movimientos de Caja</a></li>
                     
                 </ul>
+                <li>
+                    <a href="pagos_pendientes.php">
+                          <i class="fa fa-user-circle-o"></i> PAGO A MEDICOS
+                  </a> 
                 
             </ul>
      </div>

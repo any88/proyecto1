@@ -45,13 +45,16 @@ $objRolesCirugia= new RolesCirugiaController();
 $list_pacientes=array();
 $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
 
+include './menu_caja.php';
 ?>
 <br><br>
 <section class="about-text">
-    <div class="container ">
+    <div class="ingres_costo ">
       
-        <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-user text-info"> Listado de Pagos Pendientes</i></h3>
+        <div class="">
+            <h3 class="text-left"><i class="fa fa-user text-info"> Listado de Pagos Pendientes a m&eacute;dicos y colaboradores de la c&iacute;nica</i></h3>
+            
+            <div class="alert alert-info">Por cada servicio prestado es necesario abonar un % a el acreedor de dicho servicio. Debido a que el valor puede variar, queda en manos de el cajero introducir la cantidad necesaria a abonar a cada acreedor.</div>
         </div>
         <?php 
         if(count($list_pacientes)>0)
@@ -177,9 +180,13 @@ $list_pacientes=$objPacienteServC->MostrarPacienteServicio();
                     } 
                     if($id_ts==5)
                     {
+                        $idanalisis="";
+                        $arrAnalisisLaboratio=$objLaboratorio->BuscarLaboratorio("", "", "", "", $idservicio);
+                        if(count($arrAnalisisLaboratio)>0)
+                        {
+                            $idanalisis=$arrAnalisisLaboratio[0]->getIdLaboratorio();
+                        }
                         
-                        
-                        $idanalisis=$objLaboratorio->BuscarLaboratorio("", "", "", "", $idservicio)[0]->getIdLaboratorio();
                         $labclin=$objLabClinAnalab->BuscarLaboratorioClinico_Analisis("", "", $idanalisis)[0]->getIdlabclinico();
                         $acreedor=$objLabClinico->BuscarLaboratorioClinico($labclin, "", "")[0]->getNombrelabclin();
                     } 
