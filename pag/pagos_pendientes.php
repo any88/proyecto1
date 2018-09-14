@@ -52,7 +52,7 @@ include './menu_caja.php';
     <div class="ingres_costo ">
       
         <div class="">
-            <h3 class="text-left"><i class="fa fa-user text-info"> Listado de Pagos Pendientes a m&eacute;dicos y colaboradores de la c&iacute;nica</i></h3>
+            <h3 class="text-left"><i class="fa fa-stethoscope text-info"> Listado de Pagos Pendientes a m&eacute;dicos y colaboradores de la c&iacute;nica</i></h3>
             
             <div class="alert alert-info">Por cada servicio prestado es necesario abonar un % a el acreedor de dicho servicio. Debido a que el valor puede variar, queda en manos de el cajero introducir la cantidad necesaria a abonar a cada acreedor.</div>
         </div>
@@ -226,12 +226,8 @@ include './menu_caja.php';
                     }
                     echo '
                     <td>                            
-                             <a href="#" title="Pagar (Añadir Funcionalidad)" onclick="" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></a>
-
-                             <a href="'.$link_listar.'?action=delete&nik='.$idservicio.'&v='.$nombre_servicio.'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos  del servicio seleccionado ('.$nombre_servicio.') ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                 
-                             <a href="'.$link_mostrar.'?nik='.$idservicio.'" title="Mostrar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>'
-                 . '</td>';
+                      <a href="#" title="Pagar (Añadir Funcionalidad)" onclick="" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></a>
+                      </td>';
                    echo "</tr>";
                     }
                  }

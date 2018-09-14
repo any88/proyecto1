@@ -67,6 +67,9 @@ if($_GET)
                      if(count($datos_paciente)>0)
                       {
                          $nombre_paciente=$datos_paciente[0]->getNombre();
+                         $idpaciente=$datos_paciente[0]->getIdPaciente();
+                         $edadPaciente=$datos_paciente[0]->GetEdadPaciente();
+                         $sexoPaciente=$datos_paciente[0]->getSexo();
                       }
                       $datos_servicio=$objServicio->BuscarServicio($id_servicio, "", "");
                       if(count($datos_servicio)>0)
@@ -95,37 +98,66 @@ if($_GET)
                     }
                 }
                 ####datos
+                $img='../img/paciente_masculino.png';
+                if($sexoPaciente=="F"){$img="../img/paciente_femenino.png";}
+                echo "<div class='panel panel-default'>";
+                        echo "<div class='panel-heading'>";
+                            echo "<b>Datos del Servicio Cirugia </b>";
+                        echo "</div>";
+                        echo "<div class='panel-body'>";
+                            echo "<ul class='nav nav-tabs'>";
+                                echo "<li class='active'><a href='#home' data-toggle='tab'>Datos generales Paciente</a>";
+                                echo "</li>";
+                                echo "<li><a href='#profile' data-toggle='tab'>Datos de la Cosulta</a>";
+                               echo "</li>";
+                            echo "</ul>";
+                            
+                            echo "<div class='tab-content'>";
+                                echo "<div class='tab-pane fade in active' id='home'>";
+                                echo "<h4>Datos generales del paciente</h4>";
+                                echo"<div class=' text-right'><a href='editarpaciente.php?nik=$idpaciente'><i class=' fa fa-pencil' style='color:#666666;'> Editar</i></a></div>";
+                                    echo '<table class="table table-responsive">';
+                                    echo '<tr>';
+                                    echo "<td rowspan='3' style='width:200px;'><img src='$img' title='Paciete' style='width:150px;'></td>";echo "<td style='heigth:10px !important;'><b>Nombre del Paciente:</b> $nombre_paciente</td>";
+                                    echo '</tr>';
+                                    echo '<tr>';
+                                    echo "<td><b>Edad:</b> $edadPaciente </td>";
+                                    echo '</tr>';
+                                    echo '<tr>';
+                                    echo "<td><b>Sexo:</b> $sexoPaciente </td>";
+                                    echo '</tr>';
+                                    echo"</table>";
+                                echo "</div>";
+                                
+                                ##datos consulta
+                                echo "<div class='tab-pane fade' id='profile'>";
+                                    echo "<h4>Datos de la Consulta</h4>";
+                                    echo"<div class=' text-right'><a href='editar_consulta.php?nik=$idconsulta'><i class=' fa fa-pencil' style='color:#666666;'> Editar</i></a></div>";
+                                        echo '<table class="table table-responsive table-bordered">';
+                                        //echo "<h4>Consulta de $nombre_especialidad</h4>";
+                                        echo '<tr>';
+                                        echo "<th>Especialidad</th><td>$nombre_especialidad</td></tr>";
+                                        echo "<tr><th>Doctor</th><td>$nombre_medico</td></tr>";
+                                        echo "<tr><th>Fecha</th><td>$fecha</td></tr>";
+                                        
+                                        echo '<tr>';
+                                        echo "<th>Motivo</th><td>$indicaciones</td></tr>";     //El campo al que hace referencia es "indicaciones"
+                                        echo "<tr><th>Resultado</th> <td>$resultados</td></tr>";
+                                        echo "<tr><th>Precio</th><td>$precio</td></tr>";
+                                        
+                                        echo '</table>';
+                                    
+                                    echo "</div>";
+                        echo "</div>";
+                         echo "<br>";
                 
-                echo '<table class="table table-responsive table-bordered">';
-                //echo "<h4>Consulta de $nombre_especialidad</h4>";
-                echo '<tr class="text text-info">';
-                echo '<th>Especialidad</th>';
-                echo '<th>Doctor</th>';
-                echo '<th>Fecha</th>';
-                //echo '<th>Paciente</th>';
-                echo '</tr>';
-                echo '<tr>';
-                echo "<td>$nombre_especialidad</td>";
-                echo "<td>$nombre_medico</td>";
-                echo "<td>$fecha</td>";
+                        echo "<div class='pull-right'>";
+                        echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
+                        echo "<a href='editar_consulta.php?nik=$idconsulta' class='btn btn-success'>Editar</a> ";
+                        echo "<a href='mostrarpaciente.php?nik=$id_pacienteS' class='btn btn-danger'>Volver</a>";
+                        echo "</div>";
+                echo "</div>";
                
-                //echo "<td>$nombre_paciente</td>";
-                echo '</tr>';
-                echo '<tr class="text text-info">';
-                echo '<th>Motivo</th>';     //El campo al que hace referencia es "indicaciones"
-                echo '<th>Resultado</th>';
-                echo '<th>Precio</th>';
-                echo '</tr>';
-                echo '<tr>';
-                echo "<td>$indicaciones</td>";
-                echo "<td>$resultados</td>";
-                echo "<td>$precio</td>";
-                echo '</tr>';
-                echo '</table>';
-                
-                echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
-                echo "<a href='editar_consulta.php?nik=$idconsulta' class='btn btn-success'>Editar</a> ";
-                echo "<a href='mostrarpaciente.php?nik=$id_pacienteS' class='btn btn-danger'>Volver</a>";
           }
           else 
             {
@@ -135,5 +167,23 @@ if($_GET)
         </div>
     </div>
 </section>
+<script>
 
+// Select all tabs
+$('.nav-tabs a').click(function(){
+    $(this).tab('show');
+})
+
+// Select tab by name
+$('.nav-tabs a[href="#home"]').tab('show')
+
+// Select first tab
+$('.nav-tabs a:first').tab('show')
+
+// Select last tab
+$('.nav-tabs a:last').tab('show')
+
+// Select fourth tab (zero-based)
+$('.nav-tabs li:eq(3) a').tab('show')
+</script>
 

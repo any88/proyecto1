@@ -79,7 +79,7 @@ $lista_camas=$objCamaC->MostrarCamas();
                         echo "<td>";
                         echo "<form name='f$i' method='post' action='listar_camas.php'>";
                             echo "<input type='hidden' name='idcama' value='$id_cama'>";
-                            echo "<a href='editar_camas.php?nik=$id_cama' class='btn btn-success'><i class='fa fa-edit'></i></a>";
+                            //echo "<a href='editar_camas.php?nik=$id_cama' class='btn btn-success'><i class='fa fa-edit'></i></a>";
                             echo " <button class='btn btn-danger'><i class='fa fa-trash'></i></button>";
                         echo "</form>";
                         echo "</td>";
