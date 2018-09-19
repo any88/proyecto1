@@ -95,7 +95,7 @@ if($_POST)
         <div class="col-md-12">
           <h3 class="text-left  text-info"><i class="fa fa-search-plus"> </i> Buscar Servicios</h3>
           
-          <div class="col-md-12" >
+          
               <form name="f" method="post" action="buscar_servicio.php">
               <label>Tipo de servicio</label>
               <select name="tipoc" class="form-control">
@@ -143,9 +143,7 @@ if($_POST)
               </div> 
                 
           </form>
-          </div>
-          
-          <div class="col-md-12" >
+         
           <?php 
           if($msgs!=""){ echo $msgs;}
           if(count($datos)>0 || count($datosFecha)>0 || count($datosDoctor)>0)

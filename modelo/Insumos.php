@@ -15,12 +15,12 @@ class Insumos {
     
     private $idInsumo;
     private $nombre;
-    private $precioUnitario;
+    private $cant_min_almacen;
     
-    public function __construct($idInsumo, $nombre, $precioUnitario) {
+    public function __construct($idInsumo, $nombre, $cant_min_almacen) {
         $this->idInsumo = $idInsumo;
         $this->nombre = $nombre;
-        $this->precioUnitario = $precioUnitario;
+        $this->cant_min_almacen = $cant_min_almacen;
     }
 
     public function getIdInsumo() {
@@ -30,21 +30,11 @@ class Insumos {
     public function getNombre() {
         return $this->nombre;
     }
-
-    public function getPrecioUnitario() {
-        return $this->precioUnitario;
+    function getCant_min_almacen() {
+        return $this->cant_min_almacen;
     }
 
-    public function setIdInsumo($idInsumo) {
-        $this->idInsumo = $idInsumo;
-    }
-    
-    public function setNombre($nombre) {
-        $this->nombre = $nombre;
-    }
-
-    public function setPrecioUnitario($precioUnitario) {
-        $this->precioUnitario = $precioUnitario;
-    }
+     
+   
 
 }
