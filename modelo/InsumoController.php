@@ -127,7 +127,7 @@ public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen)
                 $consulta=$consulta." and `nombre`='$p_nombre'";
             }
         }
-        if($p_preciounitario!="")
+        if($cant_min_almacen!="")
         {
             if($p_id=="" && $p_nombre=="" )
             {

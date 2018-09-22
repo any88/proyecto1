@@ -75,17 +75,19 @@
               <li><a href="pacientes_hospitalizados.php">Hospitalizados</a></li>
            </ul>
           </li>
-          <li class="menu-has-children" ><a href="#">Servicios</a>
+          
+          <li class="menu-has-children" ><a href="cobros_pendientes.php">Caja</a>
+          
+          </li>
+          <li class="menu-has-children" ><a href="#">Reportes</a>
           <ul>
               <li><a href="buscar_servicio.php">Buscar Servicio</a></li>
               <li><a href="listar_servicios.php" >Listar Servicios</a></li>
            </ul>
           </li>
-          <li class="menu-has-children" ><a href="cobros_pendientes.php">Caja</a>
-          
-          </li>
+          <li><a href="almacen_gestion.php" >Almac&eacute;n</a></li>
          <li class="menu-has-children" ><a href="#" onclick="Msg();">Farmacia</a></li>
-         <li><a href="#" onclick="Msg();">Reportes</a></li>
+         
          <li class="menu-has-children" ><a href="nomencladores.php">Administraci&oacute;n</a></li>
           <li class="menu-has-children"><a href="#">Bienvenido, @usuario</a>
             <ul>

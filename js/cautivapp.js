@@ -620,6 +620,15 @@ function TrOcultos()
     trabonado.setAttribute("class","hidden");
     trvuelto.setAttribute("class","hidden");
 }
+
+function EliminarInumoAlmacen(nombre_insumo,id)
+{
+    var f=document.getElementById('form'+id);
+    if(confirm("Esta Seguro que desea ELIMINAR el insumo "+nombre_insumo))
+    {
+        f.submit();
+    }
+}
 /*** poner en la misma pagina que las tabs
  * 
 // Select all tabs

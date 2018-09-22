@@ -1,6 +1,6 @@
 <?php
 
-include './InsumoAlmacen.php';
+include 'InsumoAlmacen.php';
 class InsumoAlmacenController
 {
     function __construct() {
@@ -68,7 +68,7 @@ class InsumoAlmacenController
         $bd=new con_mysqli("", "", "", "");
         
         ##Validar Iny Sql
-        $p_id=$bd->real_scape_string($p_id);
+        $id_insumo_almacen=$bd->real_scape_string($id_insumo_almacen);
         
         $consulta="DELETE FROM `insumo_almacen` WHERE (`id_insumo_almacen`='$id_insumo_almacen')";
         
