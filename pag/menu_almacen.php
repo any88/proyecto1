@@ -6,8 +6,8 @@
   
             <ul id="menu-content" class="menu-content collapse out">
                 <li>
-                    <a href="#" onclick="Msg();">
-                  <i class="fa fa-dashboard fa-lg"></i>NUEVOS PRODUTCOS
+                    <a href="almacen_gestion.php">
+                  <i class="fa fa-medkit fa-lg"></i> ALMACEN
                   </a>
                 </li>
 
@@ -30,6 +30,9 @@
                 </ul>
                   <li>
                       <a href="#" onclick="mSG();"> <i class="fa fa-search"></i> FILTROS</a>
+                  </li>
+                  <li>
+                      <a href="listar_proveedores.php"> <i class="fa fa-truck"></i> PROVEEDORES</a>
                   </li>
                 
                   

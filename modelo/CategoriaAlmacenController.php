@@ -1,6 +1,6 @@
 <?php
 
-include './categorias_almacen.php';
+include 'categorias_almacen.php';
 class CategoriaAlmacenController
 {
     public function CrearCategoriaAlmacen($nombre_categoria)

@@ -68,13 +68,12 @@ if($_POST)
     }
   
 }
-
+include './menu_almacen.php';
 ?>
 
 <br>
 <section class="about-text">
-    <div class="container ">
-      
+    <div class="ingres_costo ">
         <div class="col-md-12">
           <h3 class="text-left"><i class="fa fa-truck"> Editar Proveedor</i></h3>
           <?php 

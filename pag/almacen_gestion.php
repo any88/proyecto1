@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../funct/con_tacnamh_db.php';
 include '../funct/functions.php';
 include './header.php';
@@ -13,6 +14,8 @@ $objProveedor=new ProveedorController();
 $msg="";
 $id_ins_delete="";
 $nombre_insumo="";
+
+if(isset($_SESSION['msg'])){$msg=$_SESSION['msg'];unset($_SESSION['msg']);}
 if($_POST)
 {
     if(isset($_POST['id_insumo_delete'])){$id_ins_delete=$_POST['id_insumo_delete'];}
@@ -62,7 +65,6 @@ include './menu_almacen.php';
                               <th>Fecha Compra</th>
                               <th>Precio Compra</th>
                               <th>Precio Venta</th>
-                              <th>Fecha vencimiento</th>
                               <th>Proveedor</th>
                               <th>Acci&oacute;n</th>
                           </tr>
@@ -100,8 +102,6 @@ include './menu_almacen.php';
                               echo "<td>$fecha_compra</td>";
                               echo "<td>$precio_compra</td>";
                               echo "<td>$precio_venta</td>";
-                              echo "<td>$fecha_vencimiento</td>";
-                             
                               echo "<td>$nombre_proveedor</td>";
                               echo "<td>";
                              

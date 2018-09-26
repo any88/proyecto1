@@ -24,7 +24,7 @@ class InsumoAlmacenController
 
             $consulta="INSERT INTO `insumo_almacen` (`id_insumo`, `cantidad`, `precio_compra`, `fecha_compra`, `precio_venta`, `lote`, `fecha_vencimiento`, `id_proveedor`) "
                     . "VALUES ('$id_insumo', '$cantidad', '$precio_compra', '$fecha_compra', '$precio_venta', '$lote', '$fecha_vencimiento', '$id_proveedor')";
-
+            
             $r=$bd->consulta($consulta);
             if($r)
             {

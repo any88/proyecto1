@@ -11,6 +11,7 @@ class InsumoAlmacen
     private $fecha_vencimiento;
     private $id_proveedor;
     
+            
     function __construct($id_insumo_almacen, $id_insumo, $cantidad, $precio_compra, $fecha_compra, $precio_venta, $lote, $fecha_vencimiento, $id_proveedor) {
         $this->id_insumo_almacen = $id_insumo_almacen;
         $this->id_insumo = $id_insumo;
@@ -22,8 +23,9 @@ class InsumoAlmacen
         $this->fecha_vencimiento = $fecha_vencimiento;
         $this->id_proveedor = $id_proveedor;
     }
-    
-    function getId_insumo_almacen() {
+  
+
+        function getId_insumo_almacen() {
         return $this->id_insumo_almacen;
     }
 

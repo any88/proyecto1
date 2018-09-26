@@ -31,11 +31,11 @@ if($_GET)
     }
 }
 
+include './menu_almacen.php';
 ?>
 <br><br>
 <section class="about-text">
-    <div class="container ">
-      
+    <div class="ingres_costo ">
         <div class="col-md-12">
           <h3 class="text-left"><i class="fa fa-truck"> Listado de Proveedores</i></h3>
           <div class="text-left">
