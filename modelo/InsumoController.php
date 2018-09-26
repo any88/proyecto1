@@ -18,7 +18,7 @@ class InsumoController {
     
         public function InsumoController(){}
     
-public function CrearInsumo($p_nombre, $cant_min_almacen)
+public function CrearInsumo($p_nombre, $cant_min_almacen,$p_id_cat_almacen)
 {
     $affected=0;
     $bd=new con_mysqli("", "", "", "");
@@ -26,8 +26,9 @@ public function CrearInsumo($p_nombre, $cant_min_almacen)
     ##Validar Iny Sql
         $p_nombre=$bd->real_scape_string($p_nombre);
         $cant_min_almacen=$bd->real_scape_string($cant_min_almacen);
+        $p_id_cat_almacen=$bd->real_scape_string($p_id_cat_almacen);
         
-        $consulta="INSERT INTO `insumo` (`nombre`, `cant_min_almacen`) VALUES ('$p_nombre', '$cant_min_almacen')";
+        $consulta="INSERT INTO `insumo` (`nombre`, `cant_min_almacen`,`id_categoria_almacen`) VALUES ('$p_nombre', '$cant_min_almacen','$p_id_cat_almacen')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -39,7 +40,7 @@ public function CrearInsumo($p_nombre, $cant_min_almacen)
         
 }
 
-public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen)
+public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen,$p_id_cat_almacen)
     {
         $affected=0;
         $bd=new con_mysqli("", "", "", "");
@@ -47,9 +48,10 @@ public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen)
         ##Validar Iny Sql
         $p_id=$bd->real_scape_string($p_id);
         $p_nombre=$bd->real_scape_string($p_nombre);
-        $p_preciounitario=$bd->real_scape_string($p_preciounitario);
+        $cant_min_almacen=$bd->real_scape_string($cant_min_almacen);
+        $p_id_cat_almacen=$bd->real_scape_string($p_id_cat_almacen);
         
-        $consulta="UPDATE `insumo` SET `nombre`='$p_nombre', `cant_min_almacen`='$cant_min_almacen' WHERE (`idinsumo`='$p_id')";
+        $consulta="UPDATE `insumo` SET `nombre`='$p_nombre', `cant_min_almacen`='$cant_min_almacen', `id_categoria_almacen`='$p_id_cat_almacen' WHERE (`idinsumo`='$p_id')";
         
         $r=$bd->consulta($consulta);
         if($r)
@@ -96,8 +98,9 @@ public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen)
                 $p_id=$fila["idinsumo"];
                 $p_nombre=$fila["nombre"];
                 $cant_min_almacen=$fila["cant_min_almacen"];
+                $id_categoria_almacen=$fila["id_categoria_almacen"];
                                 
-                $objInsumo=new Insumos($p_id, $p_nombre, $cant_min_almacen);
+                $objInsumo=new Insumos($p_id, $p_nombre, $cant_min_almacen,$id_categoria_almacen);
                 $result[$a]=$objInsumo;
                 $a++;
             }
@@ -106,7 +109,7 @@ public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen)
         return $result;
     }
     
-    public function BuscarInsumo($p_id, $p_nombre, $cant_min_almacen)
+    public function BuscarInsumo($p_id, $p_nombre, $cant_min_almacen,$id_categoria_almacen=null)
     {
         $result=array();
         $bd= new con_mysqli("", "", "", "");
@@ -138,6 +141,17 @@ public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen)
                 $consulta=$consulta." and `cant_min_almacen`='$cant_min_almacen'";
             }
          }
+         if($id_categoria_almacen!="")
+        {
+            if($p_id=="" && $p_nombre=="" && $cant_min_almacen=="" )
+            {
+                $consulta=$consulta."WHERE `id_categoria_almacen`='$id_categoria_almacen'";
+            }
+            else 
+            {
+                $consulta=$consulta." and `id_categoria_almacen`='$id_categoria_almacen'";
+            }
+         }
          
         
         $consulta=$consulta." order by `nombre` ASC";
@@ -151,8 +165,9 @@ public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen)
                 $p_id=$fila["idinsumo"];
                 $p_nombre=$fila["nombre"];
                 $cant_min_almacen=$fila["cant_min_almacen"];
+                $id_cat_almacen=$fila["id_categoria_almacen"];
                                 
-                $objInsumo=new Insumos($p_id, $p_nombre, $cant_min_almacen);
+                $objInsumo=new Insumos($p_id, $p_nombre, $cant_min_almacen,$id_cat_almacen);
                 $result[$a]=$objInsumo;
                 $a++;
             }
@@ -162,53 +177,5 @@ public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen)
         
     }
     
-    public function CargarInsumo($search)
-    {
-        $result=array();
-        $bd= new con_mysqli("", "", "", "");
-        
-        ##Validar parametros
-        $search=$bd->real_scape_string($search);
-        
-        $consulta="SELECT * FROM `insumo` WHERE `nombre` LIKE '%$search%'";
-        $r=$bd->consulta($consulta);
-        if($r)
-        {
-            $a=0;
-            while ($fila=$bd->fetch_assoc($r))
-            {
-                $bd_nombre=$fila["nombre"];
-                $result[$a]=$bd_nombre;
-                $a++;
-            }
-        }
-        $bd->Close();
-        
-        return $result;
-    }
-    public function CargarInsumoID($search)
-    {
-        $result=array();
-        $bd= new con_mysqli("", "", "", "");
-        
-        ##Validar parametros
-        $search=$bd->real_scape_string($search);
     
-        $consulta="SELECT * FROM `insumo` WHERE `idinsumo` LIKE '%$search%'";
-        $r=$bd->consulta($consulta);
-        if($r)
-        {
-            $a=0;
-            while ($fila=$bd->fetch_assoc($r))
-            {
-                $bd_nombre=$fila["nombre"];
-                $bd_idinsumo=$fila["idinsumo"];
-                $result[$a]="($bd_nombre) ".$bd_idinsumo;
-                $a++;
-            }
-        }
-        $bd->Close();
-    
-        return $result;
-    }
 }

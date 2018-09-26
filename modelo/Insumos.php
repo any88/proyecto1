@@ -16,11 +16,14 @@ class Insumos {
     private $idInsumo;
     private $nombre;
     private $cant_min_almacen;
-    
-    public function __construct($idInsumo, $nombre, $cant_min_almacen) {
+    private $id_categoria_almacen;
+
+
+    public function __construct($idInsumo, $nombre, $cant_min_almacen,$p_id_cat_almacen) {
         $this->idInsumo = $idInsumo;
         $this->nombre = $nombre;
         $this->cant_min_almacen = $cant_min_almacen;
+        $this->id_categoria_almacen=$p_id_cat_almacen;
     }
 
     public function getIdInsumo() {
@@ -33,6 +36,10 @@ class Insumos {
     function getCant_min_almacen() {
         return $this->cant_min_almacen;
     }
+    function getId_categoria_almacen() {
+        return $this->id_categoria_almacen;
+    }
+
 
      
    

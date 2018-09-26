@@ -15,7 +15,7 @@
                     <a href="#"><i class="fa fa-book"></i>NOMENCLADORES <span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="products">
-                    <li class="active"><a href="#" onclick="Msg();">INSUMOS</a></li>
+                    <li class="active"><a href="listar_insumos.php" >INSUMOS</a></li>
                     <li class="active"><a href="#" onclick="Msg();">CATEGORIAS</a></li>
                     <li class="active"><a href="#" onclick="Msg();">UNIDAD DE MEDIDA</a></li>
                 </ul>
