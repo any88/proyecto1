@@ -12,7 +12,7 @@ $objInsumoAlmacenC=new InsumoAlmacenController();
 $objInsumoC=new InsumoController();
 $objProveedor=new ProveedorController();
 $msg="";
-$id_insumo_almacen="";
+$id_insumo="";
 $nombre_insumo="";
 $datos_insumo=array();
 
@@ -21,7 +21,7 @@ if($_GET)
     if(isset($_GET['nik'])){$id_insumo=$_GET['nik'];}
     if(eliminarblancos($id_insumo)!="")
     {
-        $datos_insumo=$objInsumoAlmacenC->BuscarInsumoAlmacen($id_insumo_almacen, "", "", "", "", "", "", "", "");
+        $datos_insumo=$objInsumoAlmacenC->BuscarInsumoAlmacen($id_insumo, "", "", "", "", "", "", "", "");
         
     }
     else
@@ -46,7 +46,7 @@ include './menu_almacen.php';
               <div class="panel-heading">
                   <b class="text-left"><i class="fa fa-medkit text-info"> Datos del insumo</i></b>
                   <div class="pull-right" style="margin-top: -5px;">
-                      <a href="#" class="btn btn-success btn-xs"><i class="fa fa-pencil"> Editar</i></a>
+                      <a href="editar_insumoAlmacen.php?nik=<?php echo $id_insumo; ?>" class="btn btn-success btn-xs"><i class="fa fa-pencil"> Editar</i></a>
                   </div>
               </div>
               <div class="panel-body">

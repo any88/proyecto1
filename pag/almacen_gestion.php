@@ -49,7 +49,7 @@ include './menu_almacen.php';
           ?>
           <div class="panel panel-default">
               <div class="panel-heading">
-                  <b class="text-left"><i class="fa fa-certificate text-info"> GESTION DE ALMACEN</i></b>
+                  <b class="text-left"><i class="fa fa-medkit text-info"> GESTION DE ALMACEN</i></b>
                   <div class="pull-right" style="margin-top: -5px;">
                       <a href="nuevo_insumo_almacen.php" class="btn btn-success btn-xs"><i class="fa fa-plus"> Registrar Insumos</i></a>
                   </div>
@@ -100,8 +100,8 @@ include './menu_almacen.php';
                               echo "<td>$nombre_insumo</td>";
                               echo "<td>$cantidad</td>";
                               echo "<td>$fecha_compra</td>";
-                              echo "<td>$precio_compra</td>";
-                              echo "<td>$precio_venta</td>";
+                              echo "<td>s/. $precio_compra</td>";
+                              echo "<td>s/. $precio_venta</td>";
                               echo "<td>$nombre_proveedor</td>";
                               echo "<td>";
                              
