@@ -58,21 +58,21 @@ if($_POST)
         {
             $msg="<div class='alert alert-danger alert-dismissable'>"
             . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-            . "Error! EL campo cantidad de Insumos solo admite n6uacute;meros.</div>";
+            . "Error! EL campo cantidad de Insumos solo admite n&uacute;meros.</div>";
             $error++;
         }
         if(isNaN($p_precio))
         {
             $msg="<div class='alert alert-danger alert-dismissable'>"
             . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-            . "Error! EL campo precio de compra solo admite n6uacute;meros.</div>";
+            . "Error! EL campo precio de compra solo admite n&uacute;meros.</div>";
             $error++;
         }
         if(isNaN($p_precio_venta))
         {
             $msg="<div class='alert alert-danger alert-dismissable'>"
             . "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>"
-            . "Error! EL campo precio de ventas solo admite n6uacute;meros.</div>";
+            . "Error! EL campo precio de ventas solo admite n&uacute;meros.</div>";
             $error++;
         }
     }

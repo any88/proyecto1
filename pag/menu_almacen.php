@@ -16,8 +16,8 @@
                 </li>
                 <ul class="sub-menu collapse" id="products">
                     <li class="active"><a href="listar_insumos.php" >INSUMOS</a></li>
-                    <li class="active"><a href="#" onclick="Msg();">CATEGORIAS</a></li>
-                    <li class="active"><a href="#" onclick="Msg();">UNIDAD DE MEDIDA</a></li>
+                    <li class="active"><a href="categorias_almacen.php" >CATEGORIAS</a></li>
+                    <!--<li class="active"><a href="#" onclick="Msg();">UNIDAD DE MEDIDA</a></li>-->
                 </ul>
 
                   <li  data-toggle="collapse" data-target="#estadisticas" >
@@ -29,7 +29,7 @@
                    
                 </ul>
                   <li>
-                      <a href="#" onclick="mSG();"> <i class="fa fa-search"></i> FILTROS</a>
+                      <a href="#" onclick="Msg();"> <i class="fa fa-search"></i> FILTROS</a>
                   </li>
                   <li>
                       <a href="listar_proveedores.php"> <i class="fa fa-truck"></i> PROVEEDORES</a>

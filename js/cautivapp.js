@@ -629,6 +629,14 @@ function EliminarInumoAlmacen(nombre_insumo,id)
         f.submit();
     }
 }
+function EliminarCategoriaAlmacen(nombre_categoria,id)
+{
+    var f=document.getElementById('form'+id);
+    if(confirm("Esta Seguro que desea ELIMINAR la categoria "+nombre_categoria))
+    {
+        f.submit();
+    }
+}
 /*** poner en la misma pagina que las tabs
  * 
 // Select all tabs
