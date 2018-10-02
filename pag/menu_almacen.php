@@ -25,7 +25,7 @@
                 </li>
                 <ul class="sub-menu collapse" id="estadisticas">
                     <li class="active"><a href="#" onclick="Msg();">FLUJO DE INSUMOS (ABC)</a></li>
-                    <li class="active"><a href="#" onclick="Msg();">NECESIDAD DE PRODUCTOS</a></li>
+                    <li class="active"><a href="necesidad_productos.php" >NECESIDAD DE PRODUCTOS</a></li>
                    
                 </ul>
                   <li>

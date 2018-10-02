@@ -309,6 +309,8 @@ class InsumoAlmacenController
         return $result;
         
     }
+    
+    
 
 }
 

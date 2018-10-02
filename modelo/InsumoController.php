@@ -177,5 +177,49 @@ public function ModificarInsumo($p_id, $p_nombre, $cant_min_almacen,$p_id_cat_al
         
     }
     
+    public function Necesidad()
+    {
+        $result=array();
+        $bd= new con_mysqli("", "", "", "");
+        $consulta="SELECT * FROM insumo ORDER BY insumo.id_categoria_almacen ";
+        $r=$bd->consulta($consulta);
+        $a=0;
+        if($r)
+        {
+            while ($fila=$bd->fetch_assoc($r))
+            {
+                $id_insumo=$fila['idinsumo'];
+                $cantidad=$fila['cant_min_almacen'];
+                $id_cat_almacen=$fila['id_categoria_almacen'];
+                $nombre=$fila['nombre'];
+                
+                $consulta2="SELECT SUM(insumo_almacen.cantidad) from insumo_almacen WHERE insumo_almacen.id_insumo=$id_insumo";
+               
+                $r2=$bd->consulta($consulta2);
+                if($r2)
+                {
+                    $sumInsumo=$bd->fetch_array($r2)[0];
+                    if($sumInsumo=="")
+                    {
+                        $sumInsumo=0;
+                    }
+                        if($cantidad>=$sumInsumo)
+                        {
+                            $objInsumo= new Insumos($id_insumo, $nombre, $sumInsumo, $id_cat_almacen);
+                            $result[$a]=$objInsumo;
+                            $a++;
+                        }
+                    
+                    
+                    
+                }
+            }
+        }
+        
+        
+        $bd->Close();
+        return $result;
+    }
+    
     
 }
