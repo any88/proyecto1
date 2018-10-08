@@ -194,4 +194,29 @@ public function ModificarInsumoHospitalizacion($p_id,$p_idinsumo,$p_idhospitaliz
         
         return $result;
     }
+    
+     
+   
+    public function CantidadPorInsumos($id_insumo)
+   {
+        $result=array();
+        $bd= new con_mysqli("", "", "", "");
+        $consulta="SELECT SUM(cantidadinsumo) from insumo_hospitalizacion WHERE idinsumo='$id_insumo'";
+        
+        $r=$bd->consulta($consulta);
+        if($r)
+        {
+            $a=0;
+            while ($fila=$bd->fetch_array($r))
+            {
+                 
+                $sum=$fila[0];
+                $result[$a]=$sum;
+                $a++;
+            }
+        }
+        $bd->Close();
+        
+        return $result;
+   }
 }

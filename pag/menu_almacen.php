@@ -24,7 +24,7 @@
                     <a href="#"><i class="fa fa-glass"></i>ESTADISTICAS <span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="estadisticas">
-                    <li class="active"><a href="#" onclick="Msg();">FLUJO DE INSUMOS (ABC)</a></li>
+                    <li class="active"><a href="flujo_insumos_almacen.php">FLUJO DE INSUMOS (ABC)</a></li>
                     <li class="active"><a href="necesidad_productos.php" >NECESIDAD DE PRODUCTOS</a></li>
                    
                 </ul>
