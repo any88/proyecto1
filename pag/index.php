@@ -171,7 +171,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
                        }
                        else 
                        {
-                           echo "<h3>No hay pacientes agendados para hoy.</h3>";
+                           echo "<p>No hay pacientes agendados para hoy.</p>";
                        }
                        
                        ?>
