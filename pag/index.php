@@ -48,7 +48,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
     
     <div class="col-md-6">
     <div class="panel panel-default">
-        <div class="panel-heading"><b> <i class="fa fa-search"></i> Buscar Paciente</b> <a href="crearpaciente.php" title='Nuevo Paciente' class="pull-right btn btn-success btn-xs"><i class=" fa fa-plus"></i></a></div>
+        <div class="panel-heading"><b> <i class="fa fa-search"></i> Buscar Paciente</b> <a href="crearpaciente.php" title='Nuevo Paciente' class="pull-right btn btn-primary btn-xs"><i class=" fa fa-plus"></i> Nuevo Paciente</a></div>
         <div class="panel-body">
             <form name="fsearch" method="post" action="buscar_paciente.php">
                 <label>Buscar por Nombre</label>
@@ -59,7 +59,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
                 <input type="text" name="docid" placeholder="Documento de Identidad" class="form-control">
                 <br>
                 <div class="pull-right">
-                    <button type="submit" class="btn btn-primary"> Buscar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                 </div>
             </form>
             
@@ -69,7 +69,7 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Servicios Agendados Para Hoy (<?php echo FechaYMA();$fecha_agenda=FechaYMA();?>)</b> <a href="agendaclinica.php" title='Ver agenda' class="pull-right btn btn-primary btn-xs"><i class=" fa fa-calendar"></i></a></div>
+            <div class="panel-heading"><b>Servicios Agendados Para Hoy (<?php echo FechaYMA();$fecha_agenda=FechaYMA();?>)</b> <a href="agendaclinica.php" title='Ver agenda' class="pull-right btn btn-primary btn-xs"><i class=" fa fa-calendar"></i> Agenda</a></div>
            <div class="panel-body">
                
                        <?php 

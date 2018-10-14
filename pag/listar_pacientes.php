@@ -40,7 +40,7 @@ if($_GET)
     <div class="container ">
       
         <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-user text-info"> Listado de Pacientes</i></h3>
+          <h3 class="text-left"><i class="fa fa-group text-info"> Listado de Pacientes</i></h3>
           <div class="text-left">
               <a href='crearpaciente.php' class="btn btn-success" type="submit">Nuevo Paciente</a>
          </div>
