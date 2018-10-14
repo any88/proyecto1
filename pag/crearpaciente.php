@@ -120,31 +120,36 @@ if($_POST)
 <br>
 <section class="about-text">
     <div class="container ">
-      
-        <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-user text-info"> Nuevo Paciente</i></h3>
-          <?php 
+      <?php 
              echo $msg;
-          ?>
-          <form name="nuevo_paciente" method="post" action="crearpaciente.php">
-              <table class="table table-responsive table-bordered">
+      ?>  
+        <form name="nuevo_paciente" method="post" action="crearpaciente.php.php">
+              <div class="col-md-12" style=" border-style: solid; border-width: 1px;">
+              <div class="text-center">
+                  <h3 ><i class="fa fa-pagelines text-info"> Historia Clinica Nro.<input type="text" name="hc" class="form-control" value="<?php echo $hc;?>" placeholder="Nro. historia Clinica"> </i></h3>
+              </div>
+              
+             
+              <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">Datos Generales del Paciente</legend>
+                  <table class="table table-responsive noborder">
                   <tr class="text text-info">
                       <th> Nombre</th>
                       <th> Doc.Identidad</th>
-                      <th> Num. HC</th>
+                      <th> Fecha Nac.</th>
                   </tr>
                   <tr >
                       <td><input type="text" name="nombre_paciente" placeholder="Nombre(s) Apellido1 Apellido2" class="form-control" required="" value="<?php echo $nombre_paciente;?>"></td>
                       <td><input type="text" name="docID" class="form-control" required="" value="<?php echo $docID;?>"></td>
-                      <td><input type="text" name="hc" class="form-control" value="<?php echo $hc;?>"></td>
+                      <td><input type="date" name="fecha_nac" class="form-control" value="<?php echo $fecha_nac;?>"></td>
                   </tr>
                   <tr class="text text-info">
-                      <th >Fecha Nac.</th>
+                      <th  colspan="2">Ocupaci&oacute;n</th>
                       <th>Sexo</th>
-                      <th>Teléfono</th>
+                      
                   </tr>
                   <tr>
-                      <td><input type="date" name="fecha_nac" class="form-control" value="<?php echo $fecha_nac;?>"></td>
+                      <td colspan="2"><input type="text" name='ocupacion' class="form-control" required="" value='<?php echo $ocupacion;?>'></td>
                       <td>
                           <select name="sexo" class="form-control">
                               <?php 
@@ -158,29 +163,46 @@ if($_POST)
                               <option value='M' <?php echo $selectedf;?>>M</option>
                           </select>
                       </td>
-                      <td><input type="text" name='telefono' class="form-control" value='<?php echo $telefono;?>'></td>
-                  </tr>
-                  <tr class="text text-info">
-                      <th>Ocupaci&oacute;n</th>
-                      <th>Email</th>
-                      <th >Direcci&oacute;n</th>
-                  </tr>
-                  <tr>
-                      <td><input type="text" name='ocupacion' class="form-control" required="" value='<?php echo $ocupacion;?>'></td>
-                      <td><input type="email" name="email" class="form-control" value='<?php echo $email;?>'></td>
-                      <td >
-                          <textarea class="form-control" name="direccion"><?php echo $direccion;?></textarea>
-                      </td>
                       
                   </tr>
+                  </table>
+              </fieldset>
+              <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">Datos de Contacto</legend>
+                  <table class="table table-responsive">
+                    <tr class="text text-info">
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        
+                    </tr>
+                    <tr>
+                        <td><input type="text" name='telefono' class="form-control" value='<?php echo $telefono;?>'></td>
+                        <td><input type="email" name="email" class="form-control" value='<?php echo $email;?>'></td>
+                        
+
+                    </tr>
+                    <tr class="text text-info">
+                        <th colspan="2" >Direcci&oacute;n</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <textarea class="form-control" name="direccion"><?php echo $direccion;?></textarea>
+                        </td>
+                    </tr>
+                  </table>
+              </fieldset>
+              
+              <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">Datos de Aseguradora</legend>
+                  <table class="table table-responsive">
                   <tr class="text text-info">
                       <th>Aseguradora</th>
                       <th>ID de Cliente en Aseguradora</th>
-                      <th>Grupo Sanguíneo</th>
+                      
                   </tr>
                   <tr>
                       <td>
-                          <select name="aseguradora" class="form-control">
+                          <select name="aseguradora" class='form-control selectpicker' data-live-search='true'>
                               <option value=''>--SELECCIONE--</option>
                               <?php 
                             for ($i = 0; $i < count($lista_aseguradoras); $i++) 
@@ -195,32 +217,55 @@ if($_POST)
                           </select>
                       </td>
                       <td><input type="text" name="idclienteaseguradora" class="form-control" value="<?php echo $idclienteaseguradora;?>"></td>
-                      <td><input type="text" name="gruposanguineo" class="form-control" value="<?php echo $gruposanguineo;?>"></td>
+                      
                                             
                   </tr>
+                  </table>
+              </fieldset>
+              
+              <fieldset class="scheduler-border">
+                  <legend class="scheduler-border">Datos M&eacute;dicos</legend>
+                  <table class="table table-responsive">
                   <tr class="text text-info">
-                      <th >Anamnesis</th>
                       <th>Tiempo Enfermedad</th>
-                      <th>Alergia Medicamentosa</th>
+                      
+                      <th>Grupo Sanguíneo</th>
                   </tr>
                   <tr>
-                      <td>
-                          <textarea class="form-control" name="anamnesis" ><?php echo $anamnesis;?></textarea>
-                      </td>
                       <td><input type="number" name="tiempo_enfermedad" class="form-control" min="0" max="100" value="<?php echo $tiempo_enfermedad;?>"></td>
-                      <td>
+                      
+                      <td><input type="text" name="gruposanguineo" class="form-control" value="<?php echo $gruposanguineo;?>"></td>
+                      
+                  </tr>
+                  <tr class="text text-info">
+                      <th colspan="2">Alergia Medicamentosa</th>
+                  </tr>
+                  <tr>
+                      <td colspan="2">
                           <textarea class="form-control" name="alergiamed" ><?php echo $alergiamed;?></textarea>
                       </td>
-                      
+                  </tr>
+                  
+                  <tr class="text text-info">
+                      <th  colspan="2">Anamnesis</th>
+                  </tr>
+                  <tr>
+                      <td colspan="2">
+                          <textarea class="form-control" name="anamnesis" ><?php echo $anamnesis;?></textarea>
+                      </td>
                   </tr>
                   
               </table>
+              </fieldset>
+             </div> 
+              <br>
               <div class="text-right">
                   <button class="btn btn-success" type="submit">Registrar</button>
                   <a href='listar_pacientes.php' class="btn btn-danger" type="submit">Cancelar</a>
               </div>
-              
+              <br><br>
           </form>
-        </div>
+        
     </div>
 </section>
+
