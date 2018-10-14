@@ -29,7 +29,7 @@
                    
                 </ul>
                   <li>
-                      <a href="#" onclick="Msg();"> <i class="fa fa-search"></i> FILTROS</a>
+                      <a href="filtro_almacen.php"> <i class="fa fa-search"></i> FILTROS</a>
                   </li>
                   <li>
                       <a href="listar_proveedores.php"> <i class="fa fa-truck"></i> PROVEEDORES</a>
