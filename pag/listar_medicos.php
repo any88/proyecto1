@@ -39,50 +39,62 @@ if($_GET)
     <div class="container ">
       
         <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-user-md text-info"> Listado de Médicos</i></h3>
-          <div class="text-left">
-              <a href='crearmedico.php' class="btn btn-success" type="submit">Nuevo Médico</a>
-         </div>
-          <br>
-          <table id="dataTables-example" class="table table-striped table-hover display table-responsive " style="right: 10px;">
-              <thead>
-                  <tr>
-                      <th>Nro</th>
-                      <th>Nombre</th>
-                      <th>Doc.Id</th>
-                      <th>Num. Colegiatura</th>
-                      <th>Especialidad</th>
-                      
-                      <th>Acci&oacute;n</th>
-                  </tr>
-              </thead>
-              <tbody>
-                 <?php 
-                 $link_edit="editarmedico.php";
-                 $link_listar="";
-                 $link_mostrar="mostrarmedico.php";
-                 for ($i = 0; $i < count($list_medicos); $i++) 
-                 {
-                     $nro=$i+1;
-                    echo "<tr>";
-                    echo "<td>".$nro."</td>";
-                    echo "<td>".$list_medicos[$i]->getNombre()."</td>";
-                    echo "<td>".$list_medicos[$i]->getDocID()."</td>";
-                    echo "<td>".$list_medicos[$i]->getNroColegioMed()."</td>";
-                    echo "<td>".$objEspecialidad->BuscarEspecialidad($list_medicos[$i]->getEspecialidad(), "", "")[0]->getNombreespecialidad()."</td>";
-                   echo '
-                    <td>
-                             <a href="'.$link_edit.'?nik='.$list_medicos[$i]->getIdMedico().'" title="Editar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+        
+          
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <b class="text-left"><i class="fa fa-user-md text-info"> LISTADO DE MEDICOS</i></b>
+                  <div class="pull-right" style="margin-top: -5px;">
+                      <a href='crearmedico.php' class="btn btn-primary btn-xs" type="submit"><i class="fa fa-plus"></i> Nuevo Médico</a>
+                  </div>
+              </div>
+              <div class="panel-body">
+                  <table id="dataTables-example" class="table table-striped table-hover display table-responsive " style="right: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Nro</th>
+                            <th>Nombre</th>
+                            <th>Doc.Id</th>
+                            <th>Num. Colegiatura</th>
+                            <th>Especialidad</th>
 
-                             <a href="'.$link_listar.'?action=delete&nik='.$list_medicos[$i]->getIdMedico().'&v='.$list_medicos[$i]->getNombre() .'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos '.$list_medicos[$i]->getNombre().' ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                             
-                             <a href="'.$link_mostrar.'?nik='.$list_medicos[$i]->getIdMedico().'" title="Mostrar datos" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                     </td>';
-                    echo "</tr>";
-                 }
-                 ?>
-              </tbody>
-          </table>
+                            <th>Acci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <?php 
+                       $link_edit="editarmedico.php";
+                       $link_listar="";
+                       $link_mostrar="mostrarmedico.php";
+                       for ($i = 0; $i < count($list_medicos); $i++) 
+                       {
+                           $nro=$i+1;
+                          echo "<tr>";
+                          echo "<td>".$nro."</td>";
+                          echo "<td>".$list_medicos[$i]->getNombre()."</td>";
+                          echo "<td>".$list_medicos[$i]->getDocID()."</td>";
+                          echo "<td>".$list_medicos[$i]->getNroColegioMed()."</td>";
+                          echo "<td>".$objEspecialidad->BuscarEspecialidad($list_medicos[$i]->getEspecialidad(), "", "")[0]->getNombreespecialidad()."</td>";
+                         echo '
+                          <td>
+                                   <a href="'.$link_edit.'?nik='.$list_medicos[$i]->getIdMedico().'" title="Editar datos" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+
+                                   <a href="'.$link_listar.'?action=delete&nik='.$list_medicos[$i]->getIdMedico().'&v='.$list_medicos[$i]->getNombre() .'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos '.$list_medicos[$i]->getNombre().' ?\')" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+
+                                   <a href="'.$link_mostrar.'?nik='.$list_medicos[$i]->getIdMedico().'" title="Mostrar datos" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                           </td>';
+                          echo "</tr>";
+                       }
+                       ?>
+                    </tbody>
+                </table>
+              </div>
+          </div>
+          
         </div>
     </div>
 </section>
+<?php 
+                 include './footer.html';
+
+?>

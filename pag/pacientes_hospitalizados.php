@@ -237,3 +237,4 @@ if(count($arrServH)>0)
             </div>
 </div>
 
+<?php include './footer.html';?>
