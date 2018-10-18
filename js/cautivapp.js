@@ -637,6 +637,34 @@ function EliminarCategoriaAlmacen(nombre_categoria,id)
         f.submit();
     }
 }
+
+function TShidden()
+{
+    var ts=document.getElementById('tipo_servicioH');
+    ts.setAttribute("class","");
+    var fs=document.getElementById('fecha_servicioH');
+    var nd=document.getElementById('nombre_doctorH');
+    fs.setAttribute("class","hidden ");
+    nd.setAttribute("class","hidden ");
+}
+function FShidden()
+{
+    var ts=document.getElementById('tipo_servicioH');
+    var fs=document.getElementById('fecha_servicioH');
+    var nd=document.getElementById('nombre_doctorH');
+    ts.setAttribute("class","hidden ");
+    fs.setAttribute("class","");
+    nd.setAttribute("class","hidden ");
+}
+function NDhidden()
+{
+    var ts=document.getElementById('tipo_servicioH');
+    var fs=document.getElementById('fecha_servicioH');
+    var nd=document.getElementById('nombre_doctorH');
+    ts.setAttribute("class","hidden ");
+    fs.setAttribute("class","hidden ");
+    nd.setAttribute("class","");
+}
 /*** poner en la misma pagina que las tabs
  * 
 // Select all tabs

@@ -102,4 +102,4 @@ $salario="";
         </div>
     </div>
 </section>
-
+<?php include './footer.html'; ?>

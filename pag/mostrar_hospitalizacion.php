@@ -225,6 +225,7 @@ if($_GET)
         <br><br><br>
     </div>
 </section>
+<?php include './footer.html'; ?>
 <script>
 
 // Select all tabs

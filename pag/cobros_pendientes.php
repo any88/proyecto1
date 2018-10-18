@@ -49,10 +49,10 @@ include './menu_caja.php';
 <br><br>
 <section class="about-text">
     <div class="ingres_costo ">
-      
-        <div class="">
+      <div class="col-md-12">
+        
           <h3 class="text-left"><i class="fa fa-user text-info"> Listado de Cobros Pendientes</i></h3>
-        </div>
+       
         <?php 
         if(count($list_pacientes)>0)
         {
@@ -169,5 +169,5 @@ include './menu_caja.php';
         
         ?>
     </div>
+    </div>
 </section>
-

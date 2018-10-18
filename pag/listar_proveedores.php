@@ -37,42 +37,49 @@ include './menu_almacen.php';
 <section class="about-text">
     <div class="ingres_costo ">
         <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-truck"> Listado de Proveedores</i></h3>
-          <div class="text-left">
-              <a href='crearproveedor.php' class="btn btn-success" type="submit">Nuevo Proveedor</a>
-         </div>
-          <br>
-          <table id="example" class="table table-striped table-hover display table-responsive " style="right: 10px;">
-              <thead>
-                  <tr>
-                      <th>Nro</th>
-                      <th>Nombre</th>
-                      <th>RUC</th>
-                                            
-                      <th>Acci&oacute;n</th>
-                  </tr>
-              </thead>
-              <tbody>
-                 <?php 
-                 $link_edit="editarproveedor.php";
-                 $link_listar="";
-                 for ($i = 0; $i < count($list_proveedores); $i++) 
-                 {
-                     $nro=$i+1;
-                    echo "<tr>";
-                    echo "<td>".$nro."</td>";
-                    echo "<td>".$list_proveedores[$i]->getNombre()."</td>";
-                    echo "<td>".$list_proveedores[$i]->getRUC()."</td>";
-                    echo '<td>
-                             <a href="'.$link_edit.'?nik='.$list_proveedores[$i]->getIdProveedor().'" title="Editar datos" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+         
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <b class="text-left"><i class="fa fa-truck text-info"> LISTADO DE PROVEEDORES</i></b>
+                  <div class="pull-right">
+                      <a href='crearproveedor.php' class="btn btn-primary btn-xs" type="submit"><i class="fa fa-plus"></i> Nuevo Proveedor</a>
+                   </div>
+              </div>
+              <div class="panel-body">
+                  <table id="example" class="table table-striped table-hover display table-responsive " style="right: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Nro</th>
+                            <th>Nombre</th>
+                            <th>RUC</th>
 
-                             <a href="'.$link_listar.'?action=delete&nik='.$list_proveedores[$i]->getIdProveedor().'&v='.$list_proveedores[$i]->getNombre().'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos '.$list_proveedores[$i]->getNombre().' ?\')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                     </td>';
-                    echo "</tr>";
-                 }
-                 ?>
-              </tbody>
-          </table>
+                            <th>Acci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <?php 
+                       $link_edit="editarproveedor.php";
+                       $link_listar="";
+                       for ($i = 0; $i < count($list_proveedores); $i++) 
+                       {
+                           $nro=$i+1;
+                          echo "<tr>";
+                          echo "<td>".$nro."</td>";
+                          echo "<td>".$list_proveedores[$i]->getNombre()."</td>";
+                          echo "<td>".$list_proveedores[$i]->getRUC()."</td>";
+                          echo '<td>
+                                   <a href="'.$link_edit.'?nik='.$list_proveedores[$i]->getIdProveedor().'" title="Editar datos" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+
+                                   <a href="'.$link_listar.'?action=delete&nik='.$list_proveedores[$i]->getIdProveedor().'&v='.$list_proveedores[$i]->getNombre().'" title="Eliminar" onclick="return confirm(\'Está seguro de borrar los datos '.$list_proveedores[$i]->getNombre().' ?\')" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                           </td>';
+                          echo "</tr>";
+                       }
+                       ?>
+                    </tbody>
+                </table>
+              </div>
+          </div>
+          
         </div>
     </div>
 </section

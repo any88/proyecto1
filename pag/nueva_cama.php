@@ -103,5 +103,5 @@ if($_POST)
         </div>
     </div>
 </section>
-
+<?php include './footer.html'; ?>
 

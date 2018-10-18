@@ -75,4 +75,4 @@ if($_GET)
         </div>
     </div>
 </section>
-
+<?php include './footer.html'; ?>

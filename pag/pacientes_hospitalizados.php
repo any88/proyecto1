@@ -152,12 +152,12 @@ if(count($arrServH)>0)
 <section class="about-text">
     <div class="container ">
         <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-user text-info"> Pacientes Hospitalizados</i></h3>
+          
           <div class="row">
           <?php if($msg!=""){echo $msg;}?>
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading"><i class="fa fa-bed"></i> <b>Pacientes Hospitalizados</b></div>
+            <div class="panel-heading"> <b class="text-info"> <i class="fa fa-bed"></i> Pacientes Hospitalizados</b></div>
             <div class="panel-body">
                 <table class='table table-responsive' id="dataTables-example">
                     <thead>

@@ -132,8 +132,8 @@ if($_POST)
              
               <fieldset class="scheduler-border">
                   <legend class="scheduler-border">Datos Generales del Paciente</legend>
-                  <table class="table table-responsive noborder">
-                  <tr class="text text-info">
+                  <table class="table table-responsive">
+                  <tr >
                       <th> Nombre</th>
                       <th> Doc.Identidad</th>
                       <th> Fecha Nac.</th>
@@ -143,7 +143,7 @@ if($_POST)
                       <td><input type="text" name="docID" class="form-control" required="" value="<?php echo $docID;?>"></td>
                       <td><input type="date" name="fecha_nac" class="form-control" value="<?php echo $fecha_nac;?>"></td>
                   </tr>
-                  <tr class="text text-info">
+                  <tr >
                       <th  colspan="2">Ocupaci&oacute;n</th>
                       <th>Sexo</th>
                       
@@ -170,7 +170,7 @@ if($_POST)
               <fieldset class="scheduler-border">
                   <legend class="scheduler-border">Datos de Contacto</legend>
                   <table class="table table-responsive">
-                    <tr class="text text-info">
+                    <tr>
                         <th>Teléfono</th>
                         <th>Email</th>
                         
@@ -181,7 +181,7 @@ if($_POST)
                         
 
                     </tr>
-                    <tr class="text text-info">
+                    <tr >
                         <th colspan="2" >Direcci&oacute;n</th>
                     </tr>
                     <tr>
@@ -195,7 +195,7 @@ if($_POST)
               <fieldset class="scheduler-border">
                   <legend class="scheduler-border">Datos de Aseguradora</legend>
                   <table class="table table-responsive">
-                  <tr class="text text-info">
+                  <tr >
                       <th>Aseguradora</th>
                       <th>ID de Cliente en Aseguradora</th>
                       
@@ -226,10 +226,10 @@ if($_POST)
               <fieldset class="scheduler-border">
                   <legend class="scheduler-border">Datos M&eacute;dicos</legend>
                   <table class="table table-responsive">
-                  <tr class="text text-info">
+                  <tr >
                       <th>Tiempo Enfermedad</th>
                       
-                      <th>Grupo Sanguíneo</th>
+                      <thGrupo Sanguíneo</th>
                   </tr>
                   <tr>
                       <td><input type="number" name="tiempo_enfermedad" class="form-control" min="0" max="100" value="<?php echo $tiempo_enfermedad;?>"></td>
@@ -237,7 +237,7 @@ if($_POST)
                       <td><input type="text" name="gruposanguineo" class="form-control" value="<?php echo $gruposanguineo;?>"></td>
                       
                   </tr>
-                  <tr class="text text-info">
+                  <tr >
                       <th colspan="2">Alergia Medicamentosa</th>
                   </tr>
                   <tr>
@@ -246,7 +246,7 @@ if($_POST)
                       </td>
                   </tr>
                   
-                  <tr class="text text-info">
+                  <tr>
                       <th  colspan="2">Anamnesis</th>
                   </tr>
                   <tr>
@@ -260,8 +260,8 @@ if($_POST)
              </div> 
               <br>
               <div class="text-right">
-                  <button class="btn btn-success" type="submit">Registrar</button>
-                  <a href='listar_pacientes.php' class="btn btn-danger" type="submit">Cancelar</a>
+                  <button class="btn btn-primary" type="submit"> <i class=" fa fa-save"></i> Registrar</button>
+                  <a href='listar_pacientes.php' class="btn btn-primary" type="submit"><i class=" fa fa-retweet"></i> Cancelar</a>
               </div>
               <br><br>
           </form>
@@ -269,3 +269,6 @@ if($_POST)
     </div>
 </section>
 
+<?php 
+    include './footer.html';
+?>

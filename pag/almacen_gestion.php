@@ -51,7 +51,7 @@ include './menu_almacen.php';
               <div class="panel-heading">
                   <b class="text-left"><i class="fa fa-medkit text-info"> GESTION DE ALMACEN</i></b>
                   <div class="pull-right" style="margin-top: -5px;">
-                      <a href="nuevo_insumo_almacen.php" class="btn btn-success btn-xs"><i class="fa fa-plus"> Registrar Insumos</i></a>
+                      <a href="nuevo_insumo_almacen.php" class="btn btn-primary btn-xs"><i class="fa fa-plus"> Registrar Insumos</i></a>
                   </div>
               </div>
               <div class="panel-body">
@@ -106,11 +106,11 @@ include './menu_almacen.php';
                               echo "<td>";
                              
                               echo "<form method='post' action='almacen_gestion.php' id='form$i'>";
-                               echo "<a href='editar_insumoAlmacen.php?nik=$id_insumoAlmacen' class='btn btn-warning btn-xs'><i class='fa fa-edit'></i></a>";
-                               echo "<a href='mostrar_insumoAlmacen.php?nik=$id_insumoAlmacen' class='btn btn-primary btn-xs'><i class='fa fa-eye'></i></a>";
+                               echo "<a href='editar_insumoAlmacen.php?nik=$id_insumoAlmacen' class='btn btn-primary btn-xs'><i class='fa fa-edit'></i></a>";
+                               echo " <a href='mostrar_insumoAlmacen.php?nik=$id_insumoAlmacen' class='btn btn-primary btn-xs'><i class='fa fa-eye'></i></a>";
                               echo "<input type='hidden' name='id_insumo_delete' value='$id_insumoAlmacen'>";
                               echo "<input type='hidden' name='nombre_insumo' value='$nombre_insumo'>";
-                              echo "<button type='button' class='btn btn-danger btn-xs' title='ELiminar' onclick='EliminarInumoAlmacen(this.id,this.value);'  value='$i' id='$nombre_insumo'> <i class='fa fa-trash'></i></button></form> ";
+                              echo " <button type='button' class='btn btn-primary btn-xs' title='ELiminar' onclick='EliminarInumoAlmacen(this.id,this.value);'  value='$i' id='$nombre_insumo'> <i class='fa fa-trash'></i></button></form> ";
                               echo "</td>";
                               echo "</tr>";
                           }
@@ -123,6 +123,5 @@ include './menu_almacen.php';
         </div>
     </div>
 </section>
-
 
 

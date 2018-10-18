@@ -447,7 +447,7 @@ if($_POST)
         
     </div>
 </section>
-
+<?php include './footer.html';?>
 <script>
 document.getElementById('periodo').addEventListener('change', function() {
      var fform=document.getElementById('ff');

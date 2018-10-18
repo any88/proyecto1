@@ -280,8 +280,9 @@ for ($k = 0; $k < count($arr_serv_del_mes); $k++)
     
 </section>
 
-
 <br><br>
+<?php include './footer.html'; ?>
+
 <!-- Esta es la envoltura de las ventanas modales de bootstrap, el contenido como: header, body o footer se cargarán en este contenedor vía ajax (específicamente load)  -->
 <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 

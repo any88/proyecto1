@@ -105,3 +105,4 @@ if($_POST)
     </div>
 </section>
 
+<?php include './footer.html';?>

@@ -137,4 +137,4 @@ include './menu_caja.php';
         </div>
     </div>
 </section>
-
+<?php include './footer.html';?>

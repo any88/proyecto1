@@ -78,8 +78,14 @@ if($_POST)
             {
                 for ($j = 0; $j < count($ArrInsumos); $j++) 
                 {
-                    $result_filtro[$cont_f]=$ArrInsumos[$j];
-                    $cont_f++;
+                    $id_insumot=$ArrInsumos[$j]->getIdInsumo();
+                    $datInsA=$objInsAlmacenC->BuscarInsumoAlmacen("", $id_insumot, "", "", "", "", "", "", "");
+                    if(count($datInsA)>0)
+                    {
+                        $result_filtro[$cont_f]=$datInsA[0];
+                        $cont_f++;
+                    }
+                    
                 }
             }
         }
@@ -167,7 +173,7 @@ include './menu_almacen.php';
                       <tr>
                           <td colspan="2">
                               <div class="pull-right">
-                                  <button type="submit" class="btn btn-success"> BUSCAR </button>
+                                  <button type="submit" class="btn btn-primary"> <i class="fa fa-search"></i> BUSCAR </button>
                               </div>
                               
                           </td>
@@ -265,5 +271,3 @@ include './menu_almacen.php';
         </div>
     </div>
 </section>
-            
-

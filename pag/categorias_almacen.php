@@ -47,7 +47,7 @@ include './menu_almacen.php';
               <div class="panel-heading">
                   <b class="text-left"><i class="fa fa-tag text-info"> CATEGORIAS DE ALMACEN</i></b>
                   <div class="pull-right" style="margin-top: -5px;">
-                      <a href="nueva_categoria_almacen.php" class="btn btn-success btn-xs"><i class="fa fa-plus"> Nueva Categor&iacute;a</i></a>
+                      <a href="nueva_categoria_almacen.php" class="btn btn-primary btn-xs"><i class="fa fa-plus"> Nueva Categor&iacute;a</i></a>
                   </div>
               </div>
               <div class="panel-body">
@@ -77,10 +77,10 @@ include './menu_almacen.php';
                                     echo "<td>$nombre_categoriaAlm</td>";
                                     echo "<td>";
                                         echo "<form method='post' action='categorias_almacen.php' id='form$i'>";
-                                        echo "<a href='editar_Categoria_Almacen.php?nik=$id_categoria' class='btn btn-warning btn-xs'><i class='fa fa-edit'></i></a>";
+                                        echo "<a href='editar_Categoria_Almacen.php?nik=$id_categoria' class='btn btn-primary btn-xs'><i class='fa fa-edit'></i></a>";
                                         echo "<input type='hidden' name='id_cat_almacen' value='$id_categoria'>";
                                         echo "<input type='hidden' name='nomb_cat_almacen' value='$nombre_categoriaAlm'>";
-                                        echo "<button type='button' class='btn btn-danger btn-xs' title='ELiminar' onclick='EliminarCategoriaAlmacen(this.id,this.value);'  value='$i' id='$nombre_categoriaAlm'> <i class='fa fa-trash'></i></button></form> ";
+                                        echo " <button type='button' class='btn btn-primary btn-xs' title='ELiminar' onclick='EliminarCategoriaAlmacen(this.id,this.value);'  value='$i' id='$nombre_categoriaAlm'> <i class='fa fa-trash'></i></button></form> ";
                               
                                     echo "</td>";
                                   echo "</tr>";
@@ -96,5 +96,5 @@ include './menu_almacen.php';
         </div>
     </div>
 </section>
-                  
+            
 

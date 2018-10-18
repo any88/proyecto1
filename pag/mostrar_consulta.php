@@ -186,4 +186,4 @@ $('.nav-tabs a:last').tab('show')
 // Select fourth tab (zero-based)
 $('.nav-tabs li:eq(3) a').tab('show')
 </script>
-
+<?php include './footer.html'; ?>

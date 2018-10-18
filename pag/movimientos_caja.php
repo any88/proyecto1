@@ -52,8 +52,7 @@ include './menu_caja.php';
 <br><br>
 <section class="about-text">
     <div class="ingres_costo ">
-      
-        <div class="">
+        <div class="col-md-12">
           <h3 class="text-left"><i class="fa fa-usd text-info"> Balance de Caja para la fecha <?php echo $fecha;?></i></h3>
           <div class="form-horizontal">
               <form method="post" action="movimientos_caja.php" name="fbc">
@@ -61,7 +60,7 @@ include './menu_caja.php';
                   <button type="submit" class="btn btn-success">Buscar</button>
               </form>
           </div>
-          <div class="pull-right" style="margin-top: -90px; width: 200px; border-style:solid; border-width: 1px; border-radius: 5px;">
+           <div class="pull-right" style="margin-top: -90px; width: 200px; border-style:solid; border-width: 1px; border-radius: 5px;">
               <?php 
               $heigth1='20px';
               $heigth2='20px';
@@ -98,7 +97,11 @@ include './menu_caja.php';
               </div>
               
           </div>
-          <hr>
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <b class="text-left"><i class="fa fa-search text-info"> BUSCADOR DE INSUMOS DE ALMACEN</i></b>
+              </div>
+              <div class="panel-body">
           <table class="table table-responsive table-hover">
               <thead>
                   <tr>
@@ -167,6 +170,9 @@ include './menu_caja.php';
               </tbody>
               
           </table>
+              </div>
+          </div>
+          
         </div>
     </div>
 </section>

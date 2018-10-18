@@ -188,3 +188,4 @@ if($_POST)
         </table>
     </div>
 </section>
+<?php include './footer.html'; ?>

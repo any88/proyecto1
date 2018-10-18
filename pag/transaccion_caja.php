@@ -421,5 +421,5 @@ echo "</script>";
         </div>
     </div>
 </section>
-
+<?php include './footer.html'; ?>
 

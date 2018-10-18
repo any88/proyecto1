@@ -146,3 +146,5 @@ include './menu_caja.php';
         </div>
     </div>
 </section>
+
+<br><br>

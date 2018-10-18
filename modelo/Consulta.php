@@ -18,14 +18,15 @@ class Consulta {
     private $especialidad;
     private $indicaciones;
     private $resultados;
-    
-        
+   
+
     public function __construct($idServicio, $idConsulta, $especialidad, $indicaciones, $resultados) {
         $this->idServicio = $idServicio;
         $this->idConsulta = $idConsulta;
         $this->especialidad = $especialidad;
         $this->indicaciones = $indicaciones;
         $this->resultados = $resultados;
+       
     }
 
     public function getIdServicio() {
@@ -47,5 +48,7 @@ class Consulta {
     public function getResultados() {
         return $this->resultados;
     }
+   
+
 
 }

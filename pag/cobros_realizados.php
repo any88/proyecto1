@@ -170,4 +170,4 @@ include './menu_caja.php';
         ?>
     </div>
 </section>
-
+<?php include './footer.html';?>

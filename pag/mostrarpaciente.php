@@ -156,7 +156,7 @@ if($_POST)
                         <div class="panel-heading">
                             <b>Historia Cl&iacute;nica # (<?php echo $hc;?>)</b>
                             <div class="pull-right">
-                                <a href='addservicios.php?nik=<?php echo $id_pacmod;?>' class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Nuevo servicio</a>
+                                <a href='addservicios.php?nik=<?php echo $id_pacmod;?>' class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Nuevo servicio</a>
                             </div>
                         </div>
                         <div class="panel-body">
@@ -408,7 +408,7 @@ if($_POST)
                                                           echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";
                                                             echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'><i class='fa fa-eye'></i></a> ";
                                                             echo "<input type='hidden' name='idt' value='$id_ps'>";
-                                                            echo "<button type='submit' title='Efectuar pago' class='btn btn-success  btn-xs'><i class='fa fa-dollar'></i></button>";
+                                                            echo "<button type='submit' title='Efectuar pago' class='btn btn-primary  btn-xs'><i class='fa fa-dollar'></i></button>";
                                                             echo "</form>";
                                                            echo "<form method='post' action='mostrarpaciente.php' id='f$i' name='delf'  style='margin-top:-23px; margin-left:50px;'>";
                                                             $est="PENDIENTE";
@@ -418,7 +418,7 @@ if($_POST)
                                                             echo "<input type='hidden' name='estado' value='$est' id='estado$i'>";
                                                             echo "<input type='hidden' name='nombre_servicio' value='$nombre_tipo_servicio' id='nombre_serv$i'>";
                                                             echo "<input type='hidden' name='nombre_paciente' value='$nombre' id='nombre_pac$i'>";
-                                                            echo "<button type='button'class='btn btn-danger btn-xs' id='$i' onclick='EliminarServicio(this.id);' title='Eliminar Servicio'><i class='fa fa-trash'></i> </button>";
+                                                            echo "<button type='button'class='btn btn-primary btn-xs' id='$i' onclick='EliminarServicio(this.id);' title='Eliminar Servicio'><i class='fa fa-trash'></i> </button>";
                                                             echo "</form>";
                                                         echo "</td>";
                                                         echo "</tr>";
@@ -444,9 +444,9 @@ if($_POST)
     
         <div class="pull-right">
             <?php
-            echo "<a href='#' class='btn btn-primary'>Imprimir</a> ";
-            echo "<a href='editarpaciente.php?nik=$id_pacmod' class='btn btn-success'>Editar</a> ";
-            echo "<a href='listar_pacientes.php' class='btn btn-danger'>Cancelar</a>";
+            echo "<a href='#' class='btn btn-primary'><i class='fa fa-print'></i> Imprimir</a> ";
+            echo "<a href='editarpaciente.php?nik=$id_pacmod' class='btn btn-primary'><i class='fa fa-edit'></i> Editar</a> ";
+            echo "<a href='listar_pacientes.php' class='btn btn-primary'><i class='fa fa-close'></i> Cancelar</a>";
             ?>
         </div>
         <br><br>
@@ -454,7 +454,7 @@ if($_POST)
         </div>
         
 </section>
-
+<?php include './footer.html'; ?>
 <script>
 
 // Select all tabs

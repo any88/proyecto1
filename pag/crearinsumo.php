@@ -80,7 +80,7 @@ include './menu_almacen.php';
 <section class="about-text">
     <div class="ingres_costo ">
         <div class="col-md-12">
-          <h3 class="text-left"><i class="fa fa-medkit"> Nuevo Insumo</i></h3>
+          <h3 class="text-left text-info"><i class="fa fa-medkit"> Nuevo Insumo</i></h3>
           <?php 
              echo $msg;
           ?>
@@ -116,11 +116,12 @@ include './menu_almacen.php';
                                     
               </table>
               <div class="text-right">
-                  <button class="btn btn-success" type="submit">Registrar</button>
-                  <a href='listar_insumos.php' class="btn btn-danger" type="submit">Cancelar</a>
+                  <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Registrar</button>
+                  <a href='listar_insumos.php' class="btn btn-primary" type="submit"> <i class="fa fa-close"></i> Cancelar</a>
               </div>
               
           </form>
         </div>
     </div>
 </section>
+<?php include './footer.html'; ?>
