@@ -182,4 +182,4 @@ include './menu_almacen.php';
         </div>
     </div>
 </section>
-<?php include './footer.html'; ?>
+
