@@ -18,6 +18,7 @@ include '../modelo/CirugiaController.php';
 include '../modelo/InsumoController.php';
 include '../modelo/InsumoHospitalizacionController.php';
 include '../modelo/CajaController.php';
+include '../modelo/InsumoAlmacenController.php';
 $objCajaC=new CajaController();
 
 $saldo_caja=0;
@@ -39,6 +40,7 @@ $objInsumoCirugia=new InsumoCirugiaController();
 $objInsumoHosp=new InsumoHospitalizacionController();
 $objCirugiaC=new CirugiaController();
 $objInsumoController=new InsumoController();
+$objInsumoAlmacenC=new InsumoAlmacenController();
 
 
 #id_paciente_servicio
@@ -382,7 +384,13 @@ echo "</script>";
                                             if(count($arrInsumos)>0)
                                             {
                                                 $nombre_insumo=$arrInsumos[0]->getNombre();
-                                                $precio_insumo=$arrInsumos[0]->getPrecioUnitario();
+                                                //$precio_insumo=$arrInsumos[0]->getPrecioUnitario();
+                                                $arrInsumoAlmacen=$objInsumoAlmacenC->BuscarInsumoAlmacen("", $id_insumo, "", "", "", "", "", "", "");
+                                                if(count($arrInsumoAlmacen)>0)
+                                                    {
+                                                        $precio_insumo=$arrInsumoAlmacen[0]->getPrecio_venta();
+                                                            
+                                                    }
                                                 echo "<tr>";
                                                 echo "<td>$nombre_insumo</td>";
                                                 echo "<td>$cant_insumos</td>";

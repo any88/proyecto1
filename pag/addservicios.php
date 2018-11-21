@@ -1555,7 +1555,7 @@ for ($i = 0; $i < count($arr_cargos); $i++)
                           </select>
                       </td>
                       <td>
-                          <?php echo $numcama;?>
+                         
                           <select name="numcama" class="form-control">
                               <option value="0">--SELECCIONE--</option>
                               <?PHP 

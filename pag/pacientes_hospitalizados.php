@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../funct/con_tacnamh_db.php';
 include '../funct/functions.php';
 include '../modelo/consultas_genericas.php';
@@ -188,7 +189,7 @@ if(count($arrServH)>0)
                                                               
                                 . "<a href='mostrar_hospitalizacion.php?nik=$id_hosp_bd' class='btn btn-primary btn-xs'><i class='fa fa-eye'></i></a>" ;
                                 
-                                echo " <button type='button' title='Dar Alta' class='btn btn-success btn-xs' data-toggle='modal' data-target='#divModalAlta'><i class='fa fa-medkit'></i></button>";
+                                echo " <button type='button' title='Dar Alta' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#divModalAlta'><i class='fa fa-medkit'></i></button>";
                                 echo "</tr>";
                                 
                             } 

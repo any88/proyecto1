@@ -123,7 +123,7 @@ if($_POST)
       <?php 
              echo $msg;
       ?>  
-        <form name="nuevo_paciente" method="post" action="crearpaciente.php.php">
+        <form name="nuevo_paciente" method="post" action="crearpaciente.php">
               <div class="col-md-12" style=" border-style: solid; border-width: 1px;">
               <div class="text-center">
                   <h3 ><i class="fa fa-pagelines text-info"> Historia Clinica Nro.<input type="text" name="hc" class="form-control" value="<?php echo $hc;?>" placeholder="Nro. historia Clinica"> </i></h3>
@@ -229,10 +229,10 @@ if($_POST)
                   <tr >
                       <th>Tiempo Enfermedad</th>
                       
-                      <thGrupo Sanguíneo</th>
+                      <th>Grupo Sanguíneo</th>
                   </tr>
                   <tr>
-                      <td><input type="number" name="tiempo_enfermedad" class="form-control" min="0" max="100" value="<?php echo $tiempo_enfermedad;?>"></td>
+                      <td><input type="text" name="tiempo_enfermedad" class="form-control" value="<?php echo $tiempo_enfermedad;?>"></td>
                       
                       <td><input type="text" name="gruposanguineo" class="form-control" value="<?php echo $gruposanguineo;?>"></td>
                       

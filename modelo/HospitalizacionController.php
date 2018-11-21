@@ -126,7 +126,7 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
             $a=0;
             while ($fila=$bd->fetch_assoc($r))
             {
-               
+               $p_id_servicio=$fila["idservicio"];
                 $p_id=$fila["idhospitalizacion"];
                 $p_fechaingreso=$fila["fechaingreso"];
                 $p_fechaalta=$fila["fechaalta"];
@@ -143,7 +143,8 @@ public function ModificarHospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $
                 $p_peso=$fila["peso"];
                 $p_examenfisico=$fila["examenfisico"];
                                                              
-                $objHospitalizacion=new Hospitalizacion($p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico);
+                //$objHospitalizacion=new Hospitalizacion($p_id_servicio,$p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico);
+                $objHospitalizacion= new Hospitalizacion($p_id_servicio,$p_id, $p_fechaingreso, $p_fechaalta, $p_duracion, $p_tipohabitacion, $p_nrocama, $p_nombrefamiliar, $p_parentescofamiliar, $p_estadopaciente, $p_condicionatencion, $p_pa, $p_pulso, $p_temp, $p_peso, $p_examenfisico);
                 $result[$a]=$objHospitalizacion;
                 $a++;
             }

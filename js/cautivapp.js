@@ -181,7 +181,7 @@ function AddInsumos()
     var tabla=document.getElementById('tabla_insumosH');
     var rowCount = tabla.rows.length;
     var row = tabla.insertRow(rowCount);
-    var valor=document.getElementById('insumoH').value; alert(valor);
+    var valor=document.getElementById('insumoH').value;
     if(valor!="")
     {
         row.id=rowCount;

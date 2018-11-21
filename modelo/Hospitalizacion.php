@@ -29,7 +29,9 @@ class Hospitalizacion {
     private $temp;
     private $peso;
     private $examenFisico;
-        
+    private $precio;
+
+
     public function __construct($idServicio, $idHospitalizacion, $fechaIngreso, $fechaAlta, $duracion, $tipoHabitacion, $nroCama, $nombreFamiliar, $parentescoFamiliar, $estadoDelPaciente, $condicionDeAtencion, $PA, $pulso, $temp, $peso, $examenFisico) {
         $this->idServicio = $idServicio;
         $this->idHospitalizacion = $idHospitalizacion;
@@ -48,8 +50,11 @@ class Hospitalizacion {
         $this->peso = $peso;
         $this->examenFisico = $examenFisico;
     }
+    function getPrecio() {
+        return $this->precio;
+    }
 
-    public function getIdServicio() {
+        public function getIdServicio() {
         return $this->idServicio;
     }
 

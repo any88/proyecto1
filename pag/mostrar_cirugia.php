@@ -54,6 +54,13 @@ if($_GET)
     <div class="container">
       
         <div class="col-md-12">
+            <?php if(isset($_SESSION['msg']))
+            {
+                if($_SESSION['msg']!="")
+                {$mg=$_SESSION['msg'];echo $msg; unset($_SESSION['msg']);
+                }
+            }    
+            ?>
           <h3 class="text-left"><i class="fa fa-eye text-info"> Datos de la Cirugía</i></h3>
           <?php 
           if(count($datosCirugia)>0)

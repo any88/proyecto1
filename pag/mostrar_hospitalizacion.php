@@ -188,12 +188,13 @@ if($_GET)
                                     echo '<th>Cantidad</th>';
                                     echo '<th>Fecha/Hora de Administración</th>';
                                     echo '</tr>';
-                                    echo '<tr>';
+                                   
 
                                     for ($i=0; $i < count($datosInsumoHosp); $i++)
                                         {
                                         if($datosInsumoHosp[$i]->getIdhospitalizacion()==$idhosp)
                                             {
+                                             echo '<tr>';
                                              $idinsumo= $datosInsumoHosp[$i]->getIdinsumo();
                                              $cantidadinsumo= $datosInsumoHosp[$i]->getCantidadinsumo();
                                              $fechaHora= $datosInsumoHosp[$i]->getFecha();
@@ -201,10 +202,11 @@ if($_GET)
                                              echo "<td>$nombreinsumo</td>";
                                              echo "<td>$cantidadinsumo</td>";
                                              echo "<td>$fechaHora</td>";
+                                              echo '</tr>';
                                             }
                                         }
 
-                                    echo '</tr>';
+                                   
                                     echo '</table>';
                                 echo "</div>";
                                 echo "<br>";

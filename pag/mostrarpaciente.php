@@ -401,18 +401,18 @@ if($_POST)
                                                         echo "<td>s/. $precio_servicio</td>";
                                                         echo "<td>s/. $precio_real</td>";
                                                         $estado="<b class='text-danger'>PENDIENTE</b>";
-                                                        if($id_transaccionebd!="" && $precio_servicio<=$precio_real){$estado="<b class='text-success'>PAGO</b>";}
+                                                        if($id_transaccionebd!="" && $precio_servicio<=$precio_real){$estado="<b class='text-success'>PAGO</b>";$est="PAGO";}
                                                         if($id_transaccionebd!="" && $precio_servicio>$precio_real){$estado="<b class='text-warning'>PARCIAL</b>";}
                                                         echo "<td>$estado</td>";
                                                         echo"<td>";
-                                                          echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";
+                                                        echo "<form name='f$i' method='post' action='transaccion_pacientes.php'>";
                                                             echo "<a href='$link?nik=$nik' class='btn btn-primary  btn-xs' title='Mostrar Servicio'><i class='fa fa-eye'></i></a> ";
                                                             echo "<input type='hidden' name='idt' value='$id_ps'>";
                                                             echo "<button type='submit' title='Efectuar pago' class='btn btn-primary  btn-xs'><i class='fa fa-dollar'></i></button>";
-                                                            echo "</form>";
+                                                        echo "</form>";
                                                            echo "<form method='post' action='mostrarpaciente.php' id='f$i' name='delf'  style='margin-top:-23px; margin-left:50px;'>";
                                                             $est="PENDIENTE";
-                                                            if($estado=="PAGO"){$est="PAGO";}
+                                                            if($estado=="PAGO"){}
                                                             echo "<input type='hidden' name='id_servicio' value='$id_paciente_servicio'>";
                                                             echo "<input type='hidden' name='id_paciente' value='$id_pacmod'>";
                                                             echo "<input type='hidden' name='estado' value='$est' id='estado$i'>";
@@ -444,9 +444,13 @@ if($_POST)
     
         <div class="pull-right">
             <?php
-            echo "<a href='#' class='btn btn-primary'><i class='fa fa-print'></i> Imprimir</a> ";
-            echo "<a href='editarpaciente.php?nik=$id_pacmod' class='btn btn-primary'><i class='fa fa-edit'></i> Editar</a> ";
-            echo "<a href='listar_pacientes.php' class='btn btn-primary'><i class='fa fa-close'></i> Cancelar</a>";
+            echo "<form name='imp' method='post' action='imprimir_hc.php' target='_blank'>";
+                echo "<input type='hidden' name='id_paciente' value='$id_pacmod'>";
+                echo "<button type='submit' class='btn btn-primary' ><i class='fa fa-print'></i> Imprimir</button>";
+                echo " <a href='editarpaciente.php?nik=$id_pacmod' class='btn btn-primary'><i class='fa fa-edit'></i> Editar</a> ";
+                echo "<a href='listar_pacientes.php' class='btn btn-primary'><i class='fa fa-close'></i> Cancelar</a>";
+            echo "</form>";
+            
             ?>
         </div>
         <br><br>

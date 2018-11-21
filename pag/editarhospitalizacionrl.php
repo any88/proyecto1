@@ -12,10 +12,10 @@ $msg="";
 $objHospitalizacion=new HospitalizacionController();
 $lista_hospitalizacion= $objHospitalizacion->MostrarHospitalizacion();
 
-if(isset($_REQUEST['nik']))
+if(isset($_GET['nik']))
     {
-    $id_hospmod=$_REQUEST['nik'];
-    $hospmod=$objHospitalizacion->BuscarHospitalizacion($id_hopsmod, "", "");
+    $id_hospmod=$_GET['nik'];
+    $hospmod=$objHospitalizacion->BuscarHospitalizacion($id_hospmod, "", "");
     }
 if(isset($_POST['id_hospmod']))
     {

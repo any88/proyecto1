@@ -38,10 +38,8 @@ $listaPacientesDelDia=array();
 $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
 
 ?>
-
-  <section id="services">
-  
- 
+<br><br>
+<section class="about-text">
 
 <div class="container">
 <div class="row">
@@ -187,11 +185,11 @@ $listaPacientesDelDia=$objPacienteServC->ServiciosDelDia();
     
   </div>
   </section>
+<?php include './footer.html'; ?>
 <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
-<?php
 
-include './footer.html';
-?>
+
+
 <script>
     /**Este es el código que le da la funcionalidad a la modal*/
 $('.btnModal').on("click", function(event) {
